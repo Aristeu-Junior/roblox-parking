@@ -2654,6 +2654,130 @@ function DrParkingTextureEngine.BuildTexturedCar(entry, originCF: CFrame, parent
 			Reflectance = 0.25,
 			Parent = model,
 		})
+		-- Painted brake caliper
+		local calColor = (entry.CarId == 4 or entry.CarId == 11 or entry.CarId == 12)
+			and Color3.fromRGB(245, 190, 20)
+			or Color3.fromRGB(215, 28, 32)
+		makePart({
+			Name = wName .. "_Caliper",
+			Size = Vector3.new(wheelThick + 0.06, wheelRadius * 0.42, wheelRadius * 0.34),
+			CFrame = relCF(originCF, wx, wheelRadius + wheelRadius * 0.14, wz - wheelRadius * 0.25),
+			Color = calColor,
+			Material = Enum.Material.SmoothPlastic,
+			Parent = model,
+		})
+	end
+
+	-- Luxury / Supercar Archetype Detailing (Ferrari, Lamborghini, Porsche GT3, McLaren, Limo, Muscle, G-Class)
+	local cid = entry.CarId
+	if cid ~= nil then
+		local carbonColor = Color3.fromRGB(24, 26, 30)
+		local chromeColor = Color3.fromRGB(230, 234, 240)
+
+		-- Front carbon splitter & rear diffuser on sport/supercars
+		if cid == 1 or cid == 3 or cid == 4 or cid == 5 or cid == 7 or cid == 8 or cid == 11 or cid == 12 or cid == 14 then
+			makePart({
+				Name = "FrontSplitter",
+				Size = Vector3.new(w * 0.98, h * 0.06, l * 0.12),
+				CFrame = relCF(originCF, 0, wheelRadius * 0.48, -l * 0.48),
+				Color = carbonColor,
+				Material = Enum.Material.Metal,
+				Parent = model,
+			})
+			makePart({
+				Name = "RearDiffuser",
+				Size = Vector3.new(w * 0.90, h * 0.12, l * 0.10),
+				CFrame = relCF(originCF, 0, wheelRadius * 0.56, l * 0.49),
+				Color = carbonColor,
+				Material = Enum.Material.Metal,
+				Parent = model,
+			})
+			-- Quad exhaust tips
+			for _, ex in ipairs({ -0.32, -0.24, 0.24, 0.32 }) do
+				makePart({
+					Name = "ExhaustTip",
+					Shape = Enum.PartType.Cylinder,
+					Size = Vector3.new(0.24, wheelRadius * 0.22, wheelRadius * 0.22),
+					CFrame = relCF(originCF, ex * w, wheelRadius * 0.54, l * 0.51, 0, 90, 0),
+					Color = chromeColor,
+					Material = Enum.Material.Metal,
+					Reflectance = 0.5,
+					Parent = model,
+				})
+			end
+		end
+
+		-- Side aero intakes (Ferrari F8 / Lamborghini SVJ / McLaren 720S)
+		if cid == 4 or cid == 11 or cid == 12 then
+			for _, side in ipairs({ -1, 1 }) do
+				makePart({
+					Name = side < 0 and "SideIntake_L" or "SideIntake_R",
+					Size = Vector3.new(w * 0.08, h * 0.20, l * 0.18),
+					CFrame = relCF(originCF, side * w * 0.46, bodyY + h * 0.04, l * 0.14),
+					Color = carbonColor,
+					Material = Enum.Material.Metal,
+					Parent = model,
+				})
+			end
+		end
+
+		-- Racing stripes (Ferrari, Porsche GT3, Muscle V8)
+		if cid == 4 or cid == 7 or cid == 8 then
+			local stripeCol = cid == 4 and Color3.fromRGB(245, 215, 65) or Color3.fromRGB(242, 244, 248)
+			makePart({
+				Name = "RacingStripe",
+				Size = Vector3.new(w * 0.14, 0.03, l * 0.92),
+				CFrame = relCF(originCF, 0, bodyY + h * 0.22, 0),
+				Color = stripeCol,
+				Material = Enum.Material.SmoothPlastic,
+				Parent = model,
+			})
+		end
+
+		-- Rear Wings (GT3 swan-neck, Lamborghini SVJ carbon wing, McLaren active wing, Hatch roof spoiler)
+		if cid == 11 or cid == 7 or cid == 12 or cid == 14 then
+			local wingY = cabinY + cabinH * 0.18
+			makePart({
+				Name = "RearWingBlade",
+				Size = Vector3.new(w * 0.94, h * 0.05, l * 0.11),
+				CFrame = relCF(originCF, 0, wingY, l * 0.45),
+				Color = carbonColor,
+				Material = Enum.Material.Metal,
+				Parent = model,
+			})
+			for _, side in ipairs({ -1, 1 }) do
+				makePart({
+					Name = side < 0 and "WingPylon_L" or "WingPylon_R",
+					Size = Vector3.new(w * 0.04, cabinH * 0.48, l * 0.07),
+					CFrame = relCF(originCF, side * w * 0.24, wingY - cabinH * 0.22, l * 0.44),
+					Color = carbonColor,
+					Material = Enum.Material.Metal,
+					Parent = model,
+				})
+			end
+		elseif cid == 0 or cid == 6 or cid == 13 then
+			makePart({
+				Name = "RoofSpoiler",
+				Size = Vector3.new(w * 0.72, h * 0.06, l * 0.10),
+				CFrame = relCF(originCF, 0, cabinY + cabinH * 0.54, l * 0.25),
+				Color = carbonColor,
+				Material = Enum.Material.SmoothPlastic,
+				Parent = model,
+			})
+		end
+
+		-- Luxury vertical chrome grille (Maybach Limo / G-Class)
+		if cid == 2 or cid == 9 then
+			makePart({
+				Name = "LuxuryChromeGrille",
+				Size = Vector3.new(w * 0.42, h * 0.24, 0.18),
+				CFrame = relCF(originCF, 0, bodyY + h * 0.02, -l * 0.495),
+				Color = chromeColor,
+				Material = Enum.Material.Metal,
+				Reflectance = 0.65,
+				Parent = model,
+			})
+		end
 	end
 
 	-- Ground shadow decal pad (represents shadow.png)
