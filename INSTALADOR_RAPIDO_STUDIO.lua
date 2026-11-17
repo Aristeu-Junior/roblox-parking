@@ -1,0 +1,3784 @@
+-- INSTALADOR_RAPIDO_STUDIO.lua
+-- Cole na Command Bar do Roblox Studio (View -> Command Bar) e pressione Enter.
+-- Instala todos os 8 scripts e as 69 texturas convertidas para Luau do Dr. Parking.
+do
+	local ReplicatedStorage = game:GetService("ReplicatedStorage")
+	local ServerScriptService = game:GetService("ServerScriptService")
+	local StarterPlayer = game:GetService("StarterPlayer")
+	local StarterPlayerScripts = StarterPlayer:WaitForChild("StarterPlayerScripts")
+
+	local texturesFolder = ReplicatedStorage:FindFirstChild("Textures")
+	if texturesFolder then texturesFolder:Destroy() end
+	texturesFolder = Instance.new("Folder")
+	texturesFolder.Name = "Textures"
+	texturesFolder.Parent = ReplicatedStorage
+
+	local function upsert(parent, className, name, source)
+		local old = parent:FindFirstChild(name)
+		if old then old:Destroy() end
+		local inst = Instance.new(className)
+		inst.Name = name
+		inst.Source = source
+		inst.Parent = parent
+	end
+
+	upsert(texturesFolder, "ModuleScript", "CarTexturesData", [=====[
+-- CarTexturesData.lua
+-- 30 texturas de carros jogaveis do Dr. Parking 4 (15 modelos x 2 skins),
+-- aprimoradas via GIMP GEGL, mapeadas em UV via Blender 5.3 e convertidas para Luau.
+
+local CarTexturesData = {}
+
+CarTexturesData.car000 = {
+	Id = "car000",
+	CarId = 0,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Compact Sedan (Car 00) [Common]",
+	Category = "cars",
+	CarClass = "Compact",
+	OriginalPath = "drparking4_texturas/assets/cars/car000.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car000.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car00.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0302, 1.3026, 4.3867),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(233, 233, 233),
+		Roof = Color3.fromRGB(245, 245, 245),
+		Glass = Color3.fromRGB(37, 37, 37),
+		Trim = Color3.fromRGB(81, 81, 81),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,0A0505,080303,000000,4E4D4D,DDDEDE,D7D7D8,EAEAEA,E9E9E9,BFBEBC,A7A7A1,939393,7F8080,FBFBFB,F0F1F1,F4F4F3,ECECEC,E6E7E7,E2E2E2,E4E4E4,050000,050404,555454,3C3737,2F2E2E,171313,FEFFFF,F8F8F7,D4D4D5,CDCDCD,403F3F,898989,F6F6F6,F5F5F5,696969,212121,F0EEED,C8C8C7,ADADAD,D1D0CF,F2F2F2,C4C6C7,E0DFDF,999898,BBBBBB,9DA4A1,BEB5A2,C3C3C3,E8E9EA,E8EBF3,C0CDD1,50B9E0,C6C1AC,DBD9D5,E9E7E3|A16BACDEFG7HFIJKLDLMNOGHPGQRSQB8T8BAUVNHG4HPNQVWXYYCLZNabIcFSSRQB7T11CdeLQGPNOfOghWWXiAeZOjkllmbFRQB3TCCTCihhVD6VhWVnOgfggnMeWdXiUeZORllmQkopHBTTB3YUiKJfMOOgf3aZZf3gOONMlWdXiAKZMIqmSckkrGBTUhsqKqXCChnaaNjSPOOnggOOaMaariXiYUJZtDoSmoclYhBTBesqqleDXCYdVhqDH3gOfMfSFmkusJlrIjJitvmkklXCCAAUebcEQMMPeVhLddYqZngMjborlKLhDFZMfFroSccIrdCAl3CeZOaaOGSMZrdWddWPagmorehdXYYsfGFuFgPFRtqhCAlM3DlZZMgGHMRhAiXWDiqGIkKXWWXYXIMkIkHjSRSQueCYlaSggauqhdhNReXU3iXdWikrhWYiYieHjllFPFmckkmuhYraSHRGFA3CYEadCYYiiXXWlqWWXCieRacrbEEmo3uruqLufSHHjMLCTCVFaZbYAYYiYdkLXiYXKSZFIkFcucoc3blLemjS3HbVCUXsZMONZqCYiAVEVYYdqPOFoommoruuc3RQplcGR4HhCWsQZnOggnZhCChQXUDJnZcJumcourlusFRpRSjOjwwQQHHrhEJVafOggOgfKeOVDraaEoomkuu4rJLkEERExlytzSRpEaKiFhLZgnnNjjMaREZfFkkccoIrrIIlKLeoRNa3ysttjgNphdYdQqrSj3PQRQPNFckccour3IlqKsIEHpNa3ycLtngnpJiVYdnlrpQSSHPGGpkccoIrIuIlqKlcQjHHpvjEyybttGGHEOJYelkGmcbHSpFFEbkuIrIuIJKKlmHjGHHGFmm!mcxcFbmmEQNleIKLrHpFm4cmmrIorJKqlbGj5HGFE@x3yttEREFHHPuKJJbEmckccmcuukrsKqrFPP7HGER@3yzttpSRE4HoqJcckkF4pElKKsIEjP9HGFE@xyyxLtpREF4HPoqIccER4pSmqrRjP11HGEFF!xxbk!FFbE",
+}
+
+CarTexturesData.car001 = {
+	Id = "car001",
+	CarId = 0,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Compact Sedan (Car 00) [Special]",
+	Category = "cars",
+	CarClass = "Compact",
+	OriginalPath = "drparking4_texturas/assets/cars/car001.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car001.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car00.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0302, 1.3026, 4.3867),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(38, 65, 92),
+		Roof = Color3.fromRGB(38, 65, 91),
+		Glass = Color3.fromRGB(23, 23, 23),
+		Trim = Color3.fromRGB(18, 22, 32),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,000000,000001,050F1E,0E2B43,12314A,123048,102E47,132E46,1A2F44,162C41,1F2831,112030,0B151F,25415D,253F5A,16344E,122E46,13324A,000204,123049,1A3650,1E3953,202227,2A2E33,191415,111215,0C0B0C,28425E,27415C,0D273E,04070D,081C32,061323,163149,1C1B1C,13283B,09273F,09243C,0E2840,14334C,1D354C,253A50,072037,000D24,25445F,30465C,123047,041B32,07223B,002035,7C7D69,376683,D0C5B2,84AEBE|17ABACDDE4FGGFHIJKLMLNOOPQFR4F9A8BSBCGGTFGGRUVPWXWYZaLbcbRdTDFEFF19AefgQhUVObcVKXWiZajbcOkHPJQGFF8AeMM8CMeMVObb3cVKXWiYaKbbhlVHUmdGE3AB3SBeLLnnRR4nUObb6cOJXXiYajbVopmoDdJqEAABC4reAAM3nRGTV7c3bOJWWiZaIsKijhHdJfaMAAB5rgCeAeCCMIMV5cbbOpohI3jJJhfYKnHdHqZA4BLHJoVOVTLCgLWXiLNccbcpoIJjKWMHnnEljQEmkjlZASj3ALt3bcUGnUIWWXXZVbbpoJKXXWiYjGHdqHVUHhKLgASjn3CjsbOUhuPhLZYWWXiLVoIjZXXiYYIUJvdUV4UJgSSjnu3njLMCMTQfaaZYiWXXZIJKXaZYZKUGLLHVH3mdDqCSjnuFQFQS3AShNaAaaZYiWWJjXXiaaKoPlqDDhD4dldvrdnuFFRPM3AMobboSSaZYYiJKWiZYjPUmqlDkqmdDGDQqrrmRu3FJCABejbbccbjAeZaihWiZMjUUdqlmkwxqmDR3nRfmnh3nRMAeLUb5cbMABLnaZiJVPjjqklwxxvlvGD3wjJJkk3wGjMhIiOb5cOLLPMMIUPmwwlw5xfvrwt3y3z5ycELaoWLNb5ONVhoUnmllklwxvxxqvrrgvy!!4@y4!tCMaZVIIVO3bVoUPTmllklw3xvfvrrgqhky!!3@!yy3!tfeMaZPpytVVPhRFFGwllw3xqqgrrvluRnkz!!@z@@yy3!tEveLjmTtyoDQ4Dmq4xwfgrrvdFRFuFGp5tO5touEfrwjKjDDdm4dmkvxwfgrrvmRRFuFFhkz!!@3zyy3!tFFEqrfIIDmddm3D3lf3rfDRR6Fhkz!!4@yy3!t3FElrrlmdmGFFEFGv3rqDRR8Fhkz!!@z@@yy3!t4FRwrwmDuR4FRDgqQnRu10FGp3tss6to",
+}
+
+CarTexturesData.car010 = {
+	Id = "car010",
+	CarId = 1,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Executive Sedan (Car 01) [Common]",
+	Category = "cars",
+	CarClass = "Midsize",
+	OriginalPath = "drparking4_texturas/assets/cars/car010.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car010.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car01.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0109, 1.2224, 4.7205),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(187, 187, 187),
+		Roof = Color3.fromRGB(188, 188, 188),
+		Glass = Color3.fromRGB(22, 22, 22),
+		Trim = Color3.fromRGB(65, 65, 65),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,9D9D9D,9C9C9C,9F9F9F,9B9B9B,A1A2A2,6C6C6C,272727,1F1F1F,151515,5E6060,A5A5A5,9A9A9A,A3A3A3,A0A0A0,6F6F6F,908F8F,B9B9B9,ADADAD,8E8D8D,9E9E9E,7B7A7A,7F8385,343434,565656,A7A7A6,989898,484848,332F2E,030303,CFCEC8,A9A9A9,878686,949494,BCBCBC,C4C5C4,B4B5B5,BEBEBE,454242,CBC9C5,393939,BDBDBD,C1C1C0,4D4E4F,E9E6DF,9B9B9C,9D9E9E,6C747B,5E6872,5B87A7,70BBDF,C4B797,73A0B9,849BA0|A5BABCBABADEFGGHIJKLBB4ABBMMNDOPQRSTBACECBA6BLKOOKLDANUUVUWXYZDBB3LCBUFabcSdeVBKLOfgA4BDLBAZGJYLZhieLZfWXKBNLAMRjkRalbHcfdYSDRfJlXYLBBDNKDLCWaKZRmdUIGIIJRPSQQ4kQXanGcfdYfLROFbOKDADEVOKEYJWNCidjUWWnbOFHbQkhhohhJlWHIgmelPeJJGgT3BTnIaUCPbgedpDBCATjiaIHPiQhhkmOaWHIEiglKSFlnKL3BDnGHIWJWfeieZKAOOiiSHcqikiijMSfSfSki3eFFHFKLBBLMaHFl3HURRMMUaqaKiQnaEdRfJqHGGIbMdQBRSFqHDABBALKXHPYUaHFQePnHWqaFiQQdYJqllnGcIFkmmRDNFFIJKL3BLKFHfNMTPKQiWcHWnqaNdMFWcaWIcHOj3diQYOOWnMD3BADMUHfNZKhphiLIIGWanVSlancIcWVirppQfUUOFqHgCD4BDNSHVYjkkhoQdJcHWbFOWnHcIqTddQgjjUSBBgUHOKL6BTPJYhk5ohincIJUHIIWUjdmQReAjUZEBBTTPCD6BDDeipoh5ohphGnSIbFKddhj3RKREUNZB3DT4DsDDTEEJfmh6okhpRQSTddijSYReNAERSfMCTT3t5TCEPUVHIYih4o3hQpmddQ4RMBNYKPUFguuPSSP6SuvOXGUIniho3khQQkihj3ReENMNLVOFFaUvwddixxPymddwqJaXbFbNipkohoidij3RMCEYTSOFJqWHGUwzrr3xyydrrwvKWXXJRgSehhmieBgRjNNKEgUOJqbHGqUsKwx3rxxyy3rwuEgIUXWegPQdeUfgVOEeZfOJXWHGXVYjRYRuuSfPSSPPSfSuuLKOIXbHfepgOgKCMgFUFqWHInO3qalalJvwikRzz!yykpwvALKSWnWnTPOCCLBLEVWHIWJPKeI6cGwzrr3x3yrrwwBBLNKFbWXFLTDBBDCSnJPKYCLAH6cbwzrr3xpfyrrww3ADDegaHVED5ADMeNDLBACH6cG!!phQejjyQQh!V",
+}
+
+CarTexturesData.car011 = {
+	Id = "car011",
+	CarId = 1,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Executive Sedan (Car 01) [Special]",
+	Category = "cars",
+	CarClass = "Midsize",
+	OriginalPath = "drparking4_texturas/assets/cars/car011.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car011.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car01.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0109, 1.2224, 4.7205),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(50, 114, 185),
+		Roof = Color3.fromRGB(50, 114, 185),
+		Glass = Color3.fromRGB(20, 20, 20),
+		Trim = Color3.fromRGB(18, 39, 64),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,054379,054278,044278,033869,012A54,002D59,034277,01437D,03447C,022D57,0E457B,2462A2,225D9A,033F74,054277,034278,044379,01386A,034379,074276,083969,034279,014076,07467D,0E4B83,1D3B59,111921,0F0B08,21568F,3374BB,2A63A0,012F5C,195591,134B82,3072B9,2D6DB3,2D2726,181C20,013362,3273BA,3271B7,01427A,1E4B7B,466C96,9B9B87,041B31,010202,305C89,003D77,508BBB,E9E0CC,9CC0CB,4276AF,05427A|A7BA4BCAD3EFDA4B3ACGHHIBJKLMNAOB3ABAB6PQRNSPGQSDTKKUDSPQVPWNNXYZZaabcdeDNXKfRGCCB6PBfRSPWgMYhKhUDIWNWCYgLijkklbbcdLNWhKEFDSCBPPSSPPVmmIWYLLT3EFRWXMLj4djkklbbcdLUNhUFFRSCBPSNRASSDmSAMLhRmmfFKLn3dn3oiZklbbMdMkUYFffNVCBPVmFDNQNmNXLMGGVpXLddn5onddZklbbeiqkqKFfmSPCBPPmfFFmDmNXMYNHAZZdoonnooddiLcqZqZqMgrsYmFFRSGCBPSmfRm3FNXYIIJlkkedoondnMqZkbblbaqLMeehEffNPPCBGSDFWQNDFNhgqtblkkZdodicZ3kllubZMLMLLMffFDSPPCBGSRFNSQWNgjdtballkkedcZlbklbbaZcMLL3MUFfmC3PCBPSNfNGNYjdndM3blkkqqkklubbaZML3MTUUmFffNS3PCBPSNFRYLddonodZbaalZZ3lbutqLLcvgcmRGGNDFRS4PCBPVNTgodoo3nodtbbZZ3baZcLLghcvgUNIPPSSN6PCBGGYndno5nodillqbaZqLLc4hXYhDAC3AQAQ4ACOAIIEqdo7nodecqqLLMgvqhYXPIhKRHp10wpHNmTabedo4nojojeMLLg4hKTIXYKUEqvv10rvqDEaKbkd4o3jeMMc4hYXSXKKUmEJFqrxyyzxxss3y!vDTEtZlriioojjLMMg3hXQIYYTf3EJfFqvxyyzxzss3yivAmKEJgrreeLMM3hggTQXYKUf3EJfmDNqrz3yxzzs3yxrANfhEtYrscLgUKhRmhhKTmEEJJmRWIXXHcrr10srrBSNmKabRKghmNXPINmUJEEJfmR7tZrxyzzxx3szzrrBGSNmTttKKfQSWPGIDEFfmRNPIb6ukrxyyxzxss3yjrBPPSQRD3fGV4PSNmRNCSSP@b6uk!xyyzxzzs3yxxACQCCINDfDACQ3CQBBAA4CAa6ukss6zs3zxs",
+}
+
+CarTexturesData.car020 = {
+	Id = "car020",
+	CarId = 2,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Luxury Limo (Car 02) [Common]",
+	Category = "cars",
+	CarClass = "Large",
+	OriginalPath = "drparking4_texturas/assets/cars/car020.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car020.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car02.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0746, 1.2763, 5.1274),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(182, 180, 181),
+		Roof = Color3.fromRGB(216, 216, 216),
+		Glass = Color3.fromRGB(55, 55, 55),
+		Trim = Color3.fromRGB(63, 62, 63),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,B7B5B6,B6B4B5,B8B6B7,BAB8B9,AFAEAD,A8A6A7,B9B6B7,B5B2B4,B8B6B6,BEBCBD,C8C7C7,D0D0D0,DDDDDD,969696,535456,75787F,D4D4D4,CCCBCC,C2C1C2,A1A2A0,3B4042,B5B3B4,D9D8D9,D8D7D7,E8E5E1,8C8A89,2E3039,252531,000000,949393,C0BEBF,B9B7B8,696368,D9DBDD,0E0E0E,9E9E9E,E2DFDC,B6B5B6,B5B2AF,B7B6B6,8B8382,BCBCBE,999999,B7B4B6,040B1D,DFD6BF,B8B5B7,7EBFDE,B9AC8B,B7B5B5,B8B6B8,CAC2B4|AABC3ABDEFFEG9ABHIJKLMN4OPQRRKSDJB6ADHCABDTOOUPJV6AVVJKQWWXYZabccaM3QWSdJ5AHeHTfVePaUageV3ACBHeLWh3WQYdUaicgYLQQLKFd4ACKSKFEfCE3TFG4AHDRQXWXWXXQYdaaicPYLQQRSdjDBAAfMMLSHCAGDDJD3AHVKWhXLWXXWMWMEabccTk3QLlFJmCAACXkXSKCAA4BAVnSLQQWWLLhkXCKLKSFogSLRLQodpEKLBBCWkQeKJB5AHeEPMXRWLLkRZUibZKKRLQKSSHOUdHReTjVALMQeSS5ACSdUbPYLRXLob5cUfSSJJClHojppFqNdFArfDCAeJVAAHVgciUbNYQEg6caoJVfBACAVlEjoP3gqAABBABDSnBELZccibUbVZabi3cUdKDTSRJFTjqdZo3Pood7ASfDLkkUccibOZbiiciOTRSBEHKemNNd3Zd4NdT5ACVAKMkhkWbccURUcciOFReHBHTjVVBNZddqEVHVVASS3AVBHeQk3MWYQbUkPcigBSmmAHFqNNHfHddgNL5KSPPAACeJL7MWYQRKaOERfTEEFqNqqZqfBBCsgYtXhLhMbsAABPPMMh4M3WXeeCKJHCBFdNqqdooquAfBbPtoT3vSasCBJgbqkMMWQQWXRSJJDHAHFqqNdZooqEfAlCBbPtww4vasBTESOUSQLQWWLSeJmHCmT3qNZooqEfCBBlCBbPtwq3vLasZUdlEZDShMLSJAHBAFT3qNZoZjHJJ4DlCBbPYXhkMkXasjOaqERQQSDBBeRRDTdNqdZoZNTE7FVCBbPYMMkYYXasxjOaZFRLVHfRLRSENNZZoZqfd9iTJHbPtwJLvvXasCmqgOojEEnSSfVHfjooZjECeZ9cTJHsPtww4vasBCmjogqNNjVVBAAfEdTHDCHed9cTJHbPtww4vasAACyFdodqFC6ACDCBAVed9cTJHbPkzp3vXas3ABfBFdZVC7AB3AVed9cTJHbPYh4YQas",
+}
+
+CarTexturesData.car021 = {
+	Id = "car021",
+	CarId = 2,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Luxury Limo (Car 02) [Special]",
+	Category = "cars",
+	CarClass = "Large",
+	OriginalPath = "drparking4_texturas/assets/cars/car021.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car021.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car02.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0746, 1.2763, 5.1274),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(23, 23, 23),
+		Roof = Color3.fromRGB(22, 22, 22),
+		Glass = Color3.fromRGB(24, 24, 24),
+		Trim = Color3.fromRGB(18, 18, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,000000,010101,070809,101010,131313,060606,0C0C0C,121212,1D1E1E,272222,181919,0A0A0A,0E0D0E,0F0F0F,0D0D0D,0B0B0B,020202,030303,1F1F1F,616D7B,1F2E41,010202,040404,141414,171717,161616,352F31,4C4D4E,020303,010102,111111,1C1C1C,040506,151515,1A1A1A,000001,000202,301011,080808,070505,1B1B1B,030202,130D0C,030404,030304,040300,041027,011E44,E8E4DF,040405,E2D0AB,AEBAA5,59B7E4,1C1B1C|4AB4ACDEC12ABFGHEIJKLFMHNOPLQ8ARSAABAN3TUAV8AWOXYKKZSaSCADZE3XOK7ARbbAcAJTbTUAd6AFeYKK3YZfaICAHX3EHQXKB3ABMWATJABgGPOC6ARDZ7YZIaSFAX3EhPFiMj3AQifPZaAB10APYKZX4YZYYKSiFQYE3XkSeAQ3ABYIZ5A3B4ABeYZYYhZYZZhGQBgLNEHNNOGll3ADMABKIZBB9AmXKZXYZX3hePODQ3ABRWcZlbbneJaIQAEoY9ABLJJYKZhHHEOW3ARimBWWRBAplafJafONFAAQR8AQFFZJJYKHoam4AgOemRRAAQMiSJJlqMNPF11AGNAAFiaShJaJFAAmNDmXGFGgHaaJKMpqnBAAR9AWEIfmAAmISoJNcBmeDmBARFmQgHMmmFWRcrWgsr8AOiIifiFAAZNHQAmNOmBAAPoeAABmFt13ABAAmZI4ofimEMGRmHOORAAGIJZORAQgsua6Tbuu5ADIf4ofofiMFXMNWWDBLIShMOmRAABgvT7wUvAARLbJYooffoKKZOQQGF3AmfKhOOLWBQ3AxuTyTz3!zUvBBh3bKSfKhZKegQRW3AGiIhOPmQBQQ4AxuTyyz4!UvBOGabbJQHhiZLRRWBABNIfEOPmBBQQ6AxuTyyz3!wUvWgHmbaabSYOWBQAABMIfHOPFBBQQB7AxuT7wUvBAWDYIzwaABBmMmmfYDGLgAAQQ10AxuT7wUv3AWDSbzjAQmGmRFDGmWAAQQ12AxuTyzzw!!wUvAABBai@JSLmgB3Amg3AB14AxuTyTz4!Uv4AOEPhKhW5ARg18AxuTyyz4!Uv6AgPHL26AxuTwyz!!zwUv4AjBAAgQ26AxuT7wUv",
+}
+
+CarTexturesData.car030 = {
+	Id = "car030",
+	CarId = 3,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "City Hatch (Car 03) [Common]",
+	Category = "cars",
+	CarClass = "Compact",
+	OriginalPath = "drparking4_texturas/assets/cars/car030.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car030.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car03.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0684, 1.3210, 4.2466),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(216, 74, 0),
+		Roof = Color3.fromRGB(243, 135, 1),
+		Glass = Color3.fromRGB(55, 55, 55),
+		Trim = Color3.fromRGB(75, 25, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,010001,0A0302,993B07,EA5701,BB5615,443D38,9D4617,E34F03,DB5000,DB4E00,DC5201,EF6A02,DF5B01,DC5001,E16506,D14902,D94E01,DB4F00,000000,70411B,303A4C,6C5644,DD4A01,F17C02,7A2C03,4F1E03,E3710A,F38201,F18701,F58700,FB8D01,191513,2B1307,EF7401,D84D01,00010B,C51D01,D84A01,D84001,D85207,58290B,2A221F,C13B05,A47350,E65101,0A112C,ACB2AA,2A3046,1B2339,861F05,B88A54,63A9CA,DBDAD6,D0B68F|AABCDEFFGHHIJKLMMKNIKIHDKK5MOOLEGEPPQJJKNRIRIAASBCTUVUVEWKXXMMKRRJNPYZab3cddbeGUFfgEaLNJRJJQASASAY3VUVObchMMJQiDGfAjEeccdcbXdTUFfg3LklJJQQASS3AYTUVTLcbOKINDOdafBjTeccdbbXdTUFfZLhPkKMlmlA3SAASYTFkkhXiJDnTXddojAoe3c3deCZpjYhaqmMMkrnA4SAASYnqkqMsMGFUGeeGtAg3ebhOGTGEPCqPMqKMkrur4ASSAASCsqmDEFv3FXeapoEbOGTFFwtjjEDxqsmKkEuuEA6SAAgsQnYfp3FUGedXaETFwwpfAAZEhkxsyykqruEWA6fpjoDLYABfp4FXETFvwpfASBoEXhKPqmynquwGsiB6pfgPXecgAfppFUpTvwpfBSSgYOXLQWHWW3mgzrWiQB4pffZOecceESBfpwpopfBSSBZCOhMllDPCYZoxgSTHPiiBppffZEeecddceoSBfpojASAZCOhLN3lQYAAg3ZBYDssDDAfpYGXeccdcdccdoAgoBgoCMXhDPmllPHZAYC4YZ6YZCNEVabcdc3dccdYqEMhbbLMllJQPPWqBqDo11AsHqnFfab3cXhaOOLLhXhOKiJJ3lPqkoglDo11SHEwxnFGh4OLL4haOK3JillPqkxrynnr9VFUUqfVFxsau!@yX4hOMiJJRQ3lqkkGuyWsGwU!!zzu@!!uwUqBSUVHOa@!!yDLDsWlliJ3lm3krunWQsGwv!3zuc@!ztUsPYAvGVTnaanCooCPHPPllm3kGuyWWKQsGwU!!zzuy@!utUQNsqZAoFVHYBA3SBCsPm4kruEWIIRQsGwv8!ztUIRiHsCBYCgBZB4SACm3kGryWWK3RQsGwvu!@4u!ztUIRRiPDCSSYlsqZggBBAxmmruEWRK4RQsGwv!@yy3z!ztUI3RJisYYDllHsHQPPCgxVynWK6RQsGwv!@yy3z!ztUKNKNIIQssiQJiiQRNJDqgGsJK7NQsGwvu!@4u!ztU",
+}
+
+CarTexturesData.car031 = {
+	Id = "car031",
+	CarId = 3,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "City Hatch (Car 03) [Special]",
+	Category = "cars",
+	CarClass = "Compact",
+	OriginalPath = "drparking4_texturas/assets/cars/car031.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car031.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car03.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0684, 1.3210, 4.2466),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(69, 171, 154),
+		Roof = Color3.fromRGB(69, 171, 154),
+		Glass = Color3.fromRGB(55, 55, 55),
+		Trim = Color3.fromRGB(24, 59, 53),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,000000,010201,070404,135A4E,267C6B,267467,3A383A,464C4B,2D786B,247768,207263,247466,217062,309386,2C8677,237465,2D6057,1F6B5E,237264,217364,50605D,399F90,123932,0D2826,44AA98,42AC9A,3EA795,44AEA1,1C1716,0C161E,507875,0D0F0E,379286,4AB4A6,214945,010000,0A4137,1D6F61,11695A,0A4B3F,1F5D59,1B6A5D,083A31,C7C1B3,5A958F,26201E,3C2929,1F7868,96927B,1D2941,91BAC3,26384B,DEDAD9,010E31|ABCDEFGHIJKLMJNOELPPLPJEJF3I4ONIQRRMMSMPP4T3ABDHHUHUIMEVVOOLPLSPRWXV4YZZabQGGcd3OPKT3KAABABWUUeHHOaZVOESSMEQfACghZZ3YaZQHGfd3NWRKKSM3ABABWQUeiObaOJLPEgZgcCjQhYZYYaaZiGGfWNNRkPElml5ABAWQGknVVMSEIQabbiCBih3Y4ZoXcCnNNnpEEkeI6ABAWLDkDEJEQHGQhhQfAXhbbaVOFQQFJDHUEDJOqersA3j3ABAiEDmER3GHGahgtiOaOIQGGttCjleuHvoJnIrwI7ABBdESFictGGHGQhbaVIHGuutfjAXSNuuvssniwwIlBff4ctfXEgoAfctGGHGaOHGGutfCABWIVNJ3DsIDwtovMC6tcfFabYdBftuGGxiGutfCAAfiOVOSll4mDdwepMKC5tfXghbYhIACctutWtcCAABXQgNElRvMDWXWkfAQTRlMCttcctIbhYZZYhWAfcXWC3AXoOVNSRplTkBBf3XCWvJJEEjccWoVbZY5ZbiAdWfdWDOVVOETRlpTXAWnWnkkX6WXiTFUsaY5Z3YiRSONaaNE3MlppmDCDOW8j3AJvnFGfaa3YaVggONNgVVOJ3Ml3pnkWdpvX11AlIuqTGINNOO4N3VgOJMKTl3pDkkwsMFe9UHGHDfUuqvgyryy3VgNOOMlMTMlppDnqQwslPRxz!!3yr!!yxQofAGHMOgy!!sOOEJlRRMllppDnqnewImLJoxz!yhh3w!s@zJlWAGiUQvOsLDWWDMT4pmnqkQwsplFPJoxz!yhhrwr!w@zTTvodAWGUvkf4AfDlpmnqknewImLLPPJoxz8!s@zPTlTJDBWkffXC4ABnDqqnQwsllF4PJo@z5ryr!s@zPPTMRJiAAWlvoXdfCBAqDDewemPL5PJo@zrrwwybh!s@zPP3TlJknJlRKvTMRpDdqUsKpF7PJo@zrrwwbbh!s@z4PTTKJJMMK3M3KJofolMF8PJo@z3r3yr!s@z",
+}
+
+CarTexturesData.car040 = {
+	Id = "car040",
+	CarId = 4,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Sport Coupe (Car 04) [Common]",
+	Category = "cars",
+	CarClass = "Midsize",
+	OriginalPath = "drparking4_texturas/assets/cars/car040.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car040.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car04.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0536, 1.3001, 4.6560),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(59, 76, 86),
+		Roof = Color3.fromRGB(83, 100, 108),
+		Glass = Color3.fromRGB(23, 23, 23),
+		Trim = Color3.fromRGB(20, 26, 30),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,3C4D57,3E4F59,3D4E58,2F3F49,283840,394A54,3A4B55,3F5059,425159,465665,495A63,313537,3E4B54,3B4247,31393E,25292C,2E2D2E,505F68,54656E,4D5E67,32434D,3B4C56,2F3E47,22333C,53636B,53646C,576770,1E1919,101111,020202,51626C,2B3C4A,3C4E58,53646B,1F292E,35434C,3A4A54,3A4951,52656F,647073,0B1115,162832,364753,3C4D59,3D4D58,0E2029,3C4D56,596167,233654,031538,D2D0D1,D3C4A5,BBC0B2,5CB1D3|AB5ACD3EFC7A4GAHIJKLMMNOPQRSTACB6ARKFUCVCWXEEFC5AFAIJJTRYZSaPLQbcdcSZeMfDCg3AIZSCDBVCW3XFC3AGCTKOLaSSZZhSQLLPbdiaZKjXXUGCAAKSSJDBVCUWDDGCAGgJTNcdcRS4ZSPLLPbdLahKfXWWkEWCKSSKDBAAC3BCVGKRSTcdccMa3YZRPNLPbdlamNbXElWEEfJSZRDGC5AkBeRcQnQ3dNaZ3aS3PbccKYmQQXjWWXopIZSYWlC4AFJRNLbcTKcPIaSKI3NCJHljIaaRnjVWWiddoAHKeWqCAAVrTMPPLNQPaTaaMOL3QbciKennTHksVWEtddoXAVGHWqCAGBKPdbPQLNbNaHOcbLQbccPNaaKAFVVuWEpddtEk3ACUqCGISIdccbPQNLONQLbcbdcLvnSIACCuujEXpoopEGC4ArVAKSYaLdcbbQQNOPQbddbMnnTjjHAjqlWEX3tpWuC5AGHRS3ZabdcbbOLbbdcPKnaIFFjCE3tpXp3tpjC5AVGJSS3ZYSSidcOLddbNanKCFAGUjWtEFU5tEGC6AHJS6ZYSaLLXcLKnaJWqGqWEXEtXIAIfttXqHBCC4ABPjmY5ZSZeTRInnRBFGqW3XEWEtXIuFqXUVFqqFquCuuGPdWmYZZSZTKKYaeJGkFUE3XWDEpttXqqTTmmRvvRTTGqrsjKOcO3eTTYSSTHqlUW3XEWEX3tppwxwyyzz!!@!yywxJlEUINbIvTRRTJqUAD3XEWWXp3tpXXjwxwyyznz3@yywxJXciEkjMvnvqqp3tXXWWXp3tppEDFCIwxwyyzzn3@yywxJWibbPEEXEEjtpfDptpp3tpXEUsIIHACwxw4y!!4ywxJHqXtooOjEEpp3HU3tpXEXWjj4WFIwxwyyzz!!@3ywxJVBAEtoPXXptUBVVBppEUGu8dEIwxwyyzn!3@yywxJAVAHqfp3tpG3AgkkHBCkc5dcdEIwxwyyzzn3@yywxJ3AVCHHUXpEB4AggVVAA8kVHwxw3y4!3ywxJ",
+}
+
+CarTexturesData.car041 = {
+	Id = "car041",
+	CarId = 4,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Sport Coupe (Car 04) [Special]",
+	Category = "cars",
+	CarClass = "Midsize",
+	OriginalPath = "drparking4_texturas/assets/cars/car041.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car041.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car04.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0536, 1.3001, 4.6560),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(217, 210, 199),
+		Roof = Color3.fromRGB(226, 222, 213),
+		Glass = Color3.fromRGB(23, 23, 23),
+		Trim = Color3.fromRGB(75, 73, 69),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,D9D1C6,D9D2C8,DAD2C7,CDC5BA,C8BFB3,D6CDC2,D8D0C5,D6CFC5,DAD2C8,DBD4C9,DCD7CE,E3DCD2,737978,928D84,63625F,E0DCD3,E5E0D6,DFD8CE,D1C9BD,D9D1C5,CCC3B7,C5BDB2,E2DED5,E3DFD6,E8E3DA,49494A,2A2A2A,1B1B1B,0A0A0B,000000,222221,DAD1C6,E3E0D7,D7D1C7,D0C6BA,C4BBAE,F1ECE2,575553,3B3535,D3CCC1,BFB6AA,C3B9AD,D9D1C7,898476,CBC1B4,151514,B8B2A7,A29C91,B8AE9C,AEA596,B2A794,B3AA9A,799DA7,C4B188|AB5ACD3EFC6AGFHGGAIJKLMMNM3OPQPAII6APRFSCTCU3VFC5AFJQLKPPWXWYZaabcdeYXWGUDCf3AJXghiCGCU3jFCAAGHIYKMMkWgXXWYlmmabdZkWRnopiHqAARggKDCTCS3DHCAFqRKredePgWXXWYZmmabdMkPPnpUUnssARggKiCAAC3ICGFQPWhtdtcukPW3P3mabdvkYwZosSsUiDKgXWDGC5AFJkVaOkO3dvkX4kZaabctnPYlZDUEFwlxJXgXUFC3AGFQKMmbbKDbOokkJuNrNVJVuxuPPVMVHEFvtdMAIRWDFCAAGJYvabmZaOkhkkuMZaaetclQWYYKJDEJESNdcrjATGIUFCAGIJOdtaamZeNkoOttmaecdeMPKBHAGFGsUxdeviF3ACiFCGBYudctbammarNaabtbdcZvWQqCJIFnDspormwiFC5AGARgPkMdtteaerMbaecdbOpYWoDJHUDSUEoyyxoiHC5AGJWgXWXYZdtetMMtbddmrHYLADoHVyxzwjw3yoSq5AHFKgg3XWQYZddMMddtluXLJFGHSFEyjFS4yzVHC6ALQW6XWgkMMrdmNnYRzUHnUEpVzpKGJExzoSqGH5GRrvkP5XgXWXkNuYYRHnSU3jEiEyj4RifL8RGGZdNkPWWXgPKhhKLLGFnSsVppDDsoxyw5uouuo5ujfFRMdNkYYPJhJKRJSnSUVjVsDjozxxzorM3N3r!!M3NMZSzFQvbrpVUhRKniAD3jsDUpwxxzwojCNNSEU3@3!sVSNZvtluQp3rNFnwyywopUUjwxxywojDnGQNNipV@@N3!EpUNZsratOsCVzuSyuUDwyuwyxzoEiGR3LALvZ5lZZ5lZZJJjreevnDiwwIJJSyxzwoVx7zUQNMvNNrrN3!NNvMZGAGioMZNEuyiJGGIowEifSc7dNkNNFED3@3!sESNZ3AqnFpxyywH3AqHHICJSatb3tbtvkNrEuo@@N3!ouVNZ3ATCqISjwVI5AqGTAA8SnLvZ5l3Z5lZ",
+}
+
+CarTexturesData.car050 = {
+	Id = "car050",
+	CarId = 5,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Grand Touring (Car 05) [Common]",
+	Category = "cars",
+	CarClass = "Large",
+	OriginalPath = "drparking4_texturas/assets/cars/car050.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car050.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car05.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0230, 1.2226, 4.9296),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(24, 24, 24),
+		Roof = Color3.fromRGB(0, 19, 58),
+		Glass = Color3.fromRGB(24, 24, 24),
+		Trim = Color3.fromRGB(18, 18, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,032C59,B6BC9F,E2E1DF,060C1B,020000,020303,020202,010101,050505,060606,090909,0A0A0A,0C0C0C,0F1010,0D0F10,030303,63B3D5,040404,070707,0B0B0B,212121,2D2D2E,111111,1B1B1B,191A1B,191919,000000,8F897E,D8D1BC,020203,080808,1E1E1E,393E43,292626,131313,161616,040505,0A1429,010725,01010D,151515,1F1919,040202,696466,1C1C1C,353536,020200,181818,050303,141414,171717,000101,485F6D,030304|3AB11CBAADEF5G3HIJJKLLMNNOPJ7G3ABCC3BC3QCCBAADEF3GHGRSTLUVUWGLXYZRSaH5G3ABCCBbbc3QcCBAADEdHHRSeJRGafghiaeYZjkkaHGaHGGllmbcc3b4QcCbmlnEFSLKIHaaHaighjGKYZoeTaG3aHGllmBCCcBB3QcCCbmlnITeG5aHaKgVXGLXXOphaq4aGDmmg11rgnDOJ10aPfsiKNjZKrtaG3aHGEEu13aiUH8aPLNNTM3NiNebfaH3aGG3dRJ5IJIRSWUtgLaH3aHMUVtthhvMiiKaaw5a13GaPTNXhVgUaHaIxVggtVXWUviTH8aH11GHHTjSRifVttSaythftUxNjfjeH5aE4a11GaRiYXLaLvUVVThgtsGWOysjKG11aHH9GaKvXvYyGPNfUMhtUiTMvXiJaaG4aH5aHJxoyL3GPHGNYY3ZXNaeiMUUTLiYjMG7aHGGH3aGHKXYXL3GaIoX5ZvXOPevxKjXxeH8aH4GHHGGHIvZZeGGHWhyYZvvZYXsXNyhjZOPaHH8aH9GPjYZJ3GVgUWs3fsZoiNyje14aHGPGHH4GHWXyRGHaMtgtyZXvjxiWMP16aGP4aH3GaMXoGH3aPybrUxjWMSH16aHGGaYazaH4GIviHGH4aLrbURG16aH3GPayrVaH5GHeKHGGH5avK16aH6GR!r!faP5GHH4GHaoVG3aHGGH8aHHaaH3G@ahr!!tH13GHSiaGa6G5aH3G3a4GHgr!V16G4aH6GHaHH5GHaaH3GHtgya17GHaaH16GHH4GHHGaP11G",
+}
+
+CarTexturesData.car051 = {
+	Id = "car051",
+	CarId = 5,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Grand Touring (Car 05) [Special]",
+	Category = "cars",
+	CarClass = "Large",
+	OriginalPath = "drparking4_texturas/assets/cars/car051.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car051.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car05.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0230, 1.2226, 4.9296),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(138, 25, 0),
+		Roof = Color3.fromRGB(149, 37, 0),
+		Glass = Color3.fromRGB(23, 23, 23),
+		Trim = Color3.fromRGB(48, 18, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,1F324B,A2C8C8,DFDCD2,753220,9E2700,952601,962600,952500,A92E02,9C2A01,912102,962801,B73202,982800,992800,972600,B5886C,7499AC,641105,5E2718,381409,09090F,030101,C84001,C23E00,901D00,7F0E01,962601,750E03,000002,000000,191A1A,BE3903,891901,881801,8A1B03,07162C,911902,821202,7B0901,7D0A01,000204,644C49,861501,992301,9B310F,972801,790801,BB400D,720000,B33707,740301,700000,962501|3AB11CBAADEF4GFHFE4IJKLMIINOKPP4G3ABCCQQBBRRBCCRAADEFGFHHEEJKSTTUVWUXYYJZaKHbPGG3ARCC3QBRBRCCRAADEFHOEJcUVdeVffVdUXYgJhijjaZNG3kRCC3Q4RCCRkkTOEIFSV3edWVffVWUXYgJlijmnohG3kRCCBQ4RBCCRkkcIcUW3e3WepffVdUXYMEliin3oKTUUq11QqTTcUdee3WddeeWf3UjggIQDiaoonrN3EZ11lEJTWe3W3eWUiJMgMM3gMsQtmn3oHPFFHL7uLLItTffpWW3eUSttDDTTtMgMshhiavaonjN11GHPJSfV3fWdWStDT3fVpTwMEhihjaxxoomP9GPHHIyUdV4fpUtDfVf3VUtgshhZZja4xaHP8GPHOMYXUdWV3fStAfVepVTtgE3im3v4xzZGbb5GPGHJgYYXyWWVfVStfVVpfTtMEirirzznv!xx!vjJMggI3GbHHI5YXjdWpSwfdVUDyIZriZZjznKPJrx!nKFJYYXI3GsIM7YXSpSwfVTtyEimhZZiia!KNGHNmabuHJ3YJGGODDX8YXJwDTtIsrmhjZrozx!!ZPGuNNu4GgYYJPHlTAD3YXXYgMMgyIIlrhZZiavx!!z!!mOFjrhHGGPHMXgObmnjqqwXXY4gMEZirjZjmnz3!zon!zhOivovZNGPHIXgbrnooltBQwggMIsZirhZiazx!!xvoozvrHuPDaooZNGGFOYMHKanonr@QRtljaamhjmvx3!znovznhHOLstqDanZN3GHJJHN@anovnrtjazxzxza3!xvnnzvojOOGHGF3qDZL3GNEOOEGPHmvjDzxz!mKbKo3!vnvzoiaamPHGFsD4qObGFEm4UGGPLmmjxxzKOPGNbv!xzvmKNNaooKPGb@3qD@3GHES4e4Gurxx!iOHGGHOrxohHOPGNrnvhNGGsqqDsP3GHES4W4GPurzvH5GPHZNOG@GGNZmiZuGGPHGsF4GHESeWee",
+}
+
+CarTexturesData.car060 = {
+	Id = "car060",
+	CarId = 6,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Urban SUV (Car 06) [Common]",
+	Category = "cars",
+	CarClass = "Compact",
+	OriginalPath = "drparking4_texturas/assets/cars/car060.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car060.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car06.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(1.9708, 1.4778, 4.0575),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(201, 218, 0),
+		Roof = Color3.fromRGB(201, 218, 0),
+		Glass = Color3.fromRGB(32, 38, 46),
+		Trim = Color3.fromRGB(70, 76, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,D3DED4,A8A9A9,000000,161B0E,3C4D17,516022,3A4017,7C8F45,7BA005,87BB00,77A902,090E08,050804,8EBA01,86AF00,659400,6D9B02,BFD03A,A4B245,030401,342E15,B1CE01,9DC201,729F04,3C5D09,699903,4B6E06,A6CB03,6DA001,5E8B02,687A1F,0B2220,CEDF00,CADC01,C6D801,C5D900,B9D200,527B01,1C2A12,00192A,000003,6C9103,CBD876,587D03,010202,020404,8AAD0A,629201,669801,699B01,639101,619000|8ABCD6BDCEFG6BHGIJJKL4MLMGNNOOPQAARSABBABTLH5BUCEGU6BHUIJJKL4TMTEVWJXYZAARR3BABCCH5BFCaN8WbWWNJKccKKcXNVWJcYd8ABYYeHeeHHeGfY11ghijVW3JbkVWJKal9AKJJKJJPYmfnfkg12hghiVJWkkWJOaaAARS3BAAcKKNYDoon3fWg11h3ihkYKbkbOOIpAAqqBB3AcNVgUCTTLnfnIgi9h3ijgInmKbVOWkN8AqWjkgrsTCtnfnrgi7h3ijiijEnCmuWWkNK3ZQXZZuV3khu3CsnfnEg3h7ijjkhOfMCrNvNWKK3PwwKWkkV3kVL3CLnnEgkk4j4hjkjVmnCEbdYv3xPPwwQr4V3kjUCTCofrIFGEEGE4FrOOImLCmWQYYdZxx3PQdmpk3VkVjpCCsauaf4nt6npKcDCDuOlYrdaxZPycrtYGuk4VkkmGupDot3MLM5LtYKKyYIOXdZdmmyxPPIWGoYubWbVVbbWImo14CGKwxOIOIylmmDYcxdDIbapWONNWWNNWp4r3a4YGUGYaQXKNIUFIlDmDCDdwmoLIbNuS4W4N6W3NON4O3NWNOGFemfDCGBHFGLoEWOSASK5IZwxZ4wvvP3wvON5OpdamLsFBBHaFGCmXrXuIX5KQPxZ5xwwxxwX3OXpIcclDMLCHBFmxaFGtYGUccQamDGpXzPP3yzzddzddKNQmMtLGZUtMtCFFGxzxlFmTErddmMYaULp8rlrrldOQLmllYoLLsCsCLYcvyzxrDCtEdDLdcxKmGK3Q4XQ3XONmD3xcdDCsCoDlxz3vzxrLCoMMdxyycYLaal3r3d3pXdtlxzyzclsCtEPwz3vzvzwdDCsaxzvvxaCC7o3tMLMolw3vzxYDaxvz3vyvzvzwdLGczPvywrs9T6slwv4yPzxz3vzy",
+}
+
+CarTexturesData.car061 = {
+	Id = "car061",
+	CarId = 6,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Urban SUV (Car 06) [Special]",
+	Category = "cars",
+	CarClass = "Compact",
+	OriginalPath = "drparking4_texturas/assets/cars/car061.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car061.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car06.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(1.9708, 1.4778, 4.0575),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(169, 0, 22),
+		Roof = Color3.fromRGB(169, 0, 22),
+		Glass = Color3.fromRGB(29, 35, 35),
+		Trim = Color3.fromRGB(59, 18, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,DDDFC7,ABD2D0,B5B395,000000,071315,86A0A7,2F1616,585151,2D2423,4A0407,480001,4F0104,040001,220000,010000,020000,250102,420102,170000,340708,6E050F,850109,600104,520001,3C0000,400000,1D0505,B4001A,AB0117,990010,0F0101,3A0000,0D0706,A40014,350203,010202,010706,8C000A,AB0016,370000,000001,800002,2E0101,610001,330100,300000,390101,380000,340000,280000,010101,2C0000,350100,340100|5ABAACDE5FCEDGHI5FCHIJKLK7MNNDODPQAACCBFBACOEH5FIDGIIF4CBHIGKKR3M3PMSM4DOAACCFFBACDDH4FCHDT3UVV6UWWXRYZZRRYM6D4ABBAACNQG5IGaET12bcdVUXKKeDO5D5ABAACZLKZKKfNg3Eh12c3bhVXSDO5DAACCBFBACfZRWiejjk3Elbmmcc8mhhclaJeDO4DAACC3BACnWVhQDPOj3EUbc9m4hmLEaZMoODOOBBA3BAACp3dLOPDo3ELbh4m9hdaEDaJM4D4TJTTWVlVldUDODDkEETm8h5dhWEjDJUqeOeS3nYfRrppVVllVeDODjEEThdl11dVgkDTVqSstYZ4uRR5pVVlQOPDDgJWGEGGaaGG3TJKKSkDaUROosYYfvvnZKSRV5plXDDMJUukk3Ekk3EkknwseDaUXQeqqNZYvnYRjxaW6pVNQUJeDO5PM3PMPQunqQWXKxuxPIuYvnXrNyqXUr4pUWLS15DNuzzRXXKtNyIEaZfvSJrtKrLXW3rXrK!ZfnnwttzQQ3NxzuiJWUVWLNjIEjEsvgjgLrXJHW4rW3Xrr5XL4KRRLLWWXLWHGgIgDIF3IgjQWKHAHfRZYfftqstq4zx4zxJXX4KYTaEkDIFFHQHIjSuQuUJvZYuZZ@zq6tq3tquXKKYuYszNkjkDHFHafxIIjaGgzwia3gifx4zxzz4xQRXug3jeqeyjjOHHSfsuxIIyaQNQgMNxSkq12NzXRketqNOMMDDOygNY!@svtgDjSNeMwZfZeSnswwnvffuYZYKXee3fYseDODjgqfs3@sutMDDPM!fnnYQMQxzqq4iuuYRiyqfnvnYtOykauns5@snseDOzfnvnfzDD5yjD6jOtfnnvnfNgqf@s7@s!seSf4nftyOP4yP7yOq!5@!sns5@",
+}
+
+CarTexturesData.car070 = {
+	Id = "car070",
+	CarId = 7,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Sport Sedan (Car 07) [Common]",
+	Category = "cars",
+	CarClass = "Midsize",
+	OriginalPath = "drparking4_texturas/assets/cars/car070.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car070.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car01.obj",
+	HasOwnObj = false,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0109, 1.2224, 4.7205),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(0, 53, 123),
+		Roof = Color3.fromRGB(0, 53, 123),
+		Glass = Color3.fromRGB(23, 23, 23),
+		Trim = Color3.fromRGB(18, 18, 43),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,011A53,001953,001952,001E5A,001B55,011851,01114B,01154E,010640,000845,010C46,00184E,012764,002968,1C1E25,232835,0F1221,060A17,000016,041C4F,003378,011C56,011A52,001A54,001852,00144F,00013C,010E48,000643,013274,00367B,05397D,1E1419,030100,00367D,00367C,01033C,001951,010943,4E5769,143366,003072,06275D,5C94B1,030933,000E47,021346,01092B,03377B,011A51,02021A,A6A8A2,C7C6C7,C5B083|AB3ACADEFGHCGIIJKJHE4AFLADMNDOPQRSTUNNVFAAC3AWXCWYDDVZIaIbaacJJZXCFLCDNdeefNgPghhTijiXIGHXCWAZGHZFVDFGKaaKIakJcbFlDNd3ijeiNgPghhViedmGFFZXWBGnnoDAZbImmaImaacJHMd3ijejjeipOPghhqijNkHAYcGWZTnrnNVbJaaGaabkKZTpiije5jiidgOghhdiiDgkDJJstGonnoNVHKcaKmbWYWPOVie6jeUUpussvuUppugAGJksLKonropDYbcmbFCVuQOPOUijieeUdd4owdUpNNUPgDccvKVZTnnVGKlGGEXFFRhRgOOTiUUddooPPOggPdNNpMDTDJJssBWEZGKIaamXWLFMdRhhggOOMUooPgOOgRhhOoNNDHLDVHkvHXWCAHkIaaIHYMdiiMhhRgOOqoPOghR3hgPopqClEVCXHatXCWBCYmGcbFDpiieeiuhhRgTPgRR3hQPoopDEHbKGHEGaGECCWA3CXFDpiie3jeivhhTP4hQPofwNDTHKImKmIIkHE3CWACCBFVUi6jeieRuThROPofdNDZHLxbIF3XFbHWY3lxACBFDUie6jijipoPPofUNVHuHYYZKcY4EVDVE5VACFViie5jijUdNNMdUNDZGxHHZbJJkmVsy3Ryy6RAFVqPwijiijUdpNMNpNDFGGHZGbI4JkIVv12hACDqhOwUwdpNMNppNXGbHHGK3JIImmKmaXs12hALuDTTqo4NppNDHGHbb3JccmKGGKIImsyP11nAIysXEPnnoppZKmIbbJI3cmGHZbcImGYEvSz!3@!rrz!!zFIassOLqnnqKmFYCmccImGFFGcImGYEECCsyr!3@z3r!!zAYIaaQPTZYImVXCEHkHBYbcImGYEE5Csvz!3@4r!!zBXCbIakuAmcE5CmKckmGCEX7CBsvr!z@zr3z!!zACCXCGI3aF5CXGmGCEXCYY8Csvz11!A4WEAHIGE6WAVE14WIvz11!",
+}
+
+CarTexturesData.car071 = {
+	Id = "car071",
+	CarId = 7,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Sport Sedan (Car 07) [Special]",
+	Category = "cars",
+	CarClass = "Midsize",
+	OriginalPath = "drparking4_texturas/assets/cars/car071.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car071.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car01.obj",
+	HasOwnObj = false,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0109, 1.2224, 4.7205),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(105, 105, 105),
+		Roof = Color3.fromRGB(108, 108, 107),
+		Glass = Color3.fromRGB(24, 24, 24),
+		Trim = Color3.fromRGB(36, 36, 36),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,535353,545454,575757,515151,4A4B4A,4D4C4C,525252,484949,3A3A3A,3E3E3E,4F4F4F,575858,5A5959,626262,343434,221D1D,11121D,030313,6D6D6D,616161,555555,5E5E5E,3C3C3C,454545,3F3F3F,6A6A69,737375,1B1B1B,282828,000000,6C6C6C,6E6E6E,424241,434343,3B3636,474646,4E4E4E,626565,404040,676D6E,686867,515555,3D3D3D,545555,565656,555454,3D3E3E,6D6D6B,545453,535352,535354,BBBABA,A09E8A,4D869D|6ABCBDEFGHII3JKBAABAGDALMNBOOPQRJSNTUKBB4ABB3ACVGHWOWXOOWYWEUAGDAMTZSSaMbcQddYaefKIHDBAABKHDGGMMHghiOhWOIYWXAGLTZ3fSefVbcQddEaeeYJjHkUABHlaNMMkgIYmOWYOOWgFVZ3f4SefNPcbRdDaSNOhEjWHADknanTVkJIIHOIXihFHoff7SfflbPQddlffpiiEJJcYFpnanTVUgWOgmXABBqPHae4SfSeZooOccPOSoojPHXJOckjLnanlTMjIJjDAMYbbcPZfSfS4ZoNMTfZeZNNniiEqWPmCkHlnrjhMkjsBGKPdRbPPJaZoZZlUXOcbQgeVTlVsFtuYccAArkEjqOOYsADGVZQdRQbcPBvoGOQPbbQddceTTUKDLskOcEUGAUFOIiOWKGVZfaCddRbPbkLcbbdQ3dPjNlLDBUsAUFOhs4AGYEJHDMoffSeaIddQQjjQQR3dbJVeZMDFHhjKsHOEsG5AGBGLlff4Seacddgg3dRPYVffTMCkXWJhmWqIkUG6ABDCef6SefSQOjdRcHTSZTAEEGwXqK3BDhKBD4G3ADCef7SfefNNOFoffNMEjKxGFXqGC3L3M6LAAGCffe4SfSeZo3TffNBHFyKkFhYJimMIbP9bPAGCBWffSSfSeolTTNoTUEXHKKHhW4qIIMc12dAAMkdcfeeZlNTTloVkjHFkEgJqqWWqYmJOCO12dUFhVKmxo3TNolVLKFFjg4qWJmhhYIImOQuM3LCCMMsULBqbOCCEfa3lHmJJjhqIWqWJgjXgWImHDUQRaz3!z@@4zDWOcOOkLllMmgKGGJWqWJhjjgWImEGUUAxQQaz!vv!3@zz!BDqIOcOkDAWgCBAUkiXHjmIIgEGUU5AQQaz3!4@zz!ABAjWIiXBgJs4ABJqIIgEAUU8AQQazz!!@!!4z3AUAHWOiIDB4AUHmFAUU11AcQa11z3AGAUBEIjU6ABsU14AcQa11z",
+}
+
+CarTexturesData.car080 = {
+	Id = "car080",
+	CarId = 8,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Muscle Cruiser (Car 08) [Common]",
+	Category = "cars",
+	CarClass = "Large",
+	OriginalPath = "drparking4_texturas/assets/cars/car080.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car080.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car08.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0436, 1.2787, 4.8618),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(118, 109, 76),
+		Roof = Color3.fromRGB(171, 156, 116),
+		Glass = Color3.fromRGB(12, 12, 13),
+		Trim = Color3.fromRGB(41, 38, 26),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,776D4D,776E4E,7C7151,68614A,514C3A,292B2A,121415,20211F,6F6547,000000,010101,7A7050,756C4C,746A4B,7F7554,413E31,323330,93865F,B6A271,AB9C73,A1946D,786D4D,776E4D,161A1D,040505,9A8E68,79704E,897D5C,766D4D,62593B,0C0C0D,72694A,796E4F,5F5637,5D5237,A99F7F,796F4C,786D4B,968B69,615D4F,000002,70694E,55585D,5B6275,99937C,B0AA91,777E82,469EC8,AB9866,C7C4BA,A59B7F,756F56,AD9D6E,7A6C4D|6ABCDEFGHIEJK5JKJGLMNAODPPQFRS3TUIIAMAVAA5WVQGGXFFXQ5K4JGMCRUTQXGYJIS3TZIIabVcVA3WBIdFF4QXQ7JYYHZ3TSPXXeKDS3TRIfbUUMgAWWBfhdQF3QXFE5GEBiPU4TSdXXeKDS3TbfAUjbcgAWWBIhdEHQXHELgLCLaBOPee5TSCeXeJOSTTURIRUO3fABakcdidEXPlO3cMLCRTeJKLS5TEHGHZ3UZbbmMfIdIAfIMBBRROfOBMWWMOibSSdJJdS3TZmUURmZmZZOOmIiPPHHNdhIacTSbMc3WMOdeQSTUQCSTbnPFHHiZmmZRLcOIFK4JgIhdaMUTCM3WaOEGHXDSTSSbPFXGeoJPmmROfMIdiYJ4KgfddAMUTgckWNNQYGXHHZSREXoXGYYFCZ3bOLlhdE4KJJAgdhfMUUMBMNRpJeeGXXPRFXXYYKFgTLdOZbOCIidQ6JABfhdMUmfNOUTSPJeeXGEQGXYJHcUZbAfZOflklIIPGGeeYYAWBfdNbNLm5TGYeYPEeeoHpZZbBMccbp3qrrqqnn4qAWWBBNNb6TSbKJFBYoXDRCOBMccaAfprstsUusvvsturAWWMkOU8TSDFbHGdZUCDfNWaCldhprttwRst3vxtrAcBOpqy11TLiZUbcWaMMCMdhihDrxt3wvvtvxtrMCIczqm!7TUUmZUbMMccgCIdiihdIprxxSSR4vxtrOdHHRUmy5T3UmbbMMcWaCNdiihdIMapr11urdeYGQmyyUTTUUmRbOfMcWaLfdiihdIcaWlpr3tyttuutturHJKGeEZstUZbOCAfcfMLLfdiihdIAa3WkpuxxSwtx3vxxrfHJKPHIssOfO3mb@@MfdiihdIWa5WkprxxSw!xvxvxtrLCFJhdhClIRZbgLCgfdiihdIBg7WkpuxxSSw4vxxrMBLE4dgCbMNWcWIiiddfBB9WkprtxtyuvuvtxsrAAVOf3dfgNVg3Vgddfgg11Vlz13r",
+}
+
+CarTexturesData.car081 = {
+	Id = "car081",
+	CarId = 8,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Muscle Cruiser (Car 08) [Special]",
+	Category = "cars",
+	CarClass = "Large",
+	OriginalPath = "drparking4_texturas/assets/cars/car081.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car081.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car08.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0436, 1.2787, 4.8618),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(70, 0, 0),
+		Roof = Color3.fromRGB(107, 0, 0),
+		Glass = Color3.fromRGB(12, 12, 12),
+		Trim = Color3.fromRGB(24, 18, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,460000,470000,480202,3F0202,300405,220303,130D0F,1B171A,450303,2F0101,000000,010000,070202,480000,450000,440000,4C0000,320B0B,5A0000,720000,6A0000,6C0000,6D0000,620101,3E0000,420000,450101,470001,27252E,450001,680000,030808,610000,510101,340000,000001,170000,130909,580101,6A0101,320101,380202,552A30,4C0202,500A0D,460001,6C5E6C,4D4C5F,476D8F,9AA0A3,BBA56F,4FA3CB,818986,C7C6C0|6ABCDEFGHIJKL5KLKMNOPBQIRRFFSTUVWXYZBOa7AbaFGH3cGF5L4KMdQSeURHGffaTUVWgYZChAO5ABDiG5cHFj6KLMkgU3WRHHlfZTUVWmYZhenI4ABZoiF5cFo5kobpJeWVUUTDHHlfPTUVWhYaXqqIb3ABYJiJ3cGo5NbbrJMMU3VUTrHHlfhTUWXqsSqqYZZABNBtpJoEGJOr3AONrSnMKKrTUVVWVpFlkXeXemunSAYYiYOZYdBAmmrPQbOAAOQihTTDjjDTWWegSeXSgX3ghSmDoFFkkZoJYBOeThPO3AOQDlFWWXFrTUmIRRllp4gSNBrpkL4KNpJpNOXVQO3ABQE3HITUTThR3HGffFggSQadYoJLKK3LBZoiOOXUB3APaFfG3HgTSRGfHGffFrgmhmhNaoiJLL4KABpJZOXeOBPPSbfflGHHRSRHHMffFrerDrXmhrDJpF6jABZopOXSZPrXWTFfflGHpRHGfjkCXghaPXhZPAZYpF4MLLAABZpamPNSWWUWekflfERGlflIgghbOOahI3qvv8q3ABbPPmUW3VUTmffFrfflDSrhBOOANCZsw3xyxxzzxx!w3AOPsnWWU4VUTZFmllDggrDPOANCaposuxxyy!x3z@xvAOBrsvun3WVVUVUWWrpgghaABOarap3JRuxx3yxzxz@xvOQDIqvqen4eUneXSgghaOOANNDpJJoiYsu@@yy!4z@xvQpkkmnsqeneVUeXXgmhAOOANCPpJJoiYaBsu4!w6!up3MFsuugnneXgmhraOOANCZpJJoiYtNaOsu10x!ukKLMMRsqxeghQQAZPZtNCZpJJopYANAAaAsu@@yyx@3z@@vakKKFksqurPr3SmrhaZiJJoiYBN4AaAsu@@3y@z@z@xvNNkj3oCZZmXhBNQCZoJJoiYBB6AaAsu@@3y4z@@vOBNJ3opCQhAPAOAYJJopZBB8AaAsu3xy!zxzx@xu3AQZiooPBP5ABppZBB10AaOsuwvww5uvuu",
+}
+
+CarTexturesData.car090 = {
+	Id = "car090",
+	CarId = 9,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Micro Van (Car 09) [Common]",
+	Category = "cars",
+	CarClass = "Compact",
+	OriginalPath = "drparking4_texturas/assets/cars/car090.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car090.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car09.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0784, 1.6906, 4.1285),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(0, 155, 203),
+		Roof = Color3.fromRGB(0, 153, 201),
+		Glass = Color3.fromRGB(37, 38, 42),
+		Trim = Color3.fromRGB(18, 54, 71),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,000001,020109,090711,17151C,201F27,0E0C16,050109,A6BEC3,FBFCFB,EDEDEC,EAE7E4,E0E4E5,040613,00010D,030013,313138,4B4B4E,F4F3F1,028FC4,526E7C,163045,051225,021F37,05172E,D0CBBB,07466F,06375E,075685,0E1E32,0D1427,050C1B,02538B,016CB1,017ABB,0070B7,58A7C3,254B68,015B99,062E4E,026FAD,0163A8,046FA9,014A82,0198CB,019BCD,009DCE,01ACD7,0064AA,01A4D1,0069AF,019FCE,0168AD,0068AD,040214|AAB3CD6EFCB6AGAHI5J6KLKLHGM3NONAAGCDDP5QPDC9AHIRRJJKK7LST5DFNABAACFDFFDUVMVW3X3WPQQYI3RJJKK4LKHZabcFdFF3NB3EPPFeZTYTfghihShH4I3RJJKK4LJjkUXlWA5NEDDEFPQdmYYPAVZgnbkT4I3RJJK4LKKjbeXolaMAONCDQTPHDPEbPBWmMGUVXkkH3I3R3J3RLLjZpallqfqWBBCEPQTQPPDQEmhipbSWeUkT5IRRJLHHjTkrbVhifqfqfqBCPTQ3TDeaEUnSstuhOXkkHIIJLHjTkkamWVarbgnlqfXevNADTP3QGelEESwsrSuZOmkjHjphtqcWXeeVXmnhxxvlmGqgNBAEPTQNAaSbSwtytrswXebpamdbubNXWabohSShzzkUGag!4AG3AXSsww4ysSupepW@eVbSpfnhSrsrSlzgTPGWovg4WXXWaSwss5ysrruylmZlninSrsrShizxqqileekTTk5ihtsuttyyttyw3uwrSrSSryrrhigziSrthovaGaTJYXz!olZaSSwwssyw4uwwyrwtrrhblvv!!iSSplovladqTJHWxiffamZrSuwwuuwwyt3wrShxxfqovxxvovlEEdaffofTYYWgZCZfmZnh3wytsywwrhivv!x!gixo!olfvaDdAmgoifQYQWWDDeqflUaSwrtyyrhgvz!zv4x!vlfaalqDF@Nli!ifQYTWBMEFWqDYTqsyrSi!ihhzxgv!!olqaWVdmqcFMGWi!!iqkjHW@OFECmcTQchhzghyySiololfZmXVdcUUdCCM@Gqi!!iqkjjW3OEEMaFEfivisrhxvolfZWVeeccde@GO@@NAXzx!ziqkjjc3O@EDVaZvovgzov3xlqmFVVeCOO@ONGG@Xmogzx!iqTHHc4OFPFXfqflflxxzziZFee3@ONBG@XmZlgix!xxziqTRYX5OFFBV3fl!3xzgmG@OONBOVmZlgiig!!3zx!iZTJYc8Oeflov!!xxz!lXN@MWafziig!!zz6x!iqPkQX",
+}
+
+CarTexturesData.car091 = {
+	Id = "car091",
+	CarId = 9,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Micro Van (Car 09) [Special]",
+	Category = "cars",
+	CarClass = "Compact",
+	OriginalPath = "drparking4_texturas/assets/cars/car091.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car091.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car09.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0784, 1.6906, 4.1285),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(41, 72, 0),
+		Roof = Color3.fromRGB(40, 69, 1),
+		Glass = Color3.fromRGB(53, 54, 60),
+		Trim = Color3.fromRGB(18, 25, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,000000,020207,07070E,0B0B10,121218,232228,010002,000001,000100,010201,081206,030605,2C2F2D,404B2F,000004,030B04,204109,081C09,121E0C,000B02,010601,000701,000902,153718,011B02,01000B,011806,A1ADA8,001201,022203,002100,002000,001F00,12310A,010200,072402,626E60,001E00,001F01,0F2C10,010B02,2F4214,001901,2C4A00,2B4900,2F5101,284900,010F05,012100,001B01,264908,405620,011505|AABCCDE6FDCBGHIJAIHHG13AHKLG7AJLDEEM5NMFDCGHH4AGO13APQRH6AOGHODDEEDESLCLTUUVWWVIAHH11AIHKMXYU5A3Z3FMMDZaNbMcdeffghRAI12AiASMELjW4AZZFEEFDFNEPkbFAUclmnMXiH8AII3HAhXZLYToJAAZCENkNbEMFRFAUoAHKLDFMKAIAA3IHH3AIPSXhRYoVTTWAODFN3kMMEFEodljhpKBEMXIIAH4AUKSnXXQnCjgTVWPcqOCMkN3kFCKAUjQrstrHCXMKAAiPRSn3XFEDSQjgdqVoLAqZOEkMkNNCLqHUutssQtSOEMXSnXQunEECZBOUvjwlfloLHomZOHFNkNLGTjhursrsuutLZXQXXEhuSOOWTcqj3hldMDJPmfZZOOCZAHLhrt5rsQtQLQCZBLjhdcxjh4QjdxpMJAcqm4PVWoSur3s3rs3utthKRYlljhQQuQhdqxTWeaOAMNkF4egjQQtssr3sr4tQhQhjhQuyQhjlxjhQQhYqVJAkbbCggqYcTQhutssr6truQtuuQhRYxqlljhhj3YTULVNbbCgecovoKQhtr4truu3tyhjmxqRmdwelYqqZBUoTWYcNbbCwvJVcvcjjut4urttuhwxxlgwwefdlqooxvOIAomYwczkkDVBZIW!qEKjturttuhwqxlwdg3flq!TUUT!IAAIqegwcNkkCAAZBiVEbkTytuhdqwhhlwedgxqcoUOUUocUAIAWfggdcMbbCAAOZOiEbkEjhxYhurQjYqccoV3JUWoWi3AIAceggdcMbkC3ABZJiDEYdqjuuhlqqcTUOOJ3UiI3AI3AUl3gdTNbkD4AZZiPPqqlwjqxgwfqoUJiiI8AIUolf3gdTkbbD4AHZOiWVTcTcwwggecII8AIVocYge5gdTNbbC5AOOAJWWoc5gfW7AUocYmeef7gdTkbbD8Aicqxl6gqUAAJVcqmeefggl8gecFMMD",
+}
+
+CarTexturesData.car100 = {
+	Id = "car100",
+	CarId = 10,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Classic Compact (Car 10) [Common]",
+	Category = "cars",
+	CarClass = "Midsize",
+	OriginalPath = "drparking4_texturas/assets/cars/car100.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car100.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car10.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0466, 1.3162, 4.4657),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(153, 0, 0),
+		Roof = Color3.fromRGB(153, 0, 0),
+		Glass = Color3.fromRGB(51, 43, 41),
+		Trim = Color3.fromRGB(53, 18, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,11284A,D9D5D0,ABC1C8,79080A,7F0001,7F0102,7E0001,7D0001,7C0001,820001,8C0001,920101,960000,9A0101,990000,62090A,690101,850000,82A59D,6B6163,9A0000,9B0000,860101,35282E,1E1B24,1B0E0E,060101,4D0101,710101,842D2F,9F0000,030000,580101,380101,7A0001,760101,030303,640101,770001,7D0000,800001,650202,3E0A0B,5F0101,730001,520100,090C15,660001,6D0101,5F0001,530001,890506,6E0001,500100|AABB3C3BAADEF8GHIIJKKLMNO4PQRKRHH5GAABC3STSBAADEF6GIIJKLU3VUVWXXYZaZbcJRH4GAAB4SdSBAADEF3GEIIWLOVV4UOeJXXYZa3fZgJH3GAABBCCBCBBAADEFGHIIRLVV7UOeEXXYZa4fhiH3GAABB4CBBAADEHHJRLVV6U4OejYXYZfkffaQlm3GAAB4SdSBAADnoWPpeO4UOON5eWqqZZaffarQcjIGGAAB3SCTSBAADWDqXqVNUUOOVeMJQPbbgcKRJJdZgicsKKiEAABBCC4BAADtYYXXQeOOVORpq3YukkhLKMdCTscsKWvQEPP8dDqZZYYXXqMVVmqZkYZZakfhLeNRdSwDILi3xmRJiimm3imhakZZYYXYyMbYYZaZkfaboNKHcQQ3DJQ4xsHH5FIzNZfaaZZYYqvqYYZkfkZlLNWwvw!cwwc!4xvmE4GEHGLVeWafauZZbpZYZkkahiNK!jjQ!Qrlwry4xcEE4GEIoMVUMewffaugrZZkkZgKLHvlw!wwggxxt@@gxQGJ6GiROVOUUMewakpr3khcMLWrlwccQQrgiHEl3@wosQI3GHGKMVO4UOejwgkabWNJlvmw!wlgttbQJcwj@gcivxxcoHGoFzOLV3NVOLMQhwMLjxrwcwlgy@@ttbxG!wmcHj4xlHGIRPXeMMVOOLLKLLNWQrvccQry@btt@@bbymdTDJs6xsoGIFggLMzddNOOLFQlQcwrg@@tt@4btgwmTSdnwxlvwsmIGGJRWQcdTSTKWsrgrllg@@3t@3byrwjGos3TmFmiH5GJbbcWJ3Dcwlbb3gb@tt@3bglwmmvmoIc3TjGJKKWWRJHjhaahindD3gh3fbr3b@gvsHJsjjgcJIQ3dQJN4VeKIlw!gbciTP@blh3fbl@rwmGJoGGcsmxcoEQ3xlJMOVVUMGGcvllvxrrttblh3fbEmoJEGHHGEssig!EEs3r!EiJKLVKiGooGijcQvggtQh3fbW3H6GiII!mGEilvvmEGHiHRoHG",
+}
+
+CarTexturesData.car101 = {
+	Id = "car101",
+	CarId = 10,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Classic Compact (Car 10) [Special]",
+	Category = "cars",
+	CarClass = "Midsize",
+	OriginalPath = "drparking4_texturas/assets/cars/car101.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car101.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car10.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0466, 1.3162, 4.4657),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(0, 85, 153),
+		Roof = Color3.fromRGB(0, 84, 153),
+		Glass = Color3.fromRGB(20, 21, 25),
+		Trim = Color3.fromRGB(18, 29, 53),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,19364B,D4CEC8,ABBEC2,1E4E69,104673,00437C,00447C,00447D,014782,014C8C,024F91,015295,005499,043663,01396D,004782,488AB3,A79C75,005094,00559B,00549A,2B242A,181F25,0E0E10,050609,010A13,03264E,013E76,00437F,00589F,030001,002E5E,031731,00447F,024580,014378,01336A,012E65,00457E,023767,111C28,013A74,03569B,3C5F7B,00376B,004374,003D78,00050E,003169,00549B,012459,012A5F,00245B,011F54|AABB3C3BDAEF6G3HGFFIJKL3MAANNOIJPGFH4GAAB3Q3RBDAE8HFFIJS4TUTJVVWXYZabIPF3HGaAB3Q3RBDaEc5HFGJKMTT4UMdIVVWXY3eZfIGHHGgACB3CRBBAgEhHHGFFILTTUM5UMdiVVWXY4egF3HGgACB5CBAgEhHFhIKTT6U4MdjVVWX4eZklbmHGaAB3Q3RBDaEFhPNndM4UMMT3dTdI3oZYeeYNkOpFHGAAB3QCRRBDAEPjAVo4UMTTdLPONaafpJPIcDXfFOpJJFHAABBCC4BDNEaWVAVOdMMdMPNa3WXeegKJLqCrsppKJkOmtt8rIfoXWWVVoSdTbAoYVWXYeegKTqPrRVVPKF3lbhh5ubuugeYX3WAVfLaWVXYXeevaIqKFOkwDVDIO4lbGH4imGJqZeYYX3WanoWWoYeegNKxIsws3Okuu4lkjmG3HhFhKTdJYeYXoXaNWWoYeYgGMJOOpkskllkly3lwbmmGGHHhFILTUMdOeeYYffXXYeZfJKullkOOkz!lz!yyzlsHPHHGGHHFIMTMUUMdOYeNf3egtLKczlOpOkkzzjGml3ypipOFH3GHJLTM4UMdjOfeZaIMcllpOOslz!!@kPpOb@!pjkllbmGGmiJMLTUqqUMKSngOLSpzzspsl!!yy!y@lHswupHb4lkHHFPNAdMLxSSLKJKKqIwzlOpkz!y@!!y3@yuDrEhb6lbmGFiffKLKQr3MKcwlkpkl!yy!!5@yzpprRrFplwkOpuFGG3POOrRRQJIplzlwlzyy!!y4@!lObHIprRruijFFHH3GPaapJPjjbskl@affz@@!y4@!wObjkbmFOrRrpHI3JPIIGbgZZgjFrE!!zg3eaz4@zkbFPpbbzpmFk3DsP5TdJFwppfapjrN@@lg3eal@lOu3mHmppjlpmmszllkILUTxUMmGpswwk3l!y@wg3eacb3m4HmppFzpmmb3lpmFIJSTJFH3mFbpOwzz!kg3eaJ8GH3Fpbmmj3kbmHFFGPiGH",
+}
+
+CarTexturesData.car110 = {
+	Id = "car110",
+	CarId = 11,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Roadster GT (Car 11) [Common]",
+	Category = "cars",
+	CarClass = "Large",
+	OriginalPath = "drparking4_texturas/assets/cars/car110.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car110.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car11.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.1668, 1.1874, 4.8221),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(211, 210, 195),
+		Roof = Color3.fromRGB(212, 210, 195),
+		Glass = Color3.fromRGB(38, 38, 38),
+		Trim = Color3.fromRGB(73, 73, 68),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,B9B8A3,B0B09A,BCBAA6,BBB9A4,BBBAA4,BAB9A3,B6B49F,B4B29D,BAB8A3,BBBAA6,BAB9A4,BDBCA8,C8C7B2,CFCCBD,D0CEBF,E1DFD2,6E6C68,4D4B48,3B3B38,323130,BFBEAB,DBD9CB,D3D0C1,D4D1C2,C2C0AC,ABA991,AFAD95,BCBBA7,B7B5A1,757C81,BBBAA5,CBCABC,586066,272B33,101215,D4D3C5,A4A38C,9A9A87,91907A,888676,A9A793,AEAA8D,221C1C,979575,8E8E6F,BABAA4,BBBAA7,C7C2A8,C8C8C0,CDCECA,030923,C8B175,9BBBC1,619EB3|A4BCD3EFGHIC4JCJDJKILMNOPQRRSTUVWXWNYYL4JA3Zabc4daZGb4eAKLCYfWXXOPghShiQPOXjMUFBbeeJI4aCA3gdHZHb3eKMYcWXj3XOPgTShiQPOXWfMaZHLeJeZkkaLc4lGc3eKAUkSRPO4XOPRTShimPOWVnQBZLFAKJZokBDBZpZkHLeeALMMhqTfjWXXWNjSqhqiHVOjHqQBICZcMCKKIeGZBHHBcbKAMoUPgqqlPOWX3OlgRhqfOfflQZccZamQC3ebGZL3YLALMlSRPkqiRVWMlQQnCXMUUNfOUkBGGaaniRLMMfMcbOONNUMHgTRqlPRRoUnS3TiinfMONfYKcGHBrSiQYLN3OUYMMffbnhqSRRhNfYnTiSRTqhQAWNfYbKcAHksiqlMJCU3YLKFKcMBiqhTSRTRYRThiqihQMVfMGZBcHBZlrRRYYcJCKKFFteeKYNPgihhTSSgRTSqihnMVMLBrsrsrZkrsraYLAeJC5eKDMj3XTiqTTRRhhiSnfVfUecrrkHBr3sZbUKKeeJC4eKLNjXXOVciqqTgiiSlXjMUDcGosZaaAArlGLeK4eJC3eAUOj4XNPniqQiSlXjUAGcBaBkmZZGbbIeLK6eJCeeIYW7XOPSgllVjYJAGZ3akrskcbeeJeE7eJCeFYOjW5XjX3fOjYKcHaaZZlmssmZLeJJee5JKAAuCAMoQWjWjjXXNfNWfKAGB3aZl3srBvYAFIIAF5AUvvFLUMmSQfjXXOffOYHcH4akr3slaAldHwwxxww3NwwodlwHQZMlnOONNffMk3sloZlm3slBJYoyydPMzz!x!@!xPgyhxkSTmvcfPUHYClslaksr3srZEYYUvBhydPzsslx4@PgySwHkRqQaBUaaHksaLLUZssrkYghTThgchydP3zpx@!!@PgySxLHpnSRmZZaZrkUKKeFkZCuMS4iSuhydV3zr5@PgySxJbHakQn4rsHLE3eLLecMR4iScyydPDzz5@wPgyhxJJbDAGk3msrcb4JeeJAMR4iSUddBV3x5Vxxlddx",
+}
+
+CarTexturesData.car111 = {
+	Id = "car111",
+	CarId = 11,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Roadster GT (Car 11) [Special]",
+	Category = "cars",
+	CarClass = "Large",
+	OriginalPath = "drparking4_texturas/assets/cars/car111.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car111.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car11.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.1668, 1.1874, 4.8221),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(36, 36, 36),
+		Roof = Color3.fromRGB(36, 36, 36),
+		Glass = Color3.fromRGB(36, 36, 36),
+		Trim = Color3.fromRGB(18, 18, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,030303,020101,020202,000000,020102,010101,050506,141110,1F1F1F,242424,252525,131313,333333,29292A,181818,232323,1B1B1B,0D0D0D,080808,333A46,444344,0B0B0B,171717,212121,101010,070707,545D6C,797E8A,1D1D1D,262626,222222,242323,191B1C,262525,2D2D30,242422,020201,141518,0E0303,222323,010000,252524,000101,000001,010102,9DA799,252528,D6D1CF,142F69,DFDDDA,D4BC84,3EA6D5,010100,060C28|A3BCBB4DE8BCCFDDGHIJKLMMNOIKJJPQRSC3BAB6DTTUTDF9DFVWXKJPKYMMNWLKPPKWZG4DBB6DabbaDF7DZYcKKJ3PKLMMdWLdePfVADDFDDBB6DgIgY7DAONQJ7PLUMNLWdehgHHDFRADCB16DRcciQIJ3PJKKLMMNRQKfeSjHDVSFDBB12DFDDYeKWNeQKPKJcWLRYLLVXPIQaUDVS3DBB6DZSZGFDDAiURdQINWJeWVSG3DASWcQLXbLGS4DkG3LYDSQQOOGDRiUUelKWIQLRLiUMOYSSLWWLSDDBZDmmDDBAW3QGZYYLLCLdiMUUYIJYVRCUUiKJiJOOYZDDCGGD3mDDBCGSVVA4DZlLXKiMUULYRUMDcJNinOYRA3DFCFDDBo3DBB8DRXdYWPNMUUVRUTcAeMdljMA15DBB7DLKJPeRcPNMOVMdeNNKWYZZ17DBB5DAQd3PKcRINcAcJNNJQRZ20DBBDDCDZIKe3PedlYcARiNXYiQ22DBBDkDAJJePPePJJKRSINILVA24DBBFDpUQKeeJdKJJeIWcYSC3DF4DFqrC11AsrFGAFMtaMcNddJPeIQOLZF29DCDIaUaNcNPPXcWYZ11DCDuaUa11baUabCGDVUbvURcQLRG13DCDMwwbxvyyvx3zvxawwvFYL!DXtxtMAC12D3FCDiw@bxyybtv4zxa@wvBDSLSDDUbWDF11D4FCDiw@bx3ytvzvtzxa@wvBDDCSQS16DF3DsDiwwbx4y5zxawwvB4DR3A!13DF3DsDiw@bx3y5zvxa@wvA3BCDF5D12B3DCDTbbt11vtbbv",
+}
+
+CarTexturesData.car120 = {
+	Id = "car120",
+	CarId = 12,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Eco Hatch (Car 12) [Common]",
+	Category = "cars",
+	CarClass = "Compact",
+	OriginalPath = "drparking4_texturas/assets/cars/car120.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car120.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car12.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(1.9302, 1.2657, 4.0669),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(246, 196, 1),
+		Roof = Color3.fromRGB(246, 196, 1),
+		Glass = Color3.fromRGB(25, 25, 25),
+		Trim = Color3.fromRGB(86, 68, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,262523,393834,E89F03,EFAF01,EDAB00,EEAC00,F7B501,F6BD01,F5C301,F6C401,A8790B,FABD00,202124,1B1814,EAA901,EEAC01,F6C501,73510C,433D2B,141517,827036,584E26,745F29,EDA201,000009,0E0E0E,0B0A09,86B2A8,EDAC01,FBC501,362C1F,D7AC27,E7C454,FECD00,F5C402,C98B06,FCC901,573D0D,FDD336,F6A602,F6C402,EFC125,C46406,000000,322312,F7BF0D,F0AC00,D97804,E89101,050303,E58A01,F6C400,FAF8EF,FFFFFE|5A7B5ACDE4F3EDDGHHIJJIIHCKGLE5F4A7BAM3NMKGOFEEPDGHI4Q3JIIGRMSKDE4FMNTM6BANBUVBTWLOEDHI3Q8JIIXSBTYKLO3FZZaZA3BAMMTB3bMRGcH3Q11JIdKAeZZfgFPEF4ZM3AMNMTB3bMKhHQ10J3IJidRBAYKLffEGc4ZM4AMMNABAMeKjkI6JIIiQ3kIHCAMZKdOfOXjGN3ZT3N3MAMTeRWSSHQiJJIIJkhdDCjKCGCRlOm3fnKaR3MATa4ZAMeVReABBKhIIokhIjKRSeAYlLGdhjUfpnqarrRSMMT4aYMVlsYTABBSHQhIjRsBAMAMZZjHHkjsKtuvZrrlGPjRSMNssljDaYaTMABBWhKVBMYAANaaljkHHDCCLEwsrrlGOFGLDCCOHhkhRYxZNAASRR4AxaYaljhkDOFDDGDwvZrsODFFEOEDHQQIIQHNxaTTlReMANZYrsROhdDEOOXyywyyvaajGO3FEDIQiIJJIhKYxYRRTTZYYsRjIhLDEEDOvq3vqvlsjGOOFFEGQQ6JIhlaKR3YNRjIhLDEOXCwCvqC3LGqsndGLLFEujHo4JooikDjsYsRjHhdDCOCCw4yqwO4Rl6RcugUChHiiozIHDGCKOkhdGEOXww3y3wyvuC11rnjUssChdLHGptHHdhHDEOXCw3ywnny3KqXCa10xvslGKsWfgg!bpzHGECOCw3ywnCKRleSWqqwCx10rRNasCGWBbbUULOCwEO4ywnjRsMBWqvyCCtfM10NvlNNZRujUVROyqq3vyywXjlASWqywp17!uylZsMWn3uvvyCECvvwjWSWqvvyCCp4@!fUb!3b5@FDwRllRyXwvqCDDFDXvqUqvynl3axU4@!gfg!b@b!4@FcDXvqllRqvCDEEFEDyvyXEcLl4rU4@!gmU4b5@FFEDcnXvRlvGE5FPPDDFOGlrxxrU5@!g4b!5@",
+}
+
+CarTexturesData.car121 = {
+	Id = "car121",
+	CarId = 12,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Eco Hatch (Car 12) [Special]",
+	Category = "cars",
+	CarClass = "Compact",
+	OriginalPath = "drparking4_texturas/assets/cars/car121.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car121.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car12.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(1.9302, 1.2657, 4.0669),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(171, 0, 0),
+		Roof = Color3.fromRGB(171, 0, 0),
+		Glass = Color3.fromRGB(38, 38, 36),
+		Trim = Color3.fromRGB(59, 18, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,282626,1F2222,2B2C2A,3E3F3F,820404,900000,8C0000,8D0000,8B0000,8A0000,960101,970000,A20000,A60101,AB0000,AC0001,800101,710506,303734,1B1C1B,191413,AE0000,AC0000,430303,491919,665555,880101,A80000,760000,2C1E1D,030808,5E0404,0C0A0A,0D1111,65A9C6,510303,8D0101,070000,801919,AF0201,940505,B30000,860000,680000,6E302F,050101,3F0001,370303,000000,190506,700101,D7CAA3,F3F4F4,FFFEFC|3ABC6DC5AEFG4HIJIFKLMNOPPOPMQRKKI5H4AS5DSATUUTBRFIGIJHFLMOP3V3WOOGXSYRFI3GHTTUB6DATDZZDTYKaJFMb4V7WOPcdSTefLaGGH3ghCSSCCBBUZ3iSjFkM3VWO9WOPfCChlmZJkIH3hgTA3BTBUZ3iSfbbVWO8W3OWnNYSBecMmmJFHgghgB4A3TASCCdmonO6WOOPnVVpbNqTChrbasocrFUhghU4TBBABBdYYDCbP3WOOWppWMFERaLqXXFsmsmqXtu3BAU4ghABAYYdSDDRpbOPppbkRYdAAhvLLbpoZsmqjlwwYdAABgg3hBYXxhTASDCNnpbafvCSCCBhgRMbOLjroGflwwvKGRYdT3UYoMtegUBCDDfpRYSBeABUhevanMMHqQLHyxwwvKIGFKFEEkM3pfeegTASSfY3CTthegvQpPLaGFFLFyflwxaFHGIJJFMVVOOVNxeehTYfdCBThewxfKpOKJaIQrfcrfXtlQFIHGGJKbVWOWWbpyetejfhTheexjQOpMFIIFajuXjXuXxlrFqIHGJLVVO5WOpugrXheexXQNpMFGaQcycfuc3LIXxqMKLLHJJmNP4WPnPVMQxevjaNnbFcqQcy4ruykXuuXvvX4ukJZZIpbPnnVbMLLIfKVpNLGqQyy4ryyfXJQ11wqRZddopWNMKmoMNVpMKGaQcy3ryccyfsYuQql10tjgvFfdfmZ3znbMLGqqcy3ryQcfXvdCDXuyq11wvghxQFYZiiZsLacyaa4ryQyXUBCCYYfmmomT5U5hjxxggjGEsYYaruuXXf3rcrvACCYjrm6!z3!z6!kfxlxTYQaGJjurcJQXjyRYCCYjjyQQm4@zZZz!3i5@HFrvxxvryyXuQKFGFQuYSYjrQv3lts4@!3z!i!i!4@GGFyjvxxvXXQFJIGJFrXrQIFLv4ws4@3zZ4i5@HHGFkqcjvxjFI5HIkKFHJKvwttws5@zz4i!5@",
+}
+
+CarTexturesData.car130 = {
+	Id = "car130",
+	CarId = 13,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Crossover Sport (Car 13) [Common]",
+	Category = "cars",
+	CarClass = "Midsize",
+	OriginalPath = "drparking4_texturas/assets/cars/car130.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car130.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car13.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0564, 1.2921, 4.4630),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(74, 134, 185),
+		Roof = Color3.fromRGB(74, 135, 185),
+		Glass = Color3.fromRGB(39, 41, 37),
+		Trim = Color3.fromRGB(25, 46, 64),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,3274AE,1B3750,131A1E,050608,000304,100B0B,121315,2C699F,3678B2,3374AD,3375AF,3878B1,4380B3,397EB9,222525,325D81,266AA5,3376B0,3375AE,3477B2,000000,4585BA,4B87B9,4B87BA,4B86B7,102435,396A93,2F71AA,125793,1D619E,3176B2,010203,3173AD,4C89BC,1A5B94,2D4C67,2C70AA,22649F,3474AD,245D8F,053462,1C5F9A,2D3841,4A769A,134B7D,043F76,5E97B5,4B87B8,5385AE,034986,1989CB,29A0D9,F3E7D3,B1D7E2|ABCDEFGGDDHIJ14KAK3LMMNBOCCPNQRKKSKKTC3UFGFUDHTJ11KAATMVWX3YNZGUUabcdSSeRANBUfUFGFUZNgK3R5K3ALMWh3WYMYLZGfGMdcdMbieINjUEfFGFUBNNklkgKKJAAILVXX6WMYbOCUBVccmMnDoQNn3UGCfUnTjolipQSeNM3X7WhYXPOGEmqndMkZUUZIHDDZnHjCnqjOiQdiIPjh8W3YMmCfUjrOkmIsUfDPTHqq3BHjqrrjBtZZBOOahY3WYYXVMLIHsPauraLmdGUUBNAMhXWhhbO3rqGZZGFOOqhYWvXVLajqZGPVhhrrLJdBffCIJAMWvvhLejqqGZjZfUFCOOahYVajqOGfUOMMLgkgKdQZGOnIAAMhXhMebBUCaP4UfGOOqMajOUGDUGPhLbTIJmkpdCUjNgKAMWMLePDDPhhMGffUUDGOjjOOFUUFjwVbbSQcxxcicGZNA4KbekBDBMhvYhaUf3UFjBGFUUGjwhI3bixxc3xtobS3gKAbsGZmhhYWWYhj3UfjB3UOPwhNbkkRixdT3NQxQ5NSTHZPhhYv4WYhjDfPBFqjrVNmQQl3pxcP12jKSTNhMv7WYhmHmPMVVNkll3plkixQC12UJIlqrVYWvv3WYVMVNmNegbQldpilbbpxtlZf4Ef3E3fIlZFFjMVhhVVMMLLSgbJbQd3plHkpxxtocZ12UktCBOOr3aLLIIbkAIbld3plkQcx4txlH6nPP4nxcsZsgn3jHIbc3xpdidplQQc4txikyyz9!zyzQxxPBclSlpllxxcpcxcplQlstotxcQRILyyz!@u3@3!zyzIkxxnisrndpxxkIITpxxcstotclAIIKAmyyu!z@z@4!zyzATRctxijZcxxgIAATbttotslgIIKAAKKmyyu@z@z!uu!!zyz3KIQxtxsxtpLg3KRcspkIIRAA5Kmyyz!@z@!@3!zyz3KAIglcxttQIA4KbTITAA8Kmyyz9!zyz",
+}
+
+CarTexturesData.car131 = {
+	Id = "car131",
+	CarId = 13,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Crossover Sport (Car 13) [Special]",
+	Category = "cars",
+	CarClass = "Midsize",
+	OriginalPath = "drparking4_texturas/assets/cars/car131.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car131.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car13.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0564, 1.2921, 4.4630),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(154, 0, 1),
+		Roof = Color3.fromRGB(155, 0, 1),
+		Glass = Color3.fromRGB(39, 41, 37),
+		Trim = Color3.fromRGB(53, 18, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,8B0000,490101,2D0202,080101,090A09,1A1010,770101,900000,8C0000,8E0000,920000,940000,960101,960000,360C0C,1F221E,6D0101,7F0101,000000,010000,990001,9B0001,9C0001,7A0001,890101,8C0001,300001,8A0000,530101,7F0001,860101,000001,010101,730001,9E0102,630101,640000,4C2424,4E474B,780A0A,601515,A00001,9C0002,5B0000,600708,2D80AD,8E0101,950E0E,5C0101,870000,29A2DC,72BCD9,EEEEF0,EBD2A1|ABCDDEFFDDGHA14IAIJKKLMNOPCCQLR6IHDSTSEFESDRHA11IAAJLUVWVMULOPSSXYQGZZJIANaTTSEFESCLbI3J6IAAHNV4WVMMKOPTDKGQGLYQJHNc3TEFETBMLYdebIIAbAJKU8WMUdPFSaVQQeNQDaRLQfSSFFgSGLcBdhGdIHLNV9WiMVjPFDekQGMeCSSCHXDDCGXcCQlmPheXQKnop8WqUMLeDEgrnBeYKcgTDQHXOO3BRsmmtmBcaCOPPnpU3W3VULuHejkhvtoJZGDSgBUAMiqVWpePt3mDaaDFPPlpq4WHnoOFEnppivvHYdBggCKIANWVWiHHcmmFawCTSE3PnpVURclPPEgPvLHbxbIGRCFPhKAAL3WKIYaSCXQgSSTgF3PHRlPgFDSFovKeJHYYeGGCScNbIALVLJHkDDjipKDTTSSEPPosPPFSSEovqxeZdQjkQhQDaLA4IxJeaDBMpWUpGg4TEsBPESgFoviHeeYhrwQkjwcaeI3bIAbwDCepiUWWUpcfSSgjaESgFovpLxeeJhwXKUNNeweUL3NAHdCQppUV4WUpcDgjBEOonvUJeRXGhGwQk4cr7cIZJvvLq7WVpeRvovvVLxRGhGhXehreC11fSAHXlmvUiq3W3ULUNZNJAxRXGhhXeeGjcRCgD10gHXOEElMVppUNLLKHIbeZYdX3GXRdhjrcBkC12SYcFlPPmnnRuHJHbeAHeX4GXRRQwccBcs11n3sjkrCovnlmmRHYhjwkGGhGGXdRQrBBcwhbtyz9!ytyRwjjBknvnGXXkwQGkrQhXdGjcBBrQduuLtyz!4z3@!3yHxwrQQotoXGjkeJHJGwkQwBBrQdAHJIYKtyz!yzyz3@!3yAJJQcwQlCQkkYHAAJYccBckXbHHIAAIZKtyz!yzy!3@!3y3IHdjcwjwrGHb4IkwGxHHJAA4IZKtyz!zyz!3@!3y3IAHbXQwrrRJA4IxJHJAA7IZKtyz9!3y",
+}
+
+CarTexturesData.car140 = {
+	Id = "car140",
+	CarId = 14,
+	SkinIndex = 0,
+	SkinLabel = "Common",
+	Name = "Flagship Sedan (Car 14) [Common]",
+	Category = "cars",
+	CarClass = "Large",
+	OriginalPath = "drparking4_texturas/assets/cars/car140.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car140.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car14.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0610, 1.2694, 4.8130),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.08,
+	Palette = {
+		Body = Color3.fromRGB(103, 0, 0),
+		Roof = Color3.fromRGB(147, 0, 0),
+		Glass = Color3.fromRGB(54, 56, 53),
+		Trim = Color3.fromRGB(36, 18, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,680000,6B0000,270101,080101,3F0101,4C0C10,530000,630000,690000,660000,6A0000,710000,6E0101,730101,7A0101,8A0000,840101,3B2927,920101,6B0606,680101,670000,6E0000,000001,490101,635D6A,640101,970000,920000,7F0000,1E2831,000000,000101,770000,5E1010,692425,5D0000,5C0101,8F9395,440101,270000,0C070A,020000,7F0606,5F0505,550101,360102,141B28,480000,350708,680001,090F2C,D9CCB1,80B7CD|ABCDDE5FGHI6AIAJJKLMBNOPQRRCDDNSPOHTIU3AVWCXDY5ZHKKI4AIJBLLaYCEbcbdeeDfghbbNijGHBVAAIklaIZmZmZIalHIAIVJNanCDXfoccbdRepqDQbSHjFGrsK3AW3BjZjjTLUYtIAaKOnD3fqfXQcbORRpfDSbQsjniinlBKUlaktHOdQdhLGtJIOPbDfqqffDuPcbOvvpqCScMGlijnnutlDqttYlQQdONLlHNrjRblffgClPbbPPOAKW4NaiijYnuuEYfqwkYtOhNNhWWhs3eNSCuObbQTiiTMWMNNLNdhZZYnuunUEffCkGHLNhLkGtogvRRFbSbPsRRevppxiUBNd3QiinuunyKEDCCHKWOhJYGEXfqpvRRObiRpevDfgpRiN4QhlwGEunIIVAKWLBkGGuCtdPD3qpeesFevqffpxiTQOdQhhLGYYEEnIIVAAVAaCDqgCkScbBgqfDvFxvDfppFirQhNOBYYwnYwEuwIIV3AVBtgfDYPb3cbnfqgxxgfpxFTQQONULaElKIHnuunAI6AVLuCMb6cbCgEigpRirdhOMIJkLntWVAKkEwVIV7AJMQb7cbPtieFTdQhMaVHlGGtEkI3AKaUI8AUrPb6cbSPOTiTQQOLKAl5GnulK11UVVUJjZj3cSSbSQOLijOdNBAJktGYGYE3utWJ9HABBUTZeRjSScPQdNNOQOUUAHk4GE3uEGFzzZ!7m!ZzvJiRvvejPjrONdOhdNkll3GwE3uYlJLFzzm!!m!!3@!ZzztEtjRRiZmjOOlnYYBawGwE3untJBBaWFzzm!!mm!3@!ZzzYCuwFliZjOOnGVBHnYE3uEGHKBIIHBKFzzm3!m4@!ZzzWGCCEFtYtUElWAVBkuuEYkIBIAVIHJMJFzzm3!4@!!ZzeVWUECxjjYnwWJ3AIGtABKAVAAIJkNHKFzzm!m@m3!m!ZzzAVIWtoCxuuGBV4ABBAVV4AVkLLlWG15fAIAVWKYuuEaI13AIVkUHkWGffgq7gqgfX",
+}
+
+CarTexturesData.car141 = {
+	Id = "car141",
+	CarId = 14,
+	SkinIndex = 1,
+	SkinLabel = "Special",
+	Name = "Flagship Sedan (Car 14) [Special]",
+	Category = "cars",
+	CarClass = "Large",
+	OriginalPath = "drparking4_texturas/assets/cars/car141.jpg",
+	EnhancedPath = "textures_enhanced/assets/cars/car141.jpg",
+	ObjPath = "drparking4_texturas/assets/cars/car14.obj",
+	HasOwnObj = true,
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0610, 1.2694, 4.8130),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	Reflectance = 0.22,
+	Palette = {
+		Body = Color3.fromRGB(21, 21, 21),
+		Roof = Color3.fromRGB(21, 21, 20),
+		Glass = Color3.fromRGB(21, 21, 21),
+		Trim = Color3.fromRGB(18, 18, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,040404,020202,010101,141414,151616,141516,161718,0F0F0F,030303,070708,0C0C0C,121212,101010,212221,090909,151515,131313,0D0D0D,0A0A0A,000000,3A3B3B,586A7B,161616,171717,272826,060703,060606,2E2F2C,010202,97948E,080808,050505,010102,1E1E1D,010000,161515,0B0505,0B0B0B,040304,630101,150B0C,110101,030202,010100,000001,020201,020203,031340,010A28,000101,E3E4DF,D2B67B,86B7CB|AB4CDEFGHCC10BCCBBIJKLMNNOIILPQRCS4BAB4TCU3VUTC9TCIAICJWWXHYYZTTLWXaMb4TBB3TcTUdVdUTB7TIJefBTTAPPWMYYeTBQWWTbLTXOTBB3TgTYVUbKTC5TBSOB6TQPWMbbOTIDGRfYTXhCTBB6TiTCf6TaLXI5TCJPXXMhheTfEjkTTHNTCTBB5TISSOA4TBMbNQR3TaHDDMRlemIfeeJJnoRhI3TBB5TCfB5TAMYUUQDAOQPHKMMRSBTCIIBAJpVUITCTTBB10TCTIfZXYUNLXDRMNbbhSJLDTBfJOOaER5TBB11TB3TShbbDHQYMYXATaQXQaeOeOJq7TBB9TCRDBTTrMYbRXbNiTTKXXMSfOeJJATTkk5TBB8TJQWWM3TZXMKXATOQPLSfKKJaB5Tr6TBB6TBHWWPPXS3TaOiTlXQKJaaATCJ14TBBTTCTTeDW5PWaTBPOHXLSlJfB3TIB14TBB3TAHWW6PWWBXYLHJflSC21TBBTBXlX6PWPDRMDlaafI10TsTCBttcBccBBCTuATNVNRWP3WDLHfXNAfAC10Ti15TrIJVYbbMXMHMHSAfSBI12TsTJvwV9dVwvCLUhNbNANXKaf3eI12TixpKvvdyzzdy3!yVvvBTaYbhlVdYBefCTBaC10TiTonMvvdyzzdy3!yVvvB3TMThVbTOC15TiTpnnRvvdy3z4!yVvvBT3CLBItAC15TiTpnnowvvdyyz4!yyVvvB3TAXUNTC15TiTp3npJvvVdd!5d!VvvB5Tae18Tp4ni16TA4BITTCT14BqBp4nBBTTCt7CtCTs",
+}
+
+return CarTexturesData]=====])
+	upsert(texturesFolder, "ModuleScript", "EnvironmentTexturesData", [=====[
+-- EnvironmentTexturesData.lua
+-- 7 texturas de carros de cenario (ecars) + 14 texturas de ambiente (envi),
+-- aprimoradas via GIMP GEGL (inclui PBR packed maps) e mapeadas no Blender 5.3.
+
+local EnvironmentTexturesData = {
+	ECars = {},
+	Envi = {},
+}
+
+EnvironmentTexturesData.ECars.ecar00 = {
+	Id = "ecar00",
+	ECarId = 0,
+	Name = "Pink City Wagon (ECar 00)",
+	Category = "ecars",
+	OriginalPath = "drparking4_texturas/assets/ecars/ecar00.jpg",
+	EnhancedPath = "textures_enhanced/assets/ecars/ecar00.jpg",
+	ObjPath = "drparking4_texturas/assets/ecars/ecar00.obj",
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(1.7978, 1.6456, 3.4128),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.06,
+	Palette = {
+		Body = Color3.fromRGB(242, 89, 145),
+		Roof = Color3.fromRGB(253, 253, 253),
+		Glass = Color3.fromRGB(56, 54, 51),
+		Trim = Color3.fromRGB(84, 31, 50),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,000000,020101,C84C79,FC5C96,F05990,F25A91,F35C93,F25991,F25790,F3548D,F24E8A,F984B1,FEFDFD,FFFEFE,FFFFFF,F8FAFA,1A1916,0D0F0B,F06196,F9699E,FA78A9,FB8FB9,FAA7C8,F3EDEE,6B6567,524957,040504,090606,E84F85,FDFEFE,758893,944967,FE5F9A,EF558C,D9C8B9,47383C,14090C,5E2136,F65993,3A2229,1D0F13,391421,C23966,CB89A1,000100,040203,9EB5BA,DB5F8D,F7417C,E93E75,883654,EF588F,892946,1B2C3A|AAB7ACDE5F7GFHIJJ3KJIEFGKLM3NOPOO4AQR3ABCDEFIIJJ7KJFSTUUVLUSDEGKWOMOOPMXXBAQYQYZaAbcDJJGSTULV4W3XPM3OPdefgGhTMNPXOiQYBBj3YQQAkcKTXXPN13ONPPijRlmgKWdPPeaAYAanj3YZAoKLXP3ONN5M5NdNPdYQbApCmGXijABQiBAZYZZjjApCYXXPN7Odd3M4OinRABAqDKrRAaAiOBBRnZYnRAojQedX3Odd3M6OXXWUnsBtqThVMYAaeOPttAbQQbAbbQnniMPMd5OPXiueZjfTTvbtCUSwLPXjBiOM7AotBaQnjXOOMXiueYZj3QRRovUUffThwxcXPXQQPM7ySyABaQQYueYjnQQA3Ra4AfLUTT5xVPdiAYO5gDUVVyABaQnRQ4Ra4ABonyfTSgvr3xwwxLXOuAu4zhT4VfAAnQbb4ABojyfvUUgDEcIE!!KwqlpCUXOefFHFJT5VWfR@3Atplfv3UTgm3hzvmgxqqlpjZZJTXWmFHIS8VvCfyfvULUJhvhhzHHFGDcxq!lnYYjaACDhK3FhU6VLU4LUTG3hHcE4Hmx!pk3AZjAAoycGzEEFIgTTL3VLLUUSz3hEHFFmzzmGGEJl3ABttAApyzg5DEDyyvSVVLLTSHhhmF5HGEzJc3xotbB3ApfFgmz5YEDfnQfiiTShhzzc3HFGGIKcxx3wxo3AknyFg4zuu3emcfvfCVWShm3gEEGEhcxx3wxq!loolyCHgg5DgX3uiDCZYYCCGTDxq!!yc5wxq!poon!qz!llnpp4nplXueerg!bQ@YefC!k3As!wq!lpkonyCz3gmk10AkXueeuml@QRbQjoAAB4AokonyCz3gmzzEEoaR7btnXrCruFcqyjZRbR3AboplyCHggDmzzE4HEoAtat3BaaBnuu3eFmgDcCynll!qchDggDFzzEH7FzoA3BABABBAkZZ3@",
+}
+
+EnvironmentTexturesData.ECars.ecar01 = {
+	Id = "ecar01",
+	ECarId = 1,
+	Name = "Taxi Yellow Compact (ECar 01)",
+	Category = "ecars",
+	OriginalPath = "drparking4_texturas/assets/ecars/ecar01.jpg",
+	EnhancedPath = "textures_enhanced/assets/ecars/ecar01.jpg",
+	ObjPath = "drparking4_texturas/assets/ecars/ecar01.obj",
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0252, 1.4675, 3.3614),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.06,
+	Palette = {
+		Body = Color3.fromRGB(242, 201, 0),
+		Roof = Color3.fromRGB(242, 201, 0),
+		Glass = Color3.fromRGB(55, 55, 43),
+		Trim = Color3.fromRGB(84, 70, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,000000,020200,987103,E6A401,DA9801,DB9A00,E7AB01,EAB602,EEBD01,F1C701,DC9D03,DA9B01,DDAB10,CEB14C,8D9353,1D1F18,262820,030402,977909,AE8705,F7CE00,F2CB01,F4CD01,010000,574E23,000001,E69D00,B59D33,36372B,17160A,D08D03,D19B07,77672C,765304,785E0F,251E0B,F2C600,000003,E5BD05,0C0D05,E39901,653F03,492403,4A3F18,382F15,070602,BF7102,B26402,DA9201,CE7501,8D5002,9C5F04,995602,EFC922|7ABACDE4FEFDGHI9JIGK3EFFLEM3NOON3APQQRBACDEFFEEDDSTUV5W6VJHGKF3ENNM3ONXXYYQOPRZCDEFEaGSYQSUJ10V3JIIHGDEbNN3ONAPQYOcPdACDEFGeYQccSUJ10VJJIIHIIfGb6OAPY3gOPACaDKhdP3cSUJ9V3JIHHIGciNNb3ONAROcgQcdBCHTjZdQQcciUJ9WJJI3HkScQYNNOONNRBdcgYPBlChZARdPQccYUU9mI4kIGYccnhIoaoE3AllZAlhpZBBAnPQ3cSS14TkSccPnnfGELL7qiUSlBAARdQcQi3fTTSfmTT3STfTSrQPnBXpIEFF5DGkUJksABABnPPSmir3cQSG6cfUfQdnBRAjH3FEEFKGJVJJUfRBXAtlifsQ4cQSKQ4cQsGkpBtAZsfLE5FDJW3VJUhlRRlpmjd5PnSfd4PjnCUCZAdCKuvw4FEGJ5VJkrlZsJrZnttnntBTf6tljHGdhmGvuxw4FDIIJ4VJWJTSJT3l3ZlZZST3ZllRqhMGyzGKe3wEFoeTHHIJVVWVJmJUITp5hi3ChpphCTKTSm3pSDweETeFDhdTIHHIk4mIHGI7UTSkI4UIICTL!veTewDfpseeqjdCHMNNH4IHE7KDiiKL4KLEDKfKFoaLfidjvoepqqdh@NNI3HGDLEKFKFKKFGGfLKK4FKLDDwThsRj!xueevhqpqqzMIIHHoEe10we6wKCqjpKpjqhxu!!eexvyypypxDrjreoeo9aEaaoaoEiZAAZp3xuzyzuxDDoxvzxxep3AjoTh4iy3iCi3CihptX3Bduv!!ydjdj5pqpvvnBRtZyu14y!vz3B3A!vvxvRZRP4lZRru!jZ3Apxu9xu3xuu!3ARjquxeoTltdQn3Rttrexuhqdtpv9!6z!zqqhTwweELDCnPcQ",
+}
+
+EnvironmentTexturesData.ECars.ecar02 = {
+	Id = "ecar02",
+	ECarId = 2,
+	Name = "Crimson Mini (ECar 02)",
+	Category = "ecars",
+	OriginalPath = "drparking4_texturas/assets/ecars/ecar02.jpg",
+	EnhancedPath = "textures_enhanced/assets/ecars/ecar02.jpg",
+	ObjPath = "drparking4_texturas/assets/ecars/ecar02.obj",
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(1.8600, 1.3746, 3.3024),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.06,
+	Palette = {
+		Body = Color3.fromRGB(201, 1, 0),
+		Roof = Color3.fromRGB(200, 0, 0),
+		Glass = Color3.fromRGB(24, 24, 24),
+		Trim = Color3.fromRGB(70, 18, 18),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,000000,020000,760101,B10000,A60000,A80000,A50000,AA0000,B40000,8C0001,B50201,C30000,BB0000,AE0201,AC0000,A80101,A70000,D50701,CAC5BA,1C1F1F,030202,9F0101,7E1913,C70000,C90000,C80000,C30201,BE0201,927E66,000101,71412A,2D1F1F,6F0908,232F2F,820102,AA0603,151617,300A0A,0D0D0D,CC0201,000203,530202,CE0000,000002,080606,BD0000,C30702,120202,920101,BE0000,960704,660102,390202,0E0000|8ABACDE4FGHIJKLMMKIDNNOH3PEEQGPPR5SR3A3TUABACDEFFGQIVWTVRX4YZXX4abbKKFPRSc3SRdAcefcTUBACDEQEINgfhhiRL7Z6YajVOR5SRAThcchkkAdCDGOKClmThhgRL11ZYbngfbR5SRATe4cTAUCDFVldomThhpqa4X7ZYbIfhgRSccSSRAUchchhmBrCKbPsBBmkfhlqn3q5Y3XaXihfkW5SRdAkhceTAdlVLMYpoBskThfGNNDKMtbLLnnqaLfhTTmjujujjBBAsmUAvCbLtMXwoBUkThTjaMM3D3O3VKVhhTkolMEGEEAAd3ApNnxM3xLldBmTkwgfggyVyyVbzm!RghTkmBvuN3P4CiwXLM4xMYCoBsmwgT3hgp3hfzhfRgTTmBozRNEFF3DOuRMt5xtLDvAUVzmTTfTJphfhfghhyukmBo!uRDGFFEGPOGuat6xMqpUVzosmmkmwlkTTlCkkzR!dogRnNEHFFEDiWDjub6xtXwwCd4BU@Vv4sCvdlRJvyRaHFEWyOHGlTWDNat4xttMnbodr4Avy5AploUjnKRKEFVWhpIIpokTgEIa3MbaanuaGip!vvs!y@vl!pJyyVjuPNPFJfTovGioUUkTSct3u10RXawwubnRRyKRRbj3VGWfmAUozwvoUUkSScK4bMMKbbaannRjjRnabMKKNDKKOujWfsAUoopDVvospfSS4DOGEEGEQFNDDKDQQE4GNViCyeeTBBUovCNGOVvrWgkepp!piOEQ3FQ3EGGEQQ3FDV@ArBmmAUoo!VMOEGOwvrv6ABJI3OHHFH3ONOOFGVVzABBAABUovzVVwwIIDMVvrBU4BA!Jww5VwJiCzz5p4BAAd!P!BUUm5pzvBrr3ABl10p3zCCiiJ!4AUvCDI!dBAk3odmpDwCz!vvd!JiJ8i7C!pzCJwPDGD!ABAk4UspIODIKPViz3C3zCz3CiJwVGPHOKIIDOFEED!smkT",
+}
+
+EnvironmentTexturesData.ECars.ecar03 = {
+	Id = "ecar03",
+	ECarId = 3,
+	Name = "Navy Hatchback (ECar 03)",
+	Category = "ecars",
+	OriginalPath = "drparking4_texturas/assets/ecars/ecar03.jpg",
+	EnhancedPath = "textures_enhanced/assets/ecars/ecar03.jpg",
+	ObjPath = "drparking4_texturas/assets/ecars/ecar03.obj",
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0180, 1.6849, 4.0794),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.06,
+	Palette = {
+		Body = Color3.fromRGB(0, 28, 70),
+		Roof = Color3.fromRGB(0, 36, 81),
+		Glass = Color3.fromRGB(55, 57, 55),
+		Trim = Color3.fromRGB(18, 18, 24),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,000002,01000D,000019,000017,00021D,000018,000015,01082A,000930,011037,011941,000000,010101,00000C,001D47,00214E,002551,002756,051533,06101B,020520,000011,18171F,0B0914,001E48,002550,010107,010313,010116,000208,211E26,6B6B68,383D49,060F31,000021,030409,595958,10111D,4E4A4A,000007,292C3C,04050B,A6A595,9D9C8D,051C41,E2E0D6,10172F,020309,BBBCAF,7E837E,B4A784,D0C9B2,020115,8BB7C2|10ABCDD3ECECFCDGGFEHIJJKJJHEFGD3FCIJICD3LM6LNCCHJKKOJCGGEHKOPQQRRQOPSTUUCDFFVIKJHGLLMLMWX3LNCIKOYQKGEHKP3R3Q3ZOOTTabUEEcdEJKJCLMLefWfgMMNCK3QKEJPRRQ3Z5QZOKTbLLMhiiVVHJJULMjgfkfWlLNCHIHHIKQQZZ9QZYSTdLLTHmkEnGHJILLXomfkfgLBCGVUTHPY8QZ3POOSpLAMIhqorrnVUHLMLkf3mgLBCCUTlXJYP4QP3YsJTbbKKbLTIHemtqflNCLMMWokfepMNEUpLblTYPQPYOss3uhaALvKOhIiiHtwrqxlDLLALXeejLLNUALLnTTSYOssuuTpaMuH3LBKYehFrtqrqrlc3LM5LdKKaAALdTTsuTTuXAMALMhbvUhIeyegtqwqqoVC6BVNbKYYSLALAASldAMul3LjluJIiFVlmewzkqqmVCF6CFIOYOOPTLALhuLAMLhuMXuuhUCUogoGXqtwqqfVCFF3DFGEJYYOO3YbLUuMALLMlSuJIU!Bgfmoofwtzwqrl!C5FDEKP3OYYOOKHSMLMjlulIHEccNekj3LWwzwwqoBDGDDFFCCIJOYOY3OsOOcXuuSJUBEcVnVofpLMMjLeqqxou3WEEFCVCUJKOYOOssK5JIUECGNVefwtqLM3LMLmgRqzz@wgRFGonnGEJOOsJ4IUUEDVNNekqttzwrXLMLAnbnIRyy3@gRNmtqlWxEIJHhooUVGNnVWkqttzw4qmLjVGCE!SRqy3@gRTw3tfqreUmfkmfeWmxwzttw4qrfglb3CFCGHJw4toJgmxzttxxmmo3LXqzttzw4qrxmWVVGC3DFCGiJyy3@oImmjWfztwxgLMMjLmwqqrqqrxmWGVDCE7CDHJyy3@oJWkxkWxwzwjM4LW3qrrfWnnNBb10BNcUmfkkfuUGBUgfrwqkLjXWeogkgelcGn18M6LMCCDBVWkxflWeWlTDBVVGDEB3Aa4AaAa4AaAA5jAa",
+}
+
+EnvironmentTexturesData.ECars.ecar04 = {
+	Id = "ecar04",
+	ECarId = 4,
+	Name = "Charcoal Sedan (ECar 04)",
+	Category = "ecars",
+	OriginalPath = "drparking4_texturas/assets/ecars/ecar04.jpg",
+	EnhancedPath = "textures_enhanced/assets/ecars/ecar04.jpg",
+	ObjPath = "drparking4_texturas/assets/ecars/ecar04.obj",
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.1000, 1.3066, 4.5974),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.06,
+	Palette = {
+		Body = Color3.fromRGB(50, 50, 61),
+		Roof = Color3.fromRGB(49, 51, 62),
+		Glass = Color3.fromRGB(50, 50, 61),
+		Trim = Color3.fromRGB(18, 18, 21),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,000000,02020C,020512,060811,151720,22232D,292930,22252F,212229,1B1E28,0C1019,080C16,30303A,5D5F5F,49403F,181A22,24242B,050406,00020D,2D2E35,26272E,33343F,31323D,000008,323944,86918B,010101,020203,010100,181B24,1A222B,33333F,32333E,33333E,2F2F37,363238,17171B,30292B,111217,31313A,0E1823,020101,000002,30343C,0A0B0E,39343E,010003,010105,06060B,202027,020309,1B1D25,0B0D15,231214|9AB7CDEFG5H5FIJJEKKLCCBM5NO3APQIRAAB3CSSCKITGU11VWWHEKLCCXYZN3ZNaANNIZIbcBCCSCKdTIdeHfgh7fggiedKDCCSFNOYYNjAklNNOPmABCCLEUnmAoeHgg8fWfGdoScPCXYZNZNZOAkO3NZQABSKFMVgpqKeHrV7fgWhHdKqsGJXO5ZNaaNtNjtmAXKTVVWYsAKeHW7fg3WFoDAkHFEHOO3YTaAmlNNkAudgVfgrYkALeeMVffhgg3WMMeovpIFIFPSSvbvB3AbwbAwUVf3grYUADeeiVg5WMMiTdKAsHIIJxdwXSSB3vuqAmiVWffVVggMpydeTVgg3WMMiiGoCAkHII3JPBXXB5COYMWhVVMiTMVsvoeGFHH4FHFFGEqbIFIJJzdJEBXB3CvNZOGVVMTTMfhYkqKHFeJe5doEEFcsH4JzdzKvXBCCSxtZZHfGTWVVfgYUAkF5oP3oKEKdkkFJJzddzEXvvyCSmjRZZGHMVhgfgWVTsF!q3y!KXXvqRmsJIJz4dPwqvwywAzxmtZGMg6WMnFm3cpADK3RwqDsKJJdPEEdsAwl@bAqKQkjJGi4M3WiUEm!K!!EKDLDLDQzyXwmEdEd!bzl@@RAsokUNtdMTiMMTHzEK3LCCSNTXCSCvOjuyqqvsmmqlO@@GUAkVKkZZSHGHJEK!5L4Ds3DwwBqqv3qAAaA@O@@TTmAAkrCNZOmDwybabb5a3c7Acc4AbamOOlxTm3AaAmj!NZl7A14aq8AROlUGRAaaAcas@zxtkmsq24AbkzQTTPAAauy3AqAAsmxTxAaaAsTQI3U3lTT3ijla3AblUxmRAauuqwaAAcca9ARkxQxzzP4k4ms10AaqvABERR3baA3a27A4aAAXqAKz4a9AaAwlQxI3QUGllTTlTQwRa7AvBwmII",
+}
+
+EnvironmentTexturesData.ECars.ecar05 = {
+	Id = "ecar05",
+	ECarId = 5,
+	Name = "Silver Van (ECar 05)",
+	Category = "ecars",
+	OriginalPath = "drparking4_texturas/assets/ecars/ecar05.jpg",
+	EnhancedPath = "textures_enhanced/assets/ecars/ecar05.jpg",
+	ObjPath = "drparking4_texturas/assets/ecars/ecar05.obj",
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.6530, 1.8605, 4.7224),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.06,
+	Palette = {
+		Body = Color3.fromRGB(216, 217, 216),
+		Roof = Color3.fromRGB(221, 221, 221),
+		Glass = Color3.fromRGB(20, 21, 21),
+		Trim = Color3.fromRGB(75, 75, 75),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,8D8F8E,828483,1A1E1E,000000,858786,868887,9C9D9D,909190,888A89,878988,8A8B8A,303030,212222,242929,191919,181313,081919,606A70,BAB7AD,A8AAA7,7EA8BB,808281,929493,6C6F6E,969891,595E62,626463,575857,7A7D7D,CACBCA,4C4D4C,494A4A,000001,080B0B,464444,3A4041,727272,0E0E0E,373939,535554,E5E5E5,DADBDB,696A69,020202,666767,022424,D5D5D5,767878,050505,000807,010101,020808,4E5253|ABC3DCBAEFGHFIFIIJJFJKKELMNNMMCO6POOQRSTUURVCDCMMDCVFAWXTGBIJIJAKVBVLNLNNCM7NMOQRYKUUZPDabMcMDCJIBTdGBFIWHaBdTGZef3bN5DgDhijRSGUTRDOLakiOlhBBGSTHFWKamQn4opdeqeC3MC4OecRSTUURrOfsaqcChEIJB3VbMQttj3puoa3DlNjbXVAWWAkRYKUURDrvmsLilwFIBBKSaDxQttLuopoSDrry5DhOLfqvRTGGTZnDPLqnODnFEGSuoGywh3tSopodw3Dyyrr6DjHBJFEcWbDDrDDnGTdpopodhgzQttToppuODy6DyyrrwrkAFJIKEHqee!kddppu4pLDzQttWoppoLDr9DrwhmAFJJFIEAWYVS5u3pobDwhtQVoppofDr8DyyzttaHEJJIJEKbCBdd3u3poADrhQtW3doaDr8DrrQtQCII4JWaON!Tdd5upSwyDQafjenckxzryy4DyyxQQhyiHEJKKieLLNkdd5uppNDOsNrhQhjGQz3h3zyDyxxwDDeWEIAfDLeMMLW3d4uofNvODwwhzcGwD3y3ryDywDDOXTYEIblCwimNmeT3d3upTvl5DPTVDyyrr5yDDlbTSGWJIVCMNlffavXFGG5TAcvXabikTcwy8DrfGSGWHJJIHXwNPOiavaiFYY3GW4GTGJBGGKckabejLNOqSGWHFcZsAEWerLlOj3!aqkkvVBFIKA3HKWY6GYWHKTWAFcqjlfHIFALwLhPjfeaXqXXaa4sqq6XkXkk3vkivVajPMnecFEFFMhLwwOmZMlOfqa6qs4aZZssabnbnPmLONbBixiHWHWAClChDNm3Dyenfe!!nn5bZsjNmbbnbPPiqvnNCmsb3fenPylhbm5DbaZbbn!efiijbm3Dl!nnibqmCNfkKAO4DiVMDjHcqabnfaB4cvvkXqZZl4DMnf!LCmsEHKFFM4hjYEjcAKHH3WA5KIIJFEBBsnfjmmsab!vHAIFFJI",
+}
+
+EnvironmentTexturesData.ECars.ecar06 = {
+	Id = "ecar06",
+	ECarId = 6,
+	Name = "Pearl Luxury (ECar 06)",
+	Category = "ecars",
+	OriginalPath = "drparking4_texturas/assets/ecars/ecar06.jpg",
+	EnhancedPath = "textures_enhanced/assets/ecars/ecar06.jpg",
+	ObjPath = "drparking4_texturas/assets/ecars/ecar06.obj",
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(1.9350, 1.5002, 5.0233),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	Reflectance = 0.06,
+	Palette = {
+		Body = Color3.fromRGB(208, 218, 217),
+		Roof = Color3.fromRGB(208, 218, 217),
+		Glass = Color3.fromRGB(21, 21, 21),
+		Trim = Color3.fromRGB(72, 76, 75),
+		Headlight = Color3.fromRGB(245, 248, 255),
+		Taillight = Color3.fromRGB(220, 32, 32),
+		Wheel = Color3.fromRGB(28, 30, 34),
+		Rim = Color3.fromRGB(195, 202, 212),
+	},
+	PixelData = "48,24,000000,010101,020302,202020,A1AFB0,B1BEBE,A4B3B3,B8C4C4,C6D2D3,AAB8B7,A8B6B6,A7B5B5,ABBBBC,A9B7B7,AFBABB,BDC8C9,C4CDCD,494C4C,565656,5A6773,788787,2B2C2C,CBD4D4,CFD9D8,94A0A0,8C9899,98A5A6,D2DCDB,393E40,1B1B1B,0B0C0C,6D6E6F,A7B3B4,9AA9A9,111212,808A8B,6A858B,252626,0A0A0A,3E3333,9EABAC,060707,AAB7B7,3B4143,DFE5E4,B3C2C1,849494,C9D9DC,9D9F97,A8B7B7,324C62,C6BD9F,67ADCC,D3D9D5|5ABCBDEFGHIJKJLGEMMNJNKLKOPQ4RSTUMGJJ5NJ3AB3ACAVLHWXIJGOOYZaJGKFPIXbWccVdeAfXghG3J3NAABACdiABAVPbXbQFFgjkEFPW3bXbPccVdidHXWPhhGg3NABAlSdRfmCAcHQWHEYaaffXbb4XbHncldCRbQIPNahhoJNBBefUlfRDpCdJKJghoqrimFb5XsqDVDdpabQPtJaGgZoJCAViRUfVDDADMKLttIbneejsWX3bXFScdAcXIIPMagEZuaLCAVRfTfUjlADKMtTEssjCARsbbWqZObXPEUavwfwZGYjaKgGBAejSRfeSiCdtGSdcXbQVRObtjScVlfQQIbIvwnnjZjugLuaABAVVrjcVCAnuVDrlfsXXbFTVnldedSPQPHtFMjjZuYuTcCSBBCADcrDBAVSmdlVclYbYSnDpieVUHbPHIPPJhohYUreAiRj9AVWZBddlnlcfVlDmeRYIXPKOtUrSEoaYUVDSuJHFmem3eimcWbsfAdDVDTDimlfgXWHqKLPR3AdYZUuYOHFJgL5ohhqbbXXsrBDeSDmrjPbPFKKJGxaACCpAVuhOOKgL3N3MOJtIb4XbWVARTREWXtOGLJgoaEUACBAifMJ3K3NJJKKLGFWb6XsHrgPbIHJLNLEo3aojpAAraHKKqJ3xNLLNKJHWb5XbXIIWQQFqKNKEhY3ahaZiDUTk8sgyyKMoqXXb4XWQPPHOJxxGo3aYahYuUjUgMyTszzHv!!vqyyNJSRfHW3XQWXXPNGGEh4ahaZjUjYgFOoykzwfGv3!EyyFucSRY3WQWYSrYtY4ahhaZUUjaKJNGJEyT4z4!oyyxgYfUQ@WQQUCAApYhahhaYujjYGFtFMOMFGyT@zz4!vEyyLoOtEgtQJapAppBREZuj3UjYa8YZyTHFOF3OPuyTEZZoRStaGTBC3AijUuZatTmimppmempmmeempmpm3pmemfghYZuuoZhRAApdcSaEKMNHS24AfJMJgEaZuZTRUZoxF3JNLFUcr6crcr5cr5crcj",
+}
+
+EnvironmentTexturesData.Envi.arrow = {
+	Id = "arrow",
+	Name = "Env: arrow",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/arrow.jpg",
+	EnhancedPath = "textures_enhanced/assets/envi/arrow.jpg",
+	ObjPath = "drparking4_texturas/assets/envi/arrow.obj",
+	SourceSize = Vector2.new(4, 4),
+	BBoxSize = Vector3.new(0.3928, 0.9977, 0.3928),
+	HasAlpha = false,
+	AssetId = "",
+	Material = Enum.Material.Neon,
+	PBR = nil,
+	Palette = { Primary = Color3.fromRGB(251, 219, 0), Secondary = Color3.fromRGB(249, 224, 0) },
+	PixelData = "36,36,F2DE00,F3DF00,F7E000,FAE000,FCE000,FADF01,F7DF00,F5DE00,F4DE00,F9DE01,F6DD00,FBDF01,F8DE00,F5DD00,F4DD00,F7DD00,F8DD00,FCDF01,FCDE00,FBDE01,F9DD00,F8DC00,F7DC00,FDDE00,FBDD01,F9DC00,FCDD01,FBDC00,FDDD01,FCDC00,FADB00,F9DB00,FDDC01,FEDC00,FCDB01,FBDA00,FCDA00,FDDA00,FEDB00,FEDA00,FED900,FDD900,FFDA00,FFDB00,FFD900,FED800,FFD800,FFD700,FFD801,FFD901,FEDB01,FCDE02|3A7B4C4D3E3DF3GHH6I3A5B6C4D3E3DJ3GK4H3I8B6CDD5E3LJ3MKK3N3O3A3IHB3GCC3D5E3L3JMKK3N3O6IHH3GCC3D5E3L3JMPP3K3N3I4H4G5D5E3L4JQQ3P3K6NKH3M3FLL5R3ST3UQV6W3N3KPPQQUJJ3TRR3X3S3YUZZ6V6WVQ3U3T4S3X3Sa3Ybb6Z6VZZ3bYY3a5X3caddbb7e6f5edd3gcc3h3c3gd5i3e7j4kll3m9hmm9l7k4l5m8hmnmmn7o7p4o5q9r4q7s7t4u5s8qrqssq7s11u5s9q4s7u7v4u5s9q4s7u7v3uv13sqsuus7w7v3uv15su9w7v4u15su9w7v4u15su9w7u3su15qs9x7u4s15qs9x7o4n5m8qnn10o7p6l13m4n6ljj5k4i5g8yig3l7i7jeei4d12gl9i3f4e4bYY3a8gda3id6b6V3ZbU3Yaa8caad9bWW7VZU3Y12ad7bZZKK4P3QU4JTT8zTT3Y7UNN4K3PQM3JTT8zTT3Y5UQQOO4N3KQM3JTT8zTT3Y5UQQII5HKKPGMMJTT8RLTTJJU4QPP6I3HM3G3F8RFF4J6M6I3HM3G3F8LFF4J6M",
+}
+
+EnvironmentTexturesData.Envi.asphalt = {
+	Id = "asphalt",
+	Name = "Env: asphalt",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/asphalt.jpg",
+	EnhancedPath = "textures_enhanced/assets/envi/asphalt.jpg",
+	ObjPath = nil,
+	SourceSize = Vector2.new(1024, 1024),
+	BBoxSize = Vector3.new(32.0000, 0.2000, 48.0000),
+	HasAlpha = false,
+	AssetId = "",
+	Material = Enum.Material.Asphalt,
+	PBR = { Albedo = "textures_enhanced/assets/pbr/packed_asphalt/asphalt_albedo.png", Normal = "textures_enhanced/assets/pbr/packed_asphalt/asphalt_normal.png", Roughness = "textures_enhanced/assets/pbr/packed_asphalt/asphalt_roughness.png" },
+	Palette = { Primary = Color3.fromRGB(57, 52, 39), Secondary = Color3.fromRGB(43, 37, 23) },
+	PixelData = "40,40,322C1F,332E21,342F21,322D1F,342E21,342F22,332E20,332D20,332F21,343022,312B1D,322C1E,342E22,332D1F,343023,322D20,312C1E,343024,312B1E,322C1D,352F22,312C1D,302B1D,352F23,353023,342E20,312B1C,302B1C,302A1C,342F23,322D1E,322B1E,2E281A,332F22,302A1B,2F291A,322E20,2F291B,332E22,353024|ABCDEAEFFGGBDHEGHEFBBEEGEAGG3FBIDGCBECGCJGECBE3GKHEGGCGBLEMGEEFGFFGBLNBBNEOGLFOJBFCHPGNGAFLQFAEKAFFG3FGPBHAKRPSBDFATFCHEFFHGFUHNFGVDLEWQOFEBMFGPJCGDEHLDDFQLXBBFGHXFGFFEBHGCGGDBFCGBHDFFBEFCEG3BCHB3FEOPCEBYFBHDFHGLEEIFYZEAFCBFFGHHFBGQGCC3FE5FPDGaAHHK3EFOFFEEYOEDLBVDBHbGGF4HLFBG3FCCLDYNDGCJBPHLFGGEOCHYALYHNEBDFHEMNHEBCBNEQbFLAEECZLEGNHCCGBGCKcEAHGNDCAEdBGHFBHHENLLAGHGHFHBFFGDFBBDBDDLLBPEILAHENLAGGLEHLNDHGGBBDAAFDDBGGHFHDeN3GFGAEELQLDAHFBENDBEMBHGGEHLLHLDHBBEDLEFFEBBGEDLBKLEGBBGfgIFHCIHPBNABQQFGEGCLcFCHhBDELQADBGGFBFNLQHGDBNDELLNHFBHZBdNLANLGBABBADiGcAGQGHPGGLGFGEFNHLjBWHCAEDDHDBNGGFGkLLalL3GCADALj3GCGGNLclABIBEDDLeiNHEBFNHIEKDGBOBHGDNKADHBHHCBIKDHBOIPBNBKAGHHDHGBNhFGGBBLNGBFNGGAL3HNFFGEZGSHBEdNBBAGDWlBDACNGMDBFCBDFGMFLciENNJGHEGEHEEGYGkEEBLBGKGFNCCELWNBEFHFFHaBEG3FGBBVLBDEEGEdELBLEBAGEFHLABBEFHDEELLGIEFCGBH4GEFBFBEEZZBBPBKDFGBFCHDOFHHCBIEEBGKNEZBIMHDOJFEFFGNCHGQBHLIDEALFFCEFFBHGBHKODLEAmDVYFECFFBGCBBABEHLQXKQFCGBEEBHFFGAIBPAQFQDYFBCBDYFDBFFDHBFBENEOEZEFDCXGBFFBEDBBIHBOBdEFDFFGYBBHLIGELEGLBdEFPFFBXFBGHFEGDBEFEIFFCEFYFNAGcLGNKHGLH6FIGHAGSDBDKBEBLNDIDBCGBUFEFLAYNNEDDEGHAFGGICFCFLDOHGEGDCBEBGGFBBGHBKlBADBBHhBB3HEEGEGFKcFDNEHAFHIEEGBFBHAGNAKAHHdFCGBECGNhGEHHLNDALLPBLDLGHHGBCHBNANDDEBFBNHHNANEEBAFDKLHGHGFHNBDKAADDHIFHLDEECGGCGmBLKKNHGEBGNLGEEFBEHGDDGQDEBEEGLcBFHGEBHG3HLAEBIEEDLCBNBFLFHADDIBGEGEHLQDHDENAEAADGFGHCBEDAGFDLCNMBNAjGcHELGDPDEHPBDGEBNLjDWHhLBDDNNG3HFHHLSKlLHBGEKLAEGBHHBGHeDcjABGGBDNLeiGHHGBH3BcLGCnGHHNGDGDHEEHGCGKDBEYBHBAGSLNBENGkBNGFEFMHQHBBELGEDDHNGEBCHBCBAHBHFABHNBGclEGLFGGFKBFEBPOBIHNclZGPFBFFABdIGDOIHBEEDFNNBFGBEHFFBGCFFGGELNLFGHFFBNFhHDIFE",
+}
+
+EnvironmentTexturesData.Envi.brakelight = {
+	Id = "brakelight",
+	Name = "Env: brakelight",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/brakelight.png",
+	EnhancedPath = "textures_enhanced/assets/envi/brakelight.png",
+	ObjPath = "drparking4_texturas/assets/brake/brake00.obj",
+	SourceSize = Vector2.new(64, 64),
+	BBoxSize = Vector3.new(2.0000, 0.2000, 2.0000),
+	HasAlpha = true,
+	AssetId = "",
+	Material = Enum.Material.Neon,
+	PBR = nil,
+	Palette = { Primary = Color3.fromRGB(255, 60, 0), Secondary = Color3.fromRGB(255, 71, 0) },
+	PixelData = "32,32,FF3B00,FF3C00,FF3D00,FF3800,FF4100,FF4400,FF4801,FF4600,FF4500,FF4D00,FF5D06,FF5301,FF650A,FF4F01,FF4A01,FF5501,FF761C,FFB658,FE6D04,FF7603,FFAB34,FF7C1D,FECE6D,FFC489,FF9619,FEE0A1,FFDA96,FF8119,FFC344,FF8A1C,FEB711,FFF4E0,FFE8B1,FFA11C,FEC551,FF3E00,FF6E0A,FFD394,FED26C,FFDD7D,FFEF9A,FFFDE6,FFFCD0,FFF59A,FF3C01,FFF6C5,FFFFFC,FEC12E,FECD35|11_AABBCCBBAA19_DABEFGGHHGHFECBD15_BCIHJKLLMMLNKJHFCA12_ABFOJPK8QKPLOEBA9_DCHOOMRSSRRTTRUSSRMOGHCD7_DBFOKVSSWXTYZaTTXRSSUMOIBD6_BIOOQRbYR9cYdRVJOIB5_AFOKUSTZaYefgeegfeYaZTSRMGFA3_DCGOQRdhicWWciaaicWWcihdRVOOjD__AFOVkTglYcfgecffiegfcYagTSUPIA__BHLUTYicWWmnggooggnmWmciYTUPHj_AjNMKXXYcpaeopqrrqfoeafcYlXKQMjsAEPkSRccianotq3pfttoaaiccRSVQECAGJVXTUfWeopqqpuuptqfoenfvTXVLNCBONVRYvaWmoqp5upqqomWavYRQPNBsFQVTgWYnfrnp6uqnrfmengTVVFjCIMQTXiemtrrp6ufrrqmeiXTVQHjBOJdXTvtWvoqqp4upqqowWtvTXVPLBBGNQRTUtWeofttpuuptqfoeWteTRQPOBAEMVKXWeigang6qgnagiemXKVQECDENMSWWYcfaenfqnnqfneafceWRSMPEC_jHKRTYaWciZanorgonaZicmaYTXKGj__AHPVkTlnevfgewffwegfvenlTkVLHA__DjNGVXTYamcilnmmnlicmaeTXVGNjD3_BFNMUTTlaeetgeegteellTTUKJEA5_AONOdXTTlneeaneenlTTXdONGA6_jBFNKVQdRRhhWWhhRRdkVKNFCj7_BCGJJQRSSRXTTXRSSRkOJOCB9_ACEJLNMUSMddMSdMNNJEBA12_BCFONNL4KPNNOFjC15_CDCEFHG4HFECAC19_DDA3BAADD11_",
+}
+
+EnvironmentTexturesData.Envi.building = {
+	Id = "building",
+	Name = "Env: building",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/building.jpg",
+	EnhancedPath = "textures_enhanced/assets/envi/building.jpg",
+	ObjPath = "drparking4_texturas/assets/envi/building.obj",
+	SourceSize = Vector2.new(2048, 1024),
+	BBoxSize = Vector3.new(2.0000, 0.9999, 2.0000),
+	HasAlpha = false,
+	AssetId = "",
+	Material = Enum.Material.Concrete,
+	PBR = { Albedo = "textures_enhanced/assets/pbr/packed_building/building_albedo.png", Normal = "textures_enhanced/assets/pbr/packed_building/building_normal.png", Roughness = "textures_enhanced/assets/pbr/packed_building/building_roughness.png" },
+	Palette = { Primary = Color3.fromRGB(152, 139, 117), Secondary = Color3.fromRGB(163, 91, 67) },
+	PixelData = "40,40,8F8575,9B9180,7D7566,A79D8B,A0998A,958E80,463E33,645649,888375,B4AEA1,938879,8F8169,867660,9D8A6C,867C6C,6D5F51,A9A294,877F71,73584D,7E6054,625F58,6D665A,957958,7F664F,816C58,C7C2B7,796C5C,968362,9E835C,634C41,716B61,8F7859,ADA597,524D46,976C5B,855143,895849,A39178,98614C,A56C55,352A22,7E4737,5D4233,8C6A5E,A99881,8D6150,9E785A,A56047,9F6048,A3664F,9D573E,A4593E|ABBCDAE4BEF6GHIEJIEDA3KLMMAKK4NOBFPQRCSTUPTVWXXYYXLHBZUEJLAAKPGGaKLbccNCFKdQCedSHSSUXfWCCaOKgZFggVCeLhPhHAPINLLREBVgIijklmjnGXcIRRFRFZIFgeOCKUhGUKCRcO5ABKikmNmkiXWbXXPLhUZheJCLOlUoGVKChXHVOCCVOCVddhdpUc5WNhUZheJ3NlMhHLKKMbfLAEBagKUqdhddUc4WfNeRZeIJ3NlYqdMKlHNUCMFKHQCA5rOWWXqddHZZJZZQOALNHqGVAVGNhVCFKdgCFrLRLiKccf3dXCRZeIJLAANVPhCLoGMhPAEEOQFePPhPrUNccWWfNhUZheJ3KlPooVAhbccbRCOORReSShSTUffWfWflhUZheJ4laGGMKlRNLLOIIaFOeHShHSUqXWeaeOIFZIFJaOClHooHAVIc3LEBVgAITreCTIqXcIAIAgJZJJgGUhL4oLohXHVCFKdQCFrrCOrFHfW3XLVFZUFgCOOBHooVKCfbfbOBFPgOCSSdSjT3cfcWbOEZOEDKAllNLL3NlsslKFFAEFijjkjjiCNNalMM4JZEUaHaGeVaOOhlVCRIIOFIYGpopGtSfWdcSXFFZIQgGaoohooVheoEOAaROHFeYqjodqtSfWdcXXgJJgJJoEVoZGUJGBoFRKEQQEgQipjodjiSWWSNXX6JGFRhZhCJFgoEIKDQQgQgsllKBlsBssBssBE3DQQEEQDEDDEgEFEEBM5X3YrXYYtYYrrYMODAODREBFFBEO3GqqGPuvww5vwwvww5xuCDOVgMUjdhSdecWf3MLnwwxnvnvvnvnnywwvvwnaDCPgaekSPTSCHWM3CRnSkiiwIixImirzStvtSnRQAOgIijmljyiGWb3RAnSjubwFinFxuLzPtvtSnRROIAIiktikkbXcf3XMnSjiixEunExirzPtvtPnCRCaIOhphGdqVc3WcWcnkmqGwuxxLwGoytmvmknOQACgLUphhddVcW4fbnzzqGyz4yqqy4vznaECPgaKiLLiiLWWS3qPxzzqp6yppy4vznaDCPgaKrOCrrAccXHHdYnmxppmwmmympqzimzxmxAEFKQBUTHhTPecc4WbnrttiTmtTyYiryOizirv4COOUSHHTSeXWfMfMLxNijkrmirwLkSyKizuNvOBRCEOUSHhSSVGWM3CRxixqqtwmtwiqozimzmtxMQOagMFrCCrrKGWLIIRAxzyqq4ycyqqy4zynaDCPgaITeeraRScf3XMxzypp6sjpyzzyzzxCQRagOTjjpjjrcNbWNWNnjkyxFLgQLFmpzkkzwyxKFKFBFtp4jbaNfalaOnSkywELggLExpzSkvyjnCKOCBOSGpopGidcXScdYnqpynEPQQPBuyzqjzyynVFeUBVTdpopdidcXScdYuSkvNJKJJKJlivStxxmnQJggJgiySokjiXNfXlXfl4s6D10s5D3sEssDsDDsDDs",
+}
+
+EnvironmentTexturesData.Envi.coin = {
+	Id = "coin",
+	Name = "Env: coin",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/coin.jpg",
+	EnhancedPath = "textures_enhanced/assets/envi/coin.jpg",
+	ObjPath = "drparking4_texturas/assets/envi/coin.obj",
+	SourceSize = Vector2.new(128, 128),
+	BBoxSize = Vector3.new(0.0700, 0.4000, 0.3804),
+	HasAlpha = false,
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	PBR = { Albedo = "textures_enhanced/assets/pbr/packed_coin/coin_albedo.png", Normal = "textures_enhanced/assets/pbr/packed_coin/coin_normal.png", Roughness = "textures_enhanced/assets/pbr/packed_coin/coin_roughness.png" },
+	Palette = { Primary = Color3.fromRGB(243, 155, 1), Secondary = Color3.fromRGB(253, 184, 1) },
+	PixelData = "32,32,F39C00,F39C01,F39E02,F39800,F19601,EAB014,FBD23C,FDE962,FCDE4E,F4C532,F1AA0A,F49C01,FDCB1A,F39B00,FEC40F,FEC201,FFBA01,FDB402,FFBD02,F1BA1D,FFC401,FFB701,E79804,CF7A03,D16E02,E28E02,FCAD02,FFC002,DA8D08,EAA308,F5B20C,FCB703,D88503,FCB103,F3A304,F49F01,E99004,FCBD0A,E18403,F59E02,DF7C03,F7A201,EE9202,F6A001,E78802,F9A501,EE9803,FCAA02,F7A101,F19B01,F49E00,D26302|7ABCDEDFG4HIJKLEDC13ACDEKJIHIGMMJI3HJKEB10ANCEKGHIMOPQRRQSOMGHHJENL8ACETHIOUVWXXYYXXZaUbGHGDN7ACEKHJbScYXcdefKdgXghUOHGCNL4ABDiHJPKYgf3UbSbUUPdXWUOHGjLLAABBDIIUCYKUUfKF3TFabUPgZUJHeDCAACEGHbiXPUSd4JM3JFfUUckbIIEBABEFHlhXfUSdJMQ5VOJFfbUmCfHJEnBEIJRmdUbdJlRSPSQPbVQJFbbSoaTHiNACTRpmUbhFOVbfZ3gibSUTdbUWqRGKDrqsQsdUbdlQSfXZitWXihZgKbbfmRKunjksVmhSfdbQUZZhvvRiXgdSUSQSmauswrsmhmaRiWbQQX3tuWuZu3ihahstqmpwsoasvvWWbQagttWF6JTWvvstqopwsoaktvWWbQhgttZWUSSQQUWZvtqvkopwmoaurtkgbVScCtZZfhfQVbZZtpqasopwsYaxBpxXQVbdZvWXgXgbVSgkpjuRsoprsYatxypXiSROcswrNgeQQhXjjxiRmmpjqzraixwZgPfVMF3cJORUZgwNxvvYqrAnYoaauBrXWUVROJJMSRUtYxCEihsYwANjkzkhiEnuYWbb4VQPiYZwEiRrzuyNANpozrRiEjxXXdhfQRigYkrExhaYmpN3ABnYYveKENrZ6XgBrEieasYpB4ANALzmveeuELwxuuxjrDEKeaqzxyN5ANwqzkveTFduEEDEEuKTeauzspN8ALozoNtl3TFF3TlvDozsrN4AN4AyjszzYsNvheeRaNmYzoxr6NjnnjABBnLsY3zYssoYYosntnn6r3uxBxCirKeKkccoomujpwuEEqk5qomokyEvbQOIGHIGGbPPiEAsmmY6zommknDvSVOGGIIGGfVQixysmmYz5Y",
+}
+
+EnvironmentTexturesData.Envi.ground = {
+	Id = "ground",
+	Name = "Env: ground",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/ground.jpg",
+	EnhancedPath = "textures_enhanced/assets/envi/ground.jpg",
+	ObjPath = "drparking4_texturas/assets/envi/ground.obj",
+	SourceSize = Vector2.new(1024, 1024),
+	BBoxSize = Vector3.new(1.0000, 0.0500, 1.0000),
+	HasAlpha = false,
+	AssetId = "",
+	Material = Enum.Material.Ground,
+	PBR = { Albedo = "textures_enhanced/assets/pbr/packed_ground/ground_albedo.png", Normal = "textures_enhanced/assets/pbr/packed_ground/ground_normal.png", Roughness = "textures_enhanced/assets/pbr/packed_ground/ground_roughness.png" },
+	Palette = { Primary = Color3.fromRGB(133, 116, 73), Secondary = Color3.fromRGB(139, 122, 83) },
+	PixelData = "40,40,857449,86754B,867449,87764C,87754C,86744A,87754B,86754A,847347,857448,87764D,857348,857347,88764D,86754C,847346,847246,85744A,87764B,837144,837244,837245,847245,857346,847244|ABBCBABDE3BAFGHFBEBHHBHBAHHEDEBGAHBHBBHGDHGGBG3HIFBHHEHBAGGFBBGHEEHBJCBBFBDHJGKDBDGHFHAHADALGABMJDEHEDEBHBHAINFLBCEJJEBHBGDFHKDHCEFLAJBILDEBHGDHHDEHABH3AELJDHBEHFDDHEEGHFFGHHFBEGHBHAEDBGEGBHHBBGCHEDDGNFGBBKEBFCDFHJB3GKHGAEBBDEHHFDBHJBBG3EGEEDDGFAHIJFFL3BDK3GBNKBCJBLAHFIHHEFFHFLDBHEDDGOLANFAHEDBFFJEHHGNGFKAAKHABBCECGGFH3BGFBLPEJAGBGHLGHCHGGHBHBIQGAHHAAGJBDGHFEBFFGAJLABRHCGCHEEHAEBHAHAAJAHFBGLJFBCJAHFJGFARAF3HBAAJSAAGHHCEHCAA3HEFAGBJLJAAHEBBFA3GBFHHGFJJHAAF3BAJGGE3BHBCJGMLBHBBHLTGEFEGFFBAABJJGHGHGJQDBFEBABJLACBHBEBEFALHHABCABJJAFEBHBGDALJAAHBABBAAQBQAHJBF3HJHGHBGFFLUBPCGAGACAABAHHEHHJJIVL3HGAAJJUFHFGFFALPVJBGHGACAAWRFBBSCFBBIAHBKBHHAFMACABFHEBBIAFGKGFBABIAHHFAFHBAGDHHBBJHHBDCHHALHFHFGDBBHHLHGGDFBBAHAPWBAAGFHGABDGHAEHGDAQWBCADHFBHBFBGHKHHBGBJBHMFECGGBLXFBBGFGGFIHBHGEGBHBLLHCBBHBDBLHJBBAHBDFAJHHGEFABBJJHGBEGBB4HBGEHDBBG3BHRBMFEHBGGACDGHHBBGBGHHIFBHBBGHA3DGDDHCBFHJBFAGABJJEDGBDDBFHHFMKAJBJGCLKEBEGGHFEBBAGBHALDMLEGBHBGHFEDHAGGFALELAK3GBCNDABDEFFBEBBFBDBHBDAEDHBEEBBABBGFHNHDGDAGDHDBBHJGHBJBHAHEBDFDDBDGBHFEBHCBBGHGDDGBDKECAHPAFAIHHAF3EGDDEHFAHLAHAIHBBJFAGAHGHGDDBEAANACBAABHFAEHFGGDGELANFHGBAGHGBHHDBBHFBMVGJABHFGHBHFFBBHBFGIQDCFBFJDFGBBHBEBFAHFAMJFFDGBBGBEHCGHBFCLC4ACGACAHF3HEHBAACACHBGBFFHAJFGBHADCLJFBFHDHFBAI4AFGDFJAGBGHHBHGBJIIFFHBBHAA3BEBBHHACFLABHGBHJQBGHHBBHHFAFJAGBGBBAAGBABEADCJAAGGHBHGFAMCFABCAB3AHDHFEHBAAHGALGFBHCAVBWFGLHACABFCBA3BFJVFMFGJBAAFFHFHFDCFALIWJFGBBLJAGHBFFBHHAAQUJBHHGCAJAQHFFBGFBBHPJBBNHCFAHCHAFBBRHGHICBBKBFBAHLJABBA3HFHDHGGHLH3BAHBAAHFH3BFBGHJFBFEABFFBHPYGHAEFHDIHDGHADHBFCPUHHFGBDEJBDBHAKGH3BCERFBEHBBHSGHHGEEFBBJFAEFFDEBAEGCABGB",
+}
+
+EnvironmentTexturesData.Envi.lot = {
+	Id = "lot",
+	Name = "Env: lot",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/lot.jpg",
+	EnhancedPath = "textures_enhanced/assets/envi/lot.jpg",
+	ObjPath = "drparking4_texturas/assets/envi/lotwhite.obj",
+	SourceSize = Vector2.new(256, 256),
+	BBoxSize = Vector3.new(2.0000, 0.0500, 5.0000),
+	HasAlpha = false,
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	PBR = nil,
+	LotVariants = { lotwhite = Color3.fromRGB(235, 238, 242), lotgreen = Color3.fromRGB(24, 195, 42), lotyellow = Color3.fromRGB(245, 200, 35) },
+	Palette = { Primary = Color3.fromRGB(0, 134, 0), Secondary = Color3.fromRGB(255, 254, 255) },
+	PixelData = "32,32,D1D1D1,D3D3D3,D2D2D2,D4D4D4,D6D6D6,D0D0D0,D7D7D7,D6D6D5,D7D6D5,D3D3D1,D6D8DE,D7D8DF,DAD3B9,DAD3B8,EEBE01,E9B500,EBB802,EBB801,EAB700,E9B600,EBB901,EFBE01,E4B401,E4B301,E7B801,EBBD01,E6B701,FEC200,FDBC01,7CA401,7BA401,7CA501,008000,008001,048700,048600,018501,008500,008400,008401,018601,008700,018900,008300,008200,018A00,058E04,058D04,008100,9FCB9F,FFFFFF,FBFDFB|32A32B32C14DBD16E14AFBG15B15HIH15J17K15L17M15N32O32P15QRQ15R16S16T16UOO14V14WXYZ15a17b15c15dee15f10gh7gh6gh5gh10ij21ikkllklklkkl4klmnnmnmnmnnmnmmnn15op16q14rslt15p15qtt15m16uv15u32w32x32y32z160y",
+}
+
+EnvironmentTexturesData.Envi.random = {
+	Id = "random",
+	Name = "Env: random",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/random.png",
+	EnhancedPath = "textures_enhanced/assets/envi/random.png",
+	ObjPath = "drparking4_texturas/assets/envi/random.obj",
+	SourceSize = Vector2.new(512, 512),
+	BBoxSize = Vector3.new(2.4104, 2.8634, 1.9750),
+	HasAlpha = true,
+	AssetId = "",
+	Material = Enum.Material.Plastic,
+	PBR = nil,
+	Palette = { Primary = Color3.fromRGB(225, 82, 0), Secondary = Color3.fromRGB(0, 0, 0) },
+	PixelData = "32,32,914310,9E490E,A14E0F,AE5913,975A0E,9E420D,923910,98310E,E25301,D56403,E47301,EB7C0F,EB8223,F48421,DF5200,DB5101,D64D01,D53E01,D33100,D85303,D05004,CD4E04,803F14,8B4814,B14D0B,A3480D,A8440B,B0490A,A53E0C,C02503,BB4006,ED5500,E45300,E95300,C24C07,E75100,E75300,DF5202,E15202,E25200,E15100,E05200,E15200,DF5000,000000,E95400,533C1B,AC2809,D22201,E85F00|AB3C11DE5C3B4FGHGFIJ3KLM6NLL4KJJOOPQQ3RSHFIJ3KLMM3NMMLL4KJJTTPQQ3RSHFTJJKKL7MLKK5JTTUVVRRSSG12WXY3CZYZBAXXAFabaaZcF3S4d3Seafgghgi3Yii4YIfgjc3R5SRRiYfPkVBilk3hkkliBVjO12WbkkiBmhnoOllOpohpBUj14_PBIgOqpnhk3qOgrCl13_fbihOqpgliiqnqqOhiY6_ss6_ZPppOgQBYbZp3qnTZ5_4s5_bfkhgtZVffbihpqnPZ4_6s4_AbYiVVZklkZUgpqnTZ4_6s4_PViiYZihgZihpqOhib3_8s3_FcacagtlBitOqpnnBT3_8s__uvwdwHUmBVhOqpgkBih3_8s__uv3wvQZVhOqOklFitO3_8s__uH3vHbYfOqpkQAVhPp3_8s__Ri3biZPnqpgPFrfktg3_8s__rk3tpahggItaee3bV3_8s__POpOnQBP3QVaavddvH3_8s__OpqqrR5cHebd3wc3_8s__OpnnkghhjhjofavwddG3_8s__OpqqY5CxIge4He3_8s3_pgQZlPPmZUgpg5j4_6s4_OgQbfttfbUgp6O4_6s4_gkPBViiVBTkgk4gk5_4s4_X3Z6W3ZF3cFi5_4s4_uinQD4LDUIivwdwdF13_uVfrD4LDPfVd3wdc13_uinQD4LDQIiv3wdF13_WBZZB4CBBZB4FGe",
+}
+
+EnvironmentTexturesData.Envi.reverselight = {
+	Id = "reverselight",
+	Name = "Env: reverselight",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/reverselight.png",
+	EnhancedPath = "textures_enhanced/assets/envi/reverselight.png",
+	ObjPath = "drparking4_texturas/assets/reverse/reverse00.obj",
+	SourceSize = Vector2.new(64, 64),
+	BBoxSize = Vector3.new(2.0000, 0.2000, 2.0000),
+	HasAlpha = true,
+	AssetId = "",
+	Material = Enum.Material.Neon,
+	PBR = nil,
+	Palette = { Primary = Color3.fromRGB(255, 254, 250), Secondary = Color3.fromRGB(255, 254, 231) },
+	PixelData = "32,32,FFFFE9,FFFBED,FFFFD7,FFFDD8,FFFFEC,FFFFDA,FFFFF1,FFFFEF,FFFFF3,FFFFAD,FFFBBB,FFFFF7,FFFFF6,FFFFC3,FFFFC8,FFFFF8,FFFFBF,FFFFE2,FFFDDF,FFFFDF,FFFFF5,FFFDD1,FFFFDC,FFFDEF,FFFDF2,FFFFE0,FFFFE7,FFFFEB,FFFFFB,FFFCDB,FFFDF9,FFFFF9,FFFFCD,FFFFE4,FFFBCE,FFFFFF,FFFFD4,FFFFFD,FFFFE6,FFFCE8,FFFFFA,FFFDE8,FFFDE4,FFFFFC,FFFFD1,FFFDEB,FFFFF0,FFFFBB,FFF7D0|75_ABCDEAFCGH20_IGJKLMNOLPQJGI16_RSTSUHVWUICVXYSZTa14_MbKDcHDWYIdCEeWNEfg11_hRiReAQSjPVkPlRNmfRiTA10_PnKAohSmMYApYPqZhopQpok8_CdmMdVXjXDqlrpCGjHsZMqddF6_PnJGrTDIlYtuocXtGlIDZcuJno6_TqtdWuopTUjrHurjLSacudWASR5_AJYjkVojEqolleejloqtjfVkjuJIb3_hDqmpEpHMrfoljjloflMHptpmRCmS3_WldgcjdSlrcf4jolljZSjrOFrW4_CXdSHXbXPrr6jlrPGtYHWWuC3_mHKIckSrluY8jYGlcTVeIKHE3_AOXUFRfrGM8jUIlLRWUHOAA3_TfDVMPhtclrl4jllrctmfLVDfd4_WeDsPcWSljfUrjjrLojrZTlLgDPC4_EKbHRqHUILPecllrcPPYYXmSGAvHb3_HvujkscjpFolluGljodpjfgCjXJH5_GhThabIttIroIGfcUEAUbahTSG6_PnJIjWgLjUdtjlEdUjLiSjXJnP7_CEqtZRbeXRpffAStftSRpRbD8_WepJEjAOmjLWTLjpgajbJAoC9_FFahuhDRLIFFIPRChuhpWC11_sfHJDjINkcesNYjDJHeg13_wVuAhqpappmmhqpHss16_IYNkMYggMUsQII20_uUiOGuggUH75_",
+}
+
+EnvironmentTexturesData.Envi.shadow = {
+	Id = "shadow",
+	Name = "Env: shadow",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/shadow.png",
+	EnhancedPath = "textures_enhanced/assets/envi/shadow.png",
+	ObjPath = "drparking4_texturas/assets/envi/shadow.obj",
+	SourceSize = Vector2.new(128, 256),
+	BBoxSize = Vector3.new(2.0000, 0.0500, 2.0000),
+	HasAlpha = true,
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	PBR = nil,
+	Palette = { Primary = Color3.fromRGB(37, 34, 44), Secondary = Color3.fromRGB(37, 34, 44) },
+	PixelData = "20,36,26222D,231F2C,24212B,24212D,26212C,25222C,24212C,25212C,24222B,25212B,24202C,25222B,24222C,28232D,27222C,22222C,25202B,23212C,24202B,26232B,25202C,25202D,23232B,24242C,26212B|4_ABC7DCCE5_FGC11HFC3_CIFC11JKFL__HF15HJ_ELM14HFF_NLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_OLK14HFF_PLM14HFF_QGM14HFF__CM14HFF__HM14HFF__RL15HG__GGF11CSHGC3_THH10UJMC6_V9WXY4_",
+}
+
+EnvironmentTexturesData.Envi.shadow_obj = {
+	Id = "shadow_obj",
+	Name = "Env: shadow_obj",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/shadow_obj.png",
+	EnhancedPath = "textures_enhanced/assets/envi/shadow_obj.png",
+	ObjPath = "drparking4_texturas/assets/objects/box_s.obj",
+	SourceSize = Vector2.new(1024, 512),
+	BBoxSize = Vector3.new(2.0000, 0.2000, 2.0000),
+	HasAlpha = true,
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	PBR = nil,
+	Palette = { Primary = Color3.fromRGB(35, 33, 27), Secondary = Color3.fromRGB(35, 33, 27) },
+	PixelData = "24,24,231F18,242118,24201A,232019,25211A,22221B,23201A,24211A,24211B,25221B,262319,252218,241F1C,232318,1F1F18,231F19,261F19,21211A,241F1A,221E19,23231B,25221C,25201B,251F1A,222217,27201A,252219,23231A,20201A,22221A,231F1A,222219,252018,221F19,202018,251E1A|25_AB6CDE6_F4_G__AH6GDH5_AD3_HI__GJ5IJBK4_BLM__NLD__O7_MM4_JJ3_BGP16_DP3_DHQ3_R3FST7_UB3_VJK13_WX_WY3_IHB__GJVZN6_Wa_F4_MUB__DJJQb6_WX11_PHHLWSGc3_WX5_Wb4_PHHLWWIF3_WX4_FBLH3_DJJaWWId3_WX4_aHJIT__TDDZeXGR3_WX3_EJHHGD__eMMEFAJf3_WX3_gP3HG13_WX3_BD3HP__E5bTS3_WX3_AG3HQ_AK4QKBT3_WX3_DG3Hh__K5JGe3_WX3_UP3HD_AKK3aKBT3_WX3_YaHHGJ__EM3eMTX3_WX4_JJHaf13_WZ4_dLHI3_Oi6fi__Sj5_dJ27_",
+}
+
+EnvironmentTexturesData.Envi.tire00 = {
+	Id = "tire00",
+	Name = "Env: tire00",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/tire00.jpg",
+	EnhancedPath = "textures_enhanced/assets/envi/tire00.jpg",
+	ObjPath = "drparking4_texturas/assets/envi/tire.obj",
+	SourceSize = Vector2.new(128, 128),
+	BBoxSize = Vector3.new(0.6000, 1.8352, 1.8352),
+	HasAlpha = false,
+	AssetId = "",
+	Material = Enum.Material.Rubber,
+	PBR = { Albedo = "textures_enhanced/assets/pbr/packed_tire00/tire00_albedo.png", Normal = "textures_enhanced/assets/pbr/packed_tire00/tire00_normal.png", Roughness = "textures_enhanced/assets/pbr/packed_tire00/tire00_roughness.png" },
+	Palette = { Primary = Color3.fromRGB(0, 0, 0), Secondary = Color3.fromRGB(151, 151, 150) },
+	PixelData = "32,32,000000,010101,020202,0A0A0A,101010,040404,030303,050505,060606,282827,2C2C2C,252525,2E2E2E,242424,191919,212121,2A2A29,1C1C1C,0D0D0D,0C0C0C,181818,010001,232323,4E4E4C,323231,535353,494948,070807,3C3C3B,171717,3E3E3D,4F4F4E,5E5E5C,303030,3A3A3A,383838,151515,6A6A69,7F7F7E,2D2D2D,60605E,1E1E1D,131313,010100,343434,444443,8F908F,111111,656564,717270,4C4C4B,0F0F0F|6ABB18AB4ABAABBABCC8ABAB6ABBDEDDEBFGGHHFGGBB3GAHIFG3CFFCCFJKLKMCB4A4B4A8BABBAFNLOPQ26AIPRSTU26ACGCAAC30AB46ABC3ACB23AB3AVD4AB20AGATWXXYZaPbAB18ABAJcdefAghOiPAB16AGCjKAAklBmDACnWAB14ABAOWABBCZkoACCApqAB12ArAbmRAAFAastBHAANlBC12ABALaugbAAseKAAElmepAB12AGQAAeocIdXvFiwcAAQBB12AImxfMLyaomZaynMfxwBB10ABAzYpncsQJmlueijhRdYF11ABAvQ5AqxuxT5AWH13AbMGbHARgasfgdAHCGKCB11ABAQSzAUgYtAfhwkAHqJAC11ABAkYAMwSyEBUavlNAjT14ABANwuEWtAFAXdquoPAB14ABAwsIxdFFGRlAiZAC16ACANguBIBCCuXRAC18ABApjMPpWKhqAC20ABAADqqvIAAB22ABC5ACB26A3B46AB30AB",
+}
+
+EnvironmentTexturesData.Envi.tire01 = {
+	Id = "tire01",
+	Name = "Env: tire01",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/tire01.jpg",
+	EnhancedPath = "textures_enhanced/assets/envi/tire01.jpg",
+	ObjPath = "drparking4_texturas/assets/envi/tire.obj",
+	SourceSize = Vector2.new(128, 128),
+	BBoxSize = Vector3.new(0.6000, 1.8352, 1.8352),
+	HasAlpha = false,
+	AssetId = "",
+	Material = Enum.Material.Rubber,
+	PBR = { Albedo = "textures_enhanced/assets/pbr/packed_tire01/tire01_albedo.png", Normal = "textures_enhanced/assets/pbr/packed_tire01/tire01_normal.png", Roughness = "textures_enhanced/assets/pbr/packed_tire01/tire01_roughness.png" },
+	Palette = { Primary = Color3.fromRGB(0, 0, 0), Secondary = Color3.fromRGB(252, 251, 251) },
+	PixelData = "32,32,000000,010101,020202,0B0A0A,101011,040404,030303,050505,070707,282727,313030,242323,181818,1E1E1E,0D0D0D,131314,040304,565554,525251,8B8988,D0D0CE,3C3C3B,030404,B4B2AF,9D9B9A,A4A4A3,0E0E0E,040405,605F5F,C8C7C6,676665,ADACAB,BAB9B8,141414,030302,000101,6C6A6A,8F8D8D,484645,838283,7C7A7A,949495,040403,727170,888786,A09FA0,E6E6E5,010102,010100,595858,020101,030304|6ABB18AB4ABAABBABCC8ABAB6ABBDEDDEBFGGHHFGGBB3GAHIFG3CFFCCFJKLKKCB4A4B4A8BABBAFLLMLJ26AILNOOM26ACGCAAC30AB17AB28ACB3ABC23AC3ADPD3AB20AGAQKRRSRRKAAC18AGALTUVAWAMXTLAC16AGASYMZTGabcdKeSAG14ACAJfULOghibgVjXfJAC13ABOkOlUAeeAmnAfgNoaB12AGAmKIAkpNXkZhnpOAmSAG11ABAchEHARdfngYkAqaPrAB12Aae4AmlsSToK4AkO11ABAalYgZTtYoDltprlsmrPAB9ABABdUeMIkXotTUVMRXufvB11ABAnPISpkelXorsoPANswB11AGASUudVAAYxsAAruUpSAG11ABAOdxBAFhoIsFGAJfuPBB12ACAmxAhyRZAXNzMAxxAF14ACAreIAZtCURAaroAG16ACAxoKdpAUnVTcAG18ABANcZtRgteNAB20AC3APNh3AF22ABGB4AGB26A3B46AB30AB",
+}
+
+EnvironmentTexturesData.Envi.wall = {
+	Id = "wall",
+	Name = "Env: wall",
+	Category = "envi",
+	OriginalPath = "drparking4_texturas/assets/envi/wall.jpg",
+	EnhancedPath = "textures_enhanced/assets/envi/wall.jpg",
+	ObjPath = "drparking4_texturas/assets/envi/wall.obj",
+	SourceSize = Vector2.new(1024, 512),
+	BBoxSize = Vector3.new(1.6000, 0.6500, 25.5000),
+	HasAlpha = false,
+	AssetId = "",
+	Material = Enum.Material.Brick,
+	PBR = { Albedo = "textures_enhanced/assets/pbr/packed_wall/wall_albedo.png", Normal = "textures_enhanced/assets/pbr/packed_wall/wall_normal.png", Roughness = "textures_enhanced/assets/pbr/packed_wall/wall_roughness.png" },
+	Palette = { Primary = Color3.fromRGB(101, 106, 0), Secondary = Color3.fromRGB(196, 125, 0) },
+	PixelData = "40,40,C67D00,BE7B04,72634B,6C624E,766247,C37E03,050301,000000,616701,C98203,AF740B,020101,646A01,6F6C16,BA7E0E,7A6952,686E01,776955,947847,6D5630,816331,6C6243,84693E,766752,7B6C5A,9F8D7C,897962,8E7F6C,847461,7D6E59,887761,7B6A53,81715C,82725D,8A7A68,99866D,7F6E59,897356,968164,332611,786D35,84775D,666C01,636901,676D01,656B01,666D01,636A00,656C01|ABCDEFABGHHIJAKGLHMJJKHLHKJJNHLLKJAKDDOAABCDEBFBGLLIJFKGLLMJAKLGLKJJNLGGKFAKDDOAABCDPJJAGHHIJJK3HMJJK3HKJJQ3HKJJKDCOAABPRP3SDTTU3STTD3SUVTTWSSWVVT3SWRROAABCDX3YZaWWRbcPaZRYPCdcaYbYYefcgYY3DOAABCDCeZeChRcfihbffcCEVgaDagPfEEYZjV3DOAABCDDkjcYffZjCCERjejiEijRPhefEEkZlE3DOAABCDXiVhbYfCbCWWEkdZZVibcdZageXZCEW3DOAABCDXiChbekhXcElWRhZiYXPbhPkbbeZfEW3DOAABCDRceReRekkeCEEYkfRhggiEPYeidbeYE3COAABggifPfPXdfYXfgaXkRPffPkkfgfdCcfPYbRgOAJJEERfleeleZjlljZlbZlbllbblmZbaZlliVdXFJnneEZlPWfEflPWoPpEPpfPWWPlWWfPklEkgWgWnnHLXVjepqqIrsstIrr3ItItuIvvwtIIqIjjEXEGHGGkWaikQqrsQQqMssrrQQsqqtqssMrQQwmiVienLGGbVfipqsrMssqMsMrIrQtqMusMqqrtQqWkfXbnHGGjceiksqrrtuQqMqrIMqwsrMqtsMIIMwWcZhjnHGGjXRYWqrtqt3MtvrItwtMrMQqwrMquIlchXZnGKOZEVblIMqurrtsqrvMwMIrMrtIIMssrIacffZOKAJjPWjprqsuMusQqMtsuMIMusrIMqQQtupgbejOAAFECEcpqsMtQQqssqqMtsMtuqtwusttQuPlfYEOABBEhRkmMsIvttQQsMvvIMQwrrQQuwrtswlfgbEOBGnEECkpIMrqqtuQstqQMQqqrtQutIrsuvmhXYdnGLGYEhhWqwrrQQtusMstqsqswrqtwMIruvlbhCknHGGgZckWQrrtqstussqrqqQqrrsQQrrtqtfbcWEGLGGfcfgpqqtssQssQQttQ3qMIqQsMMsQsfcgEknLHLVYkcmvuIvQwvtvttrtIvtr3ItwIIuvpkVXkGHnngijkkoolWoWlooWWool4oll3olWopbUagnnJJPCXellbjaabbe3ZlbZebleZZeiaZblmZCCXFJABhhbcfXdRCXYCfidfPRcfRPPYXXdggcffhiYgOAABVVXhaRcRadgeXEPYkRR3hiEfkcaRbadEVDDOAABCDXiChbegcXeEWWfhZegXXbkXkbbaZdEW3DOAABCDXiThbdfCiCWWEYkZZVabckjahiXZCEW3DOAABCDDkbckfRZZCVERjcjbEijYXeaXEEhjfE3DOAABCDCeZeVhYikagbfdaCEVhiDakfdEWPZjV3DOAABCDXYcgZaEWRbcfaZRYPCdeaYbYYpP3cY3DOAABPRP3SXTTU3STTD3SUVTTWSSWVVT3SWRROAABCDPJJAGHHIJJK3HtJJK3HKJJQ3HKJJKDCOAABCDEBFBGLLIJFKGLLMJJKLGLKJJNLGGKFAKDDOAABCDEBABGHHIJAKGLHMJJKHLHKJJQHLLKJAKDDOA",
+}
+
+return EnvironmentTexturesData]=====])
+	upsert(texturesFolder, "ModuleScript", "ObjectTexturesData", [=====[
+-- ObjectTexturesData.lua
+-- 12 texturas de objetos e obstaculos de pista do Dr. Parking 4,
+-- aprimoradas via GIMP GEGL e calibradas em escala 3D pelo Blender 5.3.
+
+local ObjectTexturesData = {}
+
+ObjectTexturesData.barrier = {
+	Id = "barrier",
+	Name = "Obj: barrier",
+	Category = "objects",
+	OriginalPath = "drparking4_texturas/assets/objects/barrier.jpg",
+	EnhancedPath = "textures_enhanced/assets/objects/barrier.jpg",
+	ObjPath = "drparking4_texturas/assets/objects/barrier.obj",
+	ShadowObjPath = "drparking4_texturas/assets/objects/barrier_s.obj",
+	SourceSize = Vector2.new(256, 256),
+	BBoxSize = Vector3.new(2.0000, 1.1487, 0.3000),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	PBR = { Albedo = "textures_enhanced/assets/pbr/packed_barrier/barrier_albedo.png", Normal = "textures_enhanced/assets/pbr/packed_barrier/barrier_normal.png", Roughness = "textures_enhanced/assets/pbr/packed_barrier/barrier_roughness.png" },
+	Palette = { Primary = Color3.fromRGB(200, 23, 0), Secondary = Color3.fromRGB(216, 77, 36) },
+	PixelData = "36,36,CC1C02,CD1901,D02003,D42F03,D22903,CD1900,C91800,C01401,CB1A01,BD1200,BA1201,A10E03,C11300,B00C04,940101,9E0302,BD1808,CD1801,D8491D,D33711,D94F26,D94E27,D84C23,DC5228,E05B33,DA4E24,D94E24,D94E25,D43D1E,C53116,D84E26,A70000,AA0000,AC0201,AC0000,B90500,C11E08,B40700,BC0B00,D01B01,5E0703,AE0502,C81300,AA0201,AA0001,CE1901,EA7A53,EB8157,E87550,E56947,E36141,E46444|ABBC4D5E3DE5DE5DEE6DBFGCEHGIG8IGGHGG10IGHGEBFGCCJK11LKHH12LHHCBFGCCMN11ONMH12OJHEBFGCCMN11PNHHL11PHHEBFGCCJH11Q3H12QHHCIRGCCJ12MH14MHMCSTDTSD29TSUVWXYS4ZWZZWXXZa4ZWXXZa6ZWUYbbWYYWU5bWXcdeU3bWXcdeZ6baVYbbWYYWU4bWXcfgQXbbWXchiQU6baXYbbWXYWU4bWXd3jebbWXd3jWU5baVYbbWXYWU5bUWdQcX3bUbdQcX6baUYbbWXYWU6bU3Xa4bZ3Xa6baUYZbWYYW4UVUUVbbe5UVebe4UVUUVXYXUSZX30SXE3CkK4J4K11J5K5Jk3RIK4lj4mj10lj4m5lJ3nCHl3mN4oN4m5lmP3oOj4lK3mKNhpplO4oOl3p5Jq5oK4JHr3fi5g4jisgghF4nt5nt3ntnrggpLN4g4f4ghGt5FIGGI4FRAlsgNOLi6g3igghGt14FAofgNOLi5gh3fighGt14FAoOipNp5gir3OhghGt14FAoOihNp5gir3OhghGt14FAoOiNLLi5gh3PhghGt14FApigNOLi6g3igghGt14FApggNQN7h3rhhpI15nArsgfg13fg17qlpll15d17cA3tuvw4uw7u15wuvBBFRwx29yuBBFRwxy28zvBBnCuw29xvAADDvvu26vuvv",
+}
+
+ObjectTexturesData.box = {
+	Id = "box",
+	Name = "Obj: box",
+	Category = "objects",
+	OriginalPath = "drparking4_texturas/assets/objects/box.jpg",
+	EnhancedPath = "textures_enhanced/assets/objects/box.jpg",
+	ObjPath = "drparking4_texturas/assets/objects/box.obj",
+	ShadowObjPath = "drparking4_texturas/assets/objects/box_s.obj",
+	SourceSize = Vector2.new(512, 512),
+	BBoxSize = Vector3.new(2.0000, 0.8000, 0.5000),
+	AssetId = "",
+	Material = Enum.Material.Plastic,
+	PBR = { Albedo = "textures_enhanced/assets/pbr/packed_box/box_albedo.png", Normal = "textures_enhanced/assets/pbr/packed_box/box_normal.png", Roughness = "textures_enhanced/assets/pbr/packed_box/box_roughness.png" },
+	Palette = { Primary = Color3.fromRGB(123, 114, 117), Secondary = Color3.fromRGB(1, 1, 1) },
+	PixelData = "36,36,C99805,EDB40A,201B0B,D6AD08,736D77,7E7475,7C7376,7B7275,82797B,837B7F,AB8E26,F7C403,413410,0B0A0A,44403F,2D240C,15120C,7F7678,857B80,8D8289,8D8288,7C7375,5C554C,040302,857B7B,8C8187,7A7175,000000,7A7277,7D7376,777077,554315,000006,FECB01,000002,9E7D1B,7D7477,7C7275,8C6906,715300,6F6A72,FCCF02,6F5617,917427,7B7171,7A7379,564A31,726B6F,696468,6D6766,7C7377,6C6669|ABCCBDEFGHI5JIHGFEKLMNDAOJH6GAPQDDCERGHST3UTSHGVRCALPQAWIH6GXQBDXPYHGHJU3ZUSHGaYMbALPbWJa6GCDDNPBFcdHJU3ZUSHGVeBfgALPOSa6GADNPLAEFGHJU3ZUSHGFEKhfiADOJH6GjQPLANekGHJU3ZUSHGlIQmhMXmWIH6GiPLAbPYaGHJU3ZUSHGaYfbjhfbOJa6GMLAgMBFHdHJU3ZUSHGVeBngjhMOSa6GDAiMhAoFGHJU3ZUSHGFEjhfijDOJH6GmXMhjNekGHJU3ZUSHGHIQmpfgnWIH6GbMhAbfYadHJU3ZUSHGaIqbmhfbOJa6GMLAgnBVHdHJU3ZUSHGFEBmgmpfOSa6GDAifhjoRGHJU3ZUSHGFErhnijBOJH6GmifhmgakGHJU3ZUSHGHINnpngnWIH6GifhmbfYadHJU3ZUSHGHIqbnpnbOSa6GnhminLVHdHJU3ZUSHGFEBminpnOSa6GDjinhjoRGHJU3ZUSHGFErhmbmDOJH6GninpmgVkGHJU3ZUSHGHYNnpmifWJH6GinpmbqYadHJU3ZUSHGHIrbnhmbOSa6GnhmimLaGdHJU3ZUSHGFEBjinpnOSa6GDmimhqoFGHJU3ZUSHGFeqLjinDOJH6GfimpngFdGHJU3ZUSHGHYNMhjgMWJH6GimpnbmYadHJU3ZUSHGHRrbMhjbOYsHaaHHGmhngmLeGdHJU3ZUSHGFEBAgMpmOUIIJSJIdAnbjhqoRGHJT3ZTSHGFtfBAXfAMOOu3OWcfQqDqQVGke8vkHIPfDqQfQXAAQQDKweIkoEIGGkv7wvkGGIeotItMALPCLDOoFlVFFHGGkvw3xwxxvkGGHFFVFEDLCCLDXPs8Gyovvwwvzwvk6GVtKCCpDgMKw7GHRsWWrsOWrvy6GHYQPpAXMpKw7GcYMXApMNDDxkV5GVROKKOOKKWz7GRENApPNDDCwIH6Gkswwvvwwvx7GkoDLCQBDNCstV6Gkv3xw3xz7GcRDCCLDNPBseV6Gkvw7z7GcRQCBANPLAwRV6Gkvw7z7GkaCMfPQffPwRH6Gkvw7z",
+}
+
+ObjectTexturesData.cone = {
+	Id = "cone",
+	Name = "Obj: cone",
+	Category = "objects",
+	OriginalPath = "drparking4_texturas/assets/objects/cone.jpg",
+	EnhancedPath = "textures_enhanced/assets/objects/cone.jpg",
+	ObjPath = "drparking4_texturas/assets/objects/cone.obj",
+	ShadowObjPath = "drparking4_texturas/assets/objects/cone_s.obj",
+	SourceSize = Vector2.new(256, 256),
+	BBoxSize = Vector3.new(0.6288, 1.0524, 0.6288),
+	AssetId = "",
+	Material = Enum.Material.Plastic,
+	PBR = { Albedo = "textures_enhanced/assets/pbr/packed_cone/cone_albedo.png", Normal = "textures_enhanced/assets/pbr/packed_cone/cone_normal.png", Roughness = "textures_enhanced/assets/pbr/packed_cone/cone_roughness.png" },
+	Palette = { Primary = Color3.fromRGB(218, 51, 0), Secondary = Color3.fromRGB(1, 0, 0) },
+	PixelData = "36,36,DA3401,DB3401,DA3301,DA3500,E13D02,E74E06,DA3200,DA3300,DA3400,E03501,BF7B6F,EC7423,D72E01,DB3400,DB3503,C24628,C3B8B5,D4E0E2,D93000,D72A01,DC2901,DB3001,DE3200,D62601,D62200,D41D00,D01201,D11900,CA0000,D51A00,C60001,C10000,AE0000,B60100,CA0601,BC0000,AB0000,D93201,C92A01,960502,7C250F,000002,000000,030101,030000,24110A,20100A,8E3419,26140D,0B0706,24130B,24110B|A20BCBDDEEFFE4FCABG14HIIHGCBJEEFKE5FLFMBH11IDDIHGHNOJEJPQRLFFELFLLOBH5IGGSSGNGMTTMSCU3OVQRQWE3FLFEBH4IG5SXYYXXTMUPQPEFLRRKEFEFFEEBH4IGSTXZabZY3XMYPRQJEUKRRKJJ3FEBH3IHSTYaccabZYYXXMdQRPUEUQRRQKL3EBH3IGSTa3ecabZZYXXYPQQPVOFK4RQKJBH3IHSXfgheeiabZZYYTdPQQOEFUPQ3RQWBH3IHSXjkkhecibddZZYTdKRQPYEWUL3KOBH3IHSTakkgfecabb3ZYXdKRQPUUEFVWJOBH4ISTbgkkhfecabbdZZYXdKQQKPFJUJJDBH4ISMYikkgjfcia3bdZYXdPKQRRQKKPOBHIHGHGSXahkkhfecia3bdZYXYdPKQR3QOBHIlSSGSMZigkkhfecia3bdZZXXYdX4POBGl5SMXdi3kjfecia3bdZZYXMTX3UBlSl7MTZfkkgjfeciaa3bZZYXXTMMlCJJGMM3m3MSYigkgjfeciaa3bdZYYXXTMGnomm6n4mkkggjfeciia3bdZ3YXTSpq3r6srsrrnhgghjfeciaabbdZZYYXMs4qpr3p4qstt3khjfecciaabdZZYYTrquvv5w4uxppngkkghjfeciiaab3ZXrqwKwuututtwywxqrmf4kghjeecciiabbYrqwwxwztz4tyxqsmUjg4kghjfee3cidrqww9tyxqsmJajhg5kghhjjfeirquw9twxqsmGafjh3g9kirqxw9tyuqsmTbiefj4hg5kgfrqxw9tyuqsnMTZaceff4j3hjfirqxy9tyuqsmSSMTZaiic7ecarqxy9twwqrmSlSSMTXYZdbb4abXrqxy6tzwuwwqrmGHIlG3S5M3TMSrqxy6tuuxKoqrmWH3IH5G6SGrqr5uy3wvKwqrmJH10IH3IHBsqq5pr5xrqrmW15IHBs16qomN14HGBr7s7rqrmJA15BO",
+}
+
+ObjectTexturesData.display = {
+	Id = "display",
+	Name = "Obj: display",
+	Category = "objects",
+	OriginalPath = "drparking4_texturas/assets/objects/display.jpg",
+	EnhancedPath = "textures_enhanced/assets/objects/display.jpg",
+	ObjPath = "drparking4_texturas/assets/objects/display.obj",
+	ShadowObjPath = "drparking4_texturas/assets/objects/display_s.obj",
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(6.0000, 3.5096, 0.3000),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	PBR = nil,
+	Palette = { Primary = Color3.fromRGB(1, 1, 1), Secondary = Color3.fromRGB(253, 253, 253) },
+	PixelData = "36,36,020202,030303,010101,000000,0C0C0C,0F0F0F,131313,151515,080808,040404,A3A3A3,E0DFDC,5D5D5D,CDCECD,FFFFFF,616161,C9C9C9,FEFEFE,FCFCFC,FEFDFC,FBFDFE,FDFDFD,FFFFFE,FEFFFF,EAE3D7,CEE5F3,F3F6F4,FFFEFC,FEFEFF,F1BF56,F9A706,4DB6ED,B1DDF4,029BE9,FAAD07,85BACF,04A2EC,018FDE,FCFEFF,E6D6BB,5D8892,9E9E98,D9A134,FFFEFE,C4C4BE,4B4B4B,191919,1C1C1C,212121,252525,242424,232323|3A24B8ABC34D3CEFF3G14HGG3FI7DCDJK24LMDA5DCDJN24OPDB5DCDJQRS4R3TUURV3UV5RSRPDB5DCDJQOV4OW10OX4OSOPDB5DCDJQOVOOWOXYYZZOa3ZUOX3OSOPDB5DCDJQOVOObcdeePfOg3hfaXXOOSOPDB5DCDJQOVObOYeeiejOgkllhfOmOOSOPDB5DCDJQOVObOniooipOghffhkUOXOSOPDB5DCDJQOVObOnePoojOghjOfkaOmOSOPDB5DCDJQOVObOneiiofOghfmfhZOmOSOPDB5DCDJQOVOWWSqeieKOghfOfhZOmOSOPDB5DCDBQOVOObOUdeedmghfmfhZOmOSOPDB5DCDBQOSOWXndXnedOghfOfhZOmOSOMDB5DCDAQOSObXdeYaeqgfhfZkkaOcOSOMDB5DCCAQOSObOneddiPhkklhkfXmOOSOMDB5D3CQOSOrWa4elhkllkhgOmOOSOMDB5DCCDQOSOOWOYddo3foffgWc3OSOMDB5DCCDQOS3OWOXLLNYLLNYOR4OSOMDB5DCCDQOS4ObSNsQNLQQLmR4OSOMDB5DCCDQOS20OSOMDB5DCADQOS7ORRORORR6OSOMDB5DCADs24SMDB5DCADN24OMDB5D3CoKp20KpKtDA5DCDBACIIFG3u5vuvvuuHFEIBDJ7D3C4I18E3IJ7DCC34DCA3C21A4C6DC29wJ5DC28xyJ5DC28yzJ5DC28yzJ5DC28xyIAADCAB",
+}
+
+ObjectTexturesData.display01 = {
+	Id = "display01",
+	Name = "Obj: display01",
+	Category = "objects",
+	OriginalPath = "drparking4_texturas/assets/objects/display01.jpg",
+	EnhancedPath = "textures_enhanced/assets/objects/display01.jpg",
+	ObjPath = "drparking4_texturas/assets/objects/display.obj",
+	ShadowObjPath = "drparking4_texturas/assets/objects/display_s.obj",
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(6.0000, 3.5096, 0.3000),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	PBR = nil,
+	Palette = { Primary = Color3.fromRGB(1, 1, 1), Secondary = Color3.fromRGB(36, 36, 36) },
+	PixelData = "36,36,020202,030303,010101,000000,040404,050505,070707,080808,0B0B0A,0E0C0C,0F0F0F,0E0E0F,111010,010103,000002,090A0A,1E221E,242424,2E2C2C,212121,131513,181A18,060607,3B342B,5F5658,3E3C2A,B8B1B2,867F89,58707C,2A1A10,121212,232322,38463C,242017,25251E,232A27,303322,252525,A98364,020205,010000,7B3012,AC4F1C,030507,1F1614,5E1A07,010304,000202,010100,150605,22211F,020101|35ABC34DCCAEBEFGHIIJIJKLMMKJKKJJHNBOE7DCDPQR5STUVUPMFDPUWWKKXYZZVN6DCOEYaabaabaaccUdeSGfGCHeY3bR7DCDFgbccbbYbacchhHeISJFCfVfQiVN6DCDPSggYgSScYjjkUDFPSeWAHl3DeB6DCDFY4bcYabIekIBMJSeHAHlMACeB6DCOFYbm4bacDUknEKITVHBEDIWDeB6DCoPp4qbbacDhiOGMFgSBJWVTWDMB6DCorp4qmbaYDkhDHLLMLIeMlSUAMB6DCDIsdsdqmaagAksDPLHlXHHUXgSPMB6DCDPtpptqYbbSIkKDJKHSYWMFGPWIeB6DCCuYammqgbbLdkHDJJLUVMQWEMFveA6DCwBYaabYXbYGkkNwPJPeUUHxuDCxKB6DCDFYbbYXXbgVkiDBpqqtgVHqdgdqyC6DCDWSYgextYSkkhDx3qpclPdsgsdTo6DCDIIFzDxqSgkkUDd3ptZRIn3DOLA6DCDIGDDOxtUghkJDy3cYMVJoDCzFLA6DCDIIoxEdteXkkEDxlXXhsQJWECDCLA6DCwFX4pxPhkkDCx3DzsUMIPBACJA6DCCBZbtqYxLhkhDCt4pXYPJIEoCJA6DCCBSYttSxQkksDCt4qXbJIHnNoIA6DCordt3dxTkkMDDY4aZbVrdqgcUzO5DCzntqppqxhkkHCCbaYbaYgyWdmgcjov5DCoEx3dtxhkioDDX4YyueFdqccQov5DCDEnNnnrHUMeHPPENFEvWPHWJZgjGC6DCCBKUVyl15SlTUxxP7D3CEEFWWG14H3GrrB7DCC34DCA3C21A4C6DC29TE5DC28lRE5DC28RfE5DC28RfE5DC28lRWAADCAB",
+}
+
+ObjectTexturesData.display02 = {
+	Id = "display02",
+	Name = "Obj: display02",
+	Category = "objects",
+	OriginalPath = "drparking4_texturas/assets/objects/display02.jpg",
+	EnhancedPath = "textures_enhanced/assets/objects/display02.jpg",
+	ObjPath = "drparking4_texturas/assets/objects/display.obj",
+	ShadowObjPath = "drparking4_texturas/assets/objects/display_s.obj",
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(6.0000, 3.5096, 0.3000),
+	AssetId = "",
+	Material = Enum.Material.SmoothPlastic,
+	PBR = nil,
+	Palette = { Primary = Color3.fromRGB(1, 1, 1), Secondary = Color3.fromRGB(36, 36, 35) },
+	PixelData = "36,36,020202,030303,010101,000000,010100,201C19,202123,171615,252525,26252A,232526,212122,0B0E10,000001,8F8169,8F734D,95A676,AB925B,4B463B,555C4C,686152,7E705D,9B7443,CD922B,A98446,795C40,654D32,352F26,2F210F,B8B198,7A6750,7F7C5F,1A0000,915C29,926636,3F4332,DCDACB,CFB06E,090605,9C6633,242424,657A45,262924,698114,7A9045,020201,1E250B,000102,010302,020203,262429,020506|AA25B8ABC34DCCEF3GH3GI4GJKFLLGLLFGILMDN5DCDMOPPOQPRPS3PQTTOO3UVOVSVTDA5DCDMWXXYRXYZa3XPbcdOaefSTagUTDA5DCDMWXXaFRhSdiXXRdOdOQOdjJacOTDA5DCDMWXXYcfklUbXXYdOHUSfkSFfVfSDA5DCDMW3XdRdklYXXYkVmOdTOSKUUjjDC5DCDMWXSidbnRXajXWOUHQkjcUbUTbSDC5DCDMYXbHYPXkdZmhRoVbddbbdVjScSDC5DCDMWXknlkaRdjQXPbdQOdHjkVgSOSDC5DCDMOlRXRfcHaadXPJddeOUbkOcZQTDA5DCDmdlXlWHZZMSlXPSdQdQdbaecVdSDA5DCDMP4XaUkXVdXYUeeOOkegVefOjDC5DCDMQY4ROOQdPPdQfOVfdfUOOUTUDA5DCDMVZZaaZeeOZZeO3pqJLbj3pOTDA5DCDMZ5hWWOWhnerrsQjDEBcjssSDt5DCDMe4h3iPinnVrrQkQfuDNubrSDt5DCDMe4hinihhnnPrrQ3kQpHvDaSDt5DCDMeWihhi6nPrrsQdkkdujDaTDA5DCDMe3PhhinnRinVrrkdsQkVBrbsSDA5DCDMehPPhWihnPnnerrkdrrQSDrsrSDt5DCDMe4hPPnhhnnPrrdQrjmrussrSDt5DCDMZhRhhPWhWninP4rsuNrsYpQSDw5DCDMZnVWWhinPWnhe5rbusrXpTTDw5DCDMZhPii3hiinhV9rXfQTDw5DCDmVUUVVUVeUUeUOV4UfUUeeTfSDx5DCCAMHFFGJK5JI5JyJyGHHMm7D3C3B20mzzB7DCC34DCA3C21A4C6DC29LB5DC28IoB5DC29oB5DC29oB5DC28IomAADCAB",
+}
+
+ObjectTexturesData.fence = {
+	Id = "fence",
+	Name = "Obj: fence",
+	Category = "objects",
+	OriginalPath = "drparking4_texturas/assets/objects/fence.jpg",
+	EnhancedPath = "textures_enhanced/assets/objects/fence.jpg",
+	ObjPath = "drparking4_texturas/assets/objects/fence.obj",
+	ShadowObjPath = "drparking4_texturas/assets/objects/fence_s.obj",
+	SourceSize = Vector2.new(512, 256),
+	BBoxSize = Vector3.new(2.0000, 1.0843, 0.1200),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	PBR = { Albedo = "textures_enhanced/assets/pbr/packed_fence/fence_albedo.png", Normal = "textures_enhanced/assets/pbr/packed_fence/fence_normal.png", Roughness = "textures_enhanced/assets/pbr/packed_fence/fence_roughness.png" },
+	Palette = { Primary = Color3.fromRGB(0, 0, 0), Secondary = Color3.fromRGB(101, 101, 101) },
+	PixelData = "36,36,000000,010100,010000,000001,030201,0B0804,B08002,DAA502,81680E,010101,181202,694910,281902,342402,392D0F,865302,F8AA01,F8B801,FFC700,976B03,DC8A03,020100,000100,222118,25282C,393525,4A4A4A,4F4F4F,545454,565656,595959,5D5D5D,616060,646464,656565,676767,6A6A69,5F5F5F,616161,6D6D6D,707070,737373,808080,494949,4D4D4D,606060,515151,0E0E0E|147ABCAABBCAABBCAABBCAABBCAABB10ADAECADAECDDAEADDAEADDAEAADDE5ABAFGHIJKGHICKGHLAMGHLANGHLAOHHOAE3ABAFPIOCKIIOBMIINBMIINCNIIMAOIPKAB3AEALQQOALRRNDISRNDTSHMATSHKAGRUFBC3AVEURGDFHSGDKHSTDMRSIDNRSLAOQQLAE5ALQQOALRRNDISRMDTSHKAGSHFBGRUEVC4AFGRGJFHSGDKHSTDMRSIDNRSLAOQQLAE5ANQQOALRQNDISRMDTSHKDGSHFJGRUEFNAB3AMQGDFURGDKHSTDMRSIDNRSLAOQQLALPAE3AMUOALQQNAISQMDTSHKAGSHFBGRUEEULAE3ANTWFUQTDKURTDMQRPDNQRLANQQLAOULAE3ANNJLUUMEPQUMETQUKETQUFEGQGEFGUL5E3APGLAETGLAFGGLAKGGOAMTGNAMTTM5AXXYXX26Y5Zabbcdeefghijj3kjeflmmhjknoo5p3q3rssbcc3ef5lefltmijknoo6pqoraasbucdeeflt3mthjjkno3p9qpraasbucdeeflt3mleflmhijknoo5pqqpraasbucdeeflt3mlccdeeftmijkknoonpqpraasbucdeeflt3mlccdeeflmhjjk4nopjraasbucdeeflt3mlddeeflmhjkkn5opiraasbucdeeflt3mtthhjkkno3p5qppiraasbucdeeflt3mtmhijkno3p6qppiraasbucdeeflt3mldeeflthijknno3popiraasbucdeeflt3mlccdeeftmijkkn4opirrassucceefll3tldeefftmhjkknn5oh5F31v36A36J72A",
+}
+
+ObjectTexturesData.grass = {
+	Id = "grass",
+	Name = "Obj: grass",
+	Category = "objects",
+	OriginalPath = "drparking4_texturas/assets/objects/grass.jpg",
+	EnhancedPath = "textures_enhanced/assets/objects/grass.jpg",
+	ObjPath = "drparking4_texturas/assets/objects/grass.obj",
+	ShadowObjPath = "drparking4_texturas/assets/objects/grass_s.obj",
+	SourceSize = Vector2.new(1024, 512),
+	BBoxSize = Vector3.new(1.6000, 0.4500, 6.0000),
+	AssetId = "",
+	Material = Enum.Material.Grass,
+	PBR = { Albedo = "textures_enhanced/assets/pbr/packed_grass/grass_albedo.png", Normal = "textures_enhanced/assets/pbr/packed_grass/grass_normal.png", Roughness = "textures_enhanced/assets/pbr/packed_grass/grass_roughness.png" },
+	Palette = { Primary = Color3.fromRGB(0, 0, 0), Secondary = Color3.fromRGB(211, 134, 0) },
+	PixelData = "36,36,1E1303,030200,0E0A04,C57903,B87205,010100,3B2502,E18B00,825206,573E15,EB9501,D88300,975F02,E38F01,6E4401,C2800B,000000,CB7600,D98B01,D68901,7C6C58,81725B,948471,816E54,7C6644,887866,86735B,8D7D64,746539,CC8301,887856,827148,696200,6B6501,6D6701,6F6801,6E6701,6C6601,716A01,706900,6F6800,706901,7C6C31,010001,726B01,756D01,000001,D48700,D48800|3ABCDEFGHIFJKJFIHAFEDBALMFGNOFILDLP4QBREQANIQJKJQIHAQERQCLMQGKOQIHDLPFFCCAPECGSICJNJCISGCEPCATMCGNOCISPLPFQJUVWXYZaYabXVaUXaZaacYZYUUXZXYWYdPFQJVUV3UVY3UaUVYXZU3Y3UVUaXYVcREFQcXWWXXZWWXaWWXbWXZeebWabWbXWbfZfREBFJXbeXYXeXfYXbYXbXXffXafYeXVbXfZcREQQcZfghijikkillhghgglikggilhhlgeWYLEAAcZfhlmnjnnonnhhkhllhmhkknlkplfWYEMRReWfhhppipjikllgi4hjiklpkilgqaUBCRRYVqgjpnkiikokhhollhkoljiolikgqZcBCRRfWqghpklolkiikhhjkhioliklholgfWYrCRRqWYggiilnjjiihhojkkhloiilhphhfZcFCRRqZfghijhjjomiihnm3khijkkjmhgqacQCRRYZeglkppmmjlhmppjmsskljjlkmjgfZcFCRRfUYgkppossjhkp3msttpmpmpmmpgfWcBCRRfUqhkjt4sjjij6tsmmjmsphqWYBCAAcZfmsmtm4tmnm8tststskqZYEMuQJWemtmtm3tstpst3s3tnsttstpfZYREFFJaXfaWeVbbf3bfeWfaXXbWeXfWZXXWcREFQJZXebZXaZXaWWbfbWaZeaWbXZaWWVXWcREFQJ3ZVaVZUaaUZVVUaWVUfYVUVZUbbYZcREFQJYUWfcVeYUafYUYfYUeecceYYcfXcYWfvP3BQBdEQGNIQJKJFMNAQEdBASMQGKOQINdLP4QCDEQANIQJKJQIHAQEDFCLMQGKOQIHDLP3GBBDEQAHIQJKJQIHAQEDBCLMQGNOQILDLPHNSABDEQAHIQJKJQIHAQEDBCLMQGNOQILDSPvwdABDEQAHIQJNJQIHAQEDBCLMQGNOQOLDSPwTvABdEQGNIQJKJQINAQEDBASMQGKOQIHdTPwTvABdEQGKMQJKJQMKAQDdBAHMQGKOQINdTPwTvABdEBGKMBJKJBMKABDdBAHMBGKOBINdTPwTvCQdEQAKIQJKJQIKAQEdQCHMQGKOQINdTPwTvGGdDGJNMGOKOGMNJGDdGGSEGOKIGMNdTP3wSSwTHSvTHSvSHTwSHTwSSwTHSvSHTwdTP3wvvwwvvwwvvwvvwwvvwwvvwwvvwvvwwdTP33wdTP",
+}
+
+ObjectTexturesData.grasscircle = {
+	Id = "grasscircle",
+	Name = "Obj: grasscircle",
+	Category = "objects",
+	OriginalPath = "drparking4_texturas/assets/objects/grasscircle.jpg",
+	EnhancedPath = "textures_enhanced/assets/objects/grasscircle.jpg",
+	ObjPath = "drparking4_texturas/assets/objects/grasscircle.obj",
+	ShadowObjPath = "drparking4_texturas/assets/objects/grasscircle_s.obj",
+	SourceSize = Vector2.new(512, 512),
+	BBoxSize = Vector3.new(5.1410, 0.6500, 5.1410),
+	AssetId = "",
+	Material = Enum.Material.Grass,
+	PBR = nil,
+	Palette = { Primary = Color3.fromRGB(88, 103, 0), Secondary = Color3.fromRGB(122, 107, 90) },
+	PixelData = "36,36,6D624C,6C624B,776956,7C6B5C,7B6B5B,7A6B5A,786A59,796A59,796A5A,7C6C5B,8D7B65,86775D,84725D,827158,8B765F,94826E,706F29,7B6B5C,7C6E57,616C04,5B6800,5F6B00,616C01,616D01,6B6830,5A6801,5C6901,636F01,5D6A01,7D684C,5B6806,5A6A01,5E6C01,596801,576801,546501,5C6B01,576601,576701,7F6E55,556501,546403,516301,566701,6F634E,6D624B,5D540E,6D624D,6D634F,7B6B52,C0841C,0B0803|ABCD10EFGGHFIGHI10EI3ABCD7EIHFJKLKMNOMJJH8EI3ABCD5EDFFPPNPL3QLONPMHR6EI3ABCD4EIGSOLQTTUVWXVTTYKMCRD4EI3ABCD3EIJPKQZaXbWWXWWVUUTNPNC4EI3ABCD3EJKLQaWaXcVbXbVcaTVTQLPF3EI3ABCDEEGNdefXbWcgWXgbXWcVWghQPSIEEI3ABCDEIKKecZaWgaZgbbXcaaXXZaiQKJIEI3ABCJRHPQjTfagZakWgVkgblcgcZmlPKCJI3ABCJFndimffmkcXkcZZ4ghfZhhleOJII3ABCJHOejiljolfkfhhkfmfomfihjljdKHF3ABCIMLpjfhjjqiffhhkforjoirmjpjQOJI3ABGHKnqilmqjmmkiiffk3fjlrirqqePMGsAABCFKYqpjojriomrfhmifkqrrqrilqpLJG3AtCJPu3qoqoiojqmffiooqhill4qdMG4ACJPuqpjoqqilojmirfloqomol4qLPCsAABCJKQqmrijjiqfjlffkrmqrmihi3qLPCsAABGHOdqfkhiojiffmifirmqmfihjqqpNMGvAABGCPLqhif3ijiflkfkhlqorrirlqeKJHvAABCFMLehikihllffggkkofiffmfrajYKHI3ABCRJOefhlmaZfZfalmfaXkgaoZhcrYMHI3ABCJCPNlaZjgWgXhaZVXcaXVkZVkUQOSRH3ABCJHMPQfWccbXag4bXVZgXgXcTKPGJI3ABCDEGMPTgTXVcX5bgWgXbcThYKCREI3ABCDEDFKNTcbWVVWbbXXWacWbWgQPJ3EI3ABCDEERCNdQVVTcWX3bcaWWVTQOKGJEEI3ABCD3EDGMPdeaUW3bWWUaVTLKJH4EI3ABCD5EFLOdQeTVVWXbTQQNOJI5EI3ABCD6EHHMKPNdQddOPOKSHI6EI3AtGD7JDRJ3MKPOMMSFRD7JF3ABv3swssv5svvstv6sv6svBAtJJHCxdxSMSSNxSMLNSNSCSddSMSSNxS3MtwOLOPxdMPPnPMKKNOP3LPndNKPnPMKKMOPwdOSdnKNOJtdONMCddKKMdxLNKMttLNOFdsOdyy3zyyuzzuyyuzzuyyuzzuyy3z3y3z3yb3zyyuzzuyyuzzuyyuzzuyy3z3y3zyy",
+}
+
+ObjectTexturesData.grasssector = {
+	Id = "grasssector",
+	Name = "Obj: grasssector",
+	Category = "objects",
+	OriginalPath = "drparking4_texturas/assets/objects/grasssector.jpg",
+	EnhancedPath = "textures_enhanced/assets/objects/grasssector.jpg",
+	ObjPath = "drparking4_texturas/assets/objects/grasssector.obj",
+	ShadowObjPath = "drparking4_texturas/assets/objects/grasssector_s.obj",
+	SourceSize = Vector2.new(512, 512),
+	BBoxSize = Vector3.new(2.5000, 0.6500, 2.5000),
+	AssetId = "",
+	Material = Enum.Material.Grass,
+	PBR = nil,
+	Palette = { Primary = Color3.fromRGB(108, 98, 75), Secondary = Color3.fromRGB(88, 105, 0) },
+	PixelData = "36,36,6D624C,6B614B,6A5F49,6D624D,6B604A,6B614A,6C614B,6E634D,766752,81715E,84745F,726044,796A54,746347,796C45,7D6E59,877863,8D7B66,796642,736650,93826E,816D54,6F5526,606C00,656F02,667101,667201,627001,646C0C,746752,626E02,6A710B,5E6D01,5B6C01,5F6E01,5C6A01,586901,5A6C01,596901,566701,596A01,546502,5F690A,6A6246,5B6A00,6D634D,1E170A,C1861E,B6790B,403017,020100|10ABCCDEFBEBCEGBA3CFFCCBBGG10AHIJKLMMNONJPMIIQJJILRQSSPME8AGTMKUSOM3SOV3SOVSOOVOWSMTB8AEIQWXYZYXZYXZZaZZXXbYbaacQdF8AGHJSZ3aZYZZaZaaYYZZ4acLL10AENOeeYYXebZ3abZbX5afR11ABNLfbZbgZYabXbbaaeebYebfKIF9AEIIchebiaeijjgbeiYjijkgcSN12ARSlegiibihjggjgmjgjmmcSLB9AHCROnihhiijkojgjohkhmpkqJPC9ADCNPphgogjhkpkgghgnknnlqPN11AGHJrkopmkjlmhkghphlgghqSLD12ATQco3noohoknpkhl3hqNMC12ACJMppnk3nkkm3pnsolqQIE12AGTUOpjpnkoonnppknjhhqUQC12AHCQUcklknmononpkl3hpRRC13AHCJTmhnhjhhnkpknmolqPIF15AHPrhgjmjokos3hkhmQdF14AHCMQLqpnjmgiibimkgeTME16AHMSSWhbbjgaiibgbeSTG17AErMUOXbYgXbbZbbYSLB17AHAHNSJcXiYYaYeZYPAG20AEAJKSqib4aeKRC20ADACMKSSWcfcYXOQC22AHEENOSJVOROIPC25ABCEHNLQKMIG26AHA3GCCAG32AHHAtAAGGBBGA3GFFBAF3EGGFGBAGGAFBBAGEBEAHT3dTNdTH3IH3IMdT3dHTTH3INdIIMHHRQJKVOVUUJKQKRRUKQRJKJSVRUJKRKQRUREdJPRRNMJUUVUPRKOKUJPKUIOPRUMUPQQVVUTPUJVRUQUJTVRQQJPVUUQMJUQUQdTRKRJPIUPuWvw3xSvvWxxWvvWuxWvw3xvvw3xwvvxWyuwwuyyfwwxyyYwwxyyqvw3y3w3y3wypuxwwxuufwwxuufwwxuuWww3u3w3u3wuW",
+}
+
+ObjectTexturesData.grasstriangle = {
+	Id = "grasstriangle",
+	Name = "Obj: grasstriangle",
+	Category = "objects",
+	OriginalPath = "drparking4_texturas/assets/objects/grasstriangle.jpg",
+	EnhancedPath = "textures_enhanced/assets/objects/grasstriangle.jpg",
+	ObjPath = "drparking4_texturas/assets/objects/grasstriangle.obj",
+	ShadowObjPath = "drparking4_texturas/assets/objects/grasstriangle_s.obj",
+	SourceSize = Vector2.new(512, 512),
+	BBoxSize = Vector3.new(2.5000, 0.6500, 2.5000),
+	AssetId = "",
+	Material = Enum.Material.Grass,
+	PBR = nil,
+	Palette = { Primary = Color3.fromRGB(108, 98, 75), Secondary = Color3.fromRGB(88, 105, 0) },
+	PixelData = "36,36,6D624C,6B604A,6A5F49,6C614B,6B614A,6B614B,6D634D,6A5D45,786955,84755E,76603E,7B6C53,77654D,816C52,80715D,897A66,83725D,706345,8D7C69,796A46,6D624D,998569,77653C,7C6F52,746751,5B6B01,657103,5E6D02,606E01,5C6D01,636F03,596A01,5C6C01,626C06,877764,6C624C,586800,61661A,6D624B,6F634E,556601,5A6807,776851,6C5F48,251B0A,433216,BC8520,684A14,A97B2D,000000,CF8403,020201|10ABCCDBEFBFBBDFGCCBEEHEEFAD11AIJJKLIMNMOOIMMPQJIRSPTTLIB8AUBIJVWWT3WTT4WXWTWXTWWLYD9AGCYVTZabcdcZccZcdcebcfghiYB10AGEYNWbccaeabb3cbaccbchKRj11AGFYOTkgZbc3Z4cdgZglSmj12AGBnMTbkbZfZZcffgZcdolQYE13AUjHQPpZgZdkZooZdZdZpTRj15AGHPXpffgffoofkofopTRF16ADmIWpfZkkoof4opQOC17AFRNWpZok3of3kpORj18AUHOXpkgoofodfopTRj19AjmMWpZdggfkokhMLC20AjHVSpZkdZffkpPqB21AUniXpdcggkfpViH22ABnTWhdZb3ZPSH23AjHLJhccZZpOYE25ArSJp3chiYE25ADmiSh3aMIB25AGCqVKhaaWMF26AGBHMJlaTRj28AGHLOlXnD29AGrOqJSH31ABKNQC31AUrMOC32AjnqD33Amm35AGAADDEDFjDDjEFFjFBEBDDEDEjDDjEFFjDBFBAG5YnYYnqYYmYqqI5YnYYnYYqmYIYInmPP3QTNSVOJPQPSViJS3QTNPVQQPQP3SrnQOiSMMOSVqSOPiLNSQOJVqMOPVNSOiiNNSYISiLiViSiYLSJPOLLVVSLOSPVPIYPJSOLqVOstuuvtsWuuvssvuuvstvuutstwuutstwuutsxsyytxxvyyvxxvyyvxxtyysxxwyysxxwyysxzsyytzzvyyvzzvyyvzzvyyszzwyyszzayysz",
+}
+
+ObjectTexturesData.sign = {
+	Id = "sign",
+	Name = "Obj: sign",
+	Category = "objects",
+	OriginalPath = "drparking4_texturas/assets/objects/sign.jpg",
+	EnhancedPath = "textures_enhanced/assets/objects/sign.jpg",
+	ObjPath = "drparking4_texturas/assets/objects/sign.obj",
+	ShadowObjPath = "drparking4_texturas/assets/objects/sign_s.obj",
+	SourceSize = Vector2.new(256, 256),
+	BBoxSize = Vector3.new(0.8416, 1.0302, 0.5714),
+	AssetId = "",
+	Material = Enum.Material.Metal,
+	PBR = nil,
+	Palette = { Primary = Color3.fromRGB(242, 179, 0), Secondary = Color3.fromRGB(228, 135, 0) },
+	PixelData = "36,36,F2B301,F1B301,F1B300,F2B700,F1B200,EB9F01,E37D00,E58500,F1B000,EA9800,E07405,E17701,F1A401,E89001,EA9901,E17801,E00B08,E60000,EB9A01,E12514,E04D34,E8CF87,CBA14C,F3A801,18130A,684C10,F8FBFB,F2B300,BC0404,ECA201,EFA900,F2B500,F0AD00,EC9E01,EFAB00,E58800,E58700,EFA700,EFA500,EDA300,B4710C,ECA000,DB870B,EB9C00|26A9BCA25C10DA10C4E8CEDFG9HA7CEIC4DEI6CEDJK8LKA6CECDDMNNMDDCE4CEDOK8PLA5CIDIKQ4RQKDDE3CEDOKP8LA4CIDSTRU4VURTMDECCEDOKP8LA3CEDSQRW7VQQXDECEDOKP8LA4CATRRT6YZVQTDECEDOKP8LACCIDKRVURQZ3VZYWVRHDEEDOKP8LACCEDQTaaURT3aVYYaQTDEEDOKP8LbCEDMRW3acRTaaVYYaURBCEDJKP8LBIIDNRV3aYcRTZYYVaURdDIDSKP8LEIIDORV3aYYcRcYWaaURMBIDJK9LIEIBeRU3aYYaURT3aUQBIIfSP9G3IgDTQ3aYYaaUcTaaQTDgIIA10fgIIgDHcWaaYY3aUcTUcNfggIh10J4giDTcVaYY4aUccKDiggIN10H6giTcUV5aUcTB3giINH9jg3igeIeTcQ4UccKIgegiegNHj7kj6ieiDNTQccQKODie3iegNHj7kj8elIDgllgDIl5eliNH8kj9lmn3AImm6lmeNH8kj11looZoXm7leNH8kjm7lnnX4YXnmm5leNH8kj6nmlXlM4o3Xmm4nlNH8kj5nmF12ZX4nmNH8kj5dMNYZ5YZ3YZ5dnNH8kj5pnOoq10ond3pnNH8kj6pdXM10XF4pdNH8kj7FrF10r5FdNH8kj7F8hFhFh6FNH8kj24rhN9kj24SrNH8kj25SNH8kj24OSNk9j",
+}
+
+return ObjectTexturesData]=====])
+	upsert(texturesFolder, "ModuleScript", "UITexturesData", [=====[
+-- UITexturesData.lua
+-- 6 texturas principais de UI e Sprite Atlas (ui, menu, world, logo, background, icon)
+-- + recortes individuais de botoes, volante, cambio P-R-N-D, pedais, painel 1a pessoa e selos.
+
+local UITexturesData = {
+	Atlases = {},
+	Sprites = {},
+}
+
+UITexturesData.Atlases.ui = {
+	Id = "ui",
+	Name = "UI Atlas: ui.png",
+	Category = "ui",
+	OriginalPath = "drparking4_texturas/assets/ui.png",
+	EnhancedPath = "textures_enhanced/assets/ui.png",
+	SourceSize = Vector2.new(1024, 1024),
+	HasAlpha = true,
+	AssetId = "",
+	Palette = { Primary = Color3.fromRGB(4, 3, 4), Secondary = Color3.fromRGB(254, 254, 254) },
+	PixelData = "64,64,EAC493,E6B38E,F8F182,73D7B4,E4D4CE,F2AB63,E39470,F87B42,55463A,946131,9F4B24,ABBAAD,C3C6C7,2D3338,CEA034,B5633E,CFCDCE,808169,997136,8FA39C,0F1112,0A0C0D,131B21,918760,97967A,D0A04E,786B5A,C81F0E,D1A04D,1E2022,B19884,26282F,1D1514,000000,010000,070606,111516,020303,030404,F3F6FF,FFFFFF,EFEDEC,040505,010101,F3641F,E09442,BCB0AA,CFAF7A,4A8A8E,EBFFFF,B97B46,B88C40,482820,D09F4D,D0A04D,3B697B,000B1C|4_ABBCCD_EE__F_GHIJKJ3K34_LM6_A_GCCD_IINOO_PPIJKKJKK32_QRSST5_T_T_TT_UVW_O6_J_J15_XYOZRY12_YJIJSM_MRIR6_aI21_b5_XYcZRY12_RJNISLIINdN3_eaN3fN43_T3IR_NgfWN__RIg3higdd42_TRRQ_NffdN_afh6_jgU46_NdfdN_fh8_kU39_J__J3_NdfdNIk__NIaaNN_hgl36_IcFS3I__NdfWNNkRTdfNNdfTadm_noo_op_3o7_pn_3opp11_OOKIJI__NdfkfdkaakjdgqdaakrAFAFAHHAFAFEEFE3BHHAFBBFB11_KK__KK__NdfkfdV_RfrUUlNR_dhpHsFHtGHsBHAuHssHsGtHssHHG9_Y3T_4L_NdfkfVk__IdjjdI_ad__tbMs4HsHQQssbGsGH4sBB_BBFF4_Y3RT3YT_NNfkf_kg__RIIR__Nm__GHMessevsG_pHGHvGssvHGHFG_H3sG3_4TYaRRa_NNffN__kdfTRTTINj4_w__DT__w3_3T__Tw_wTTw__GHHsv3_R3TR4I9_Ud4Ngh3_EEpEoAAoEpE_EE_oAA_oEE4A3_uu4_a3R_4f11_4h5_G4FsHAHAFxFFxFssBFHEsFFt9_4I__dd21_ussBsQGHsGHxtHpsBGHHGpH3G9_4N26_HsQ3sGHsHxGsBHssGGbAsGBG10_UUW__nno21_GGMeyyLeye_vyGuyyuyyLGvGG10_vv3_3o55_eyye__3o4_EE4_EE4_EAE3_EAEAA_pAE__YYMEEY15_Svyyvy7_AHG3_FssB3_HsHA__BsBHHAssB__uQpooYK4_EpnE6_SAABAy_oo4_BsG3_Gsst3_BssG__EststtsBM__LuEonTO4_TLTT6_SABvAy_3o3_BsG4_GsB3_BssB__p3stusHB__JKYTvcO6_h7_J4eS7_GsG3_EsbGn__BsbG3_HbsGBsbG__JS_LSO6_KK7_vXaaX3_E4_GsG3_GssH3_tsHe3_Gssuysye3_zXpMw12_tGH3FHFFBFFHG__TT4_Y3T3_TT5_3T__T6_Moou12_HHsGsHsGHBHHsG34_RppT12_e4yeyey_Xee36_aR92_E4uQMQuup4u_u7_uQEMMEuEMMQMMQuQM3Q4_T3_EpMQ8_EYYMEMQuMQpYeMMuuTM_eY_Eu3EMpupMpMQEEuQEEMpT3uYTYTMEuQu7_e3_YaYReRu__uu4_uY_eT_uuTTMYu_uYeeueRueeTYeu5_uuaa8_u_u_QuuMuM_M_QT3u_TuueR_T_TT_Q_M_MM_u_uYM5TuTM3uTMQ7_ppQnMEeEQpQEMMEupEEuEEpMEEoEppEEQpQEpEnMETEQpMpQpoupuEEMp7_MQuMuQuQMQMuu_QMQMMuMMQuQuQMMQuQuMYMEuQTQuQuEYEuQQTQuQMMQ21_!JK3JKKI3J_K47_17vZ8_J23SJ12_Sv14ABAv7_JS22zyJ12_SvA14BAv7_Jy3@16#3@zS12_Jv16AZ7_Jy22@zS13_y16eS7_Jy@c7#@##5@5#zS13_z14SJJzc6_Jy@#@ZZ#3Z##ZZ##Z5#@zS12_O6SzS5zSSzzSSt5_Jy8@#5@##6@zS12_zStOO4zOOtt4OtOSz5_Jy@@18#Z@zS12_z19St5_Jy@20#ZzS13_9SJ8SK6_Jy@##ZZ7#Z##ZZ4#ZzS__3KPPJP3JKK$$8w$_$9w$_Jy@##ZZ#ZZ##3Z#3Z#ZZ##zS__JKP6uJKP$$LLE4Lw$w$TMLMTM3T$_KJy21zSJ__3K5Xa3K$$7w$$w$wwRw$3w$$__25J3_JJ5!KJJ__10$_$$3N$N4$7_KJJaaJSaa54_PyPKXvXRTw54_KPPKSzS$Y$52_N_I3KIIJaaJ13_oTh9_11kUUkWdff12dWWdffdkVVU11k__w_T_T_w4_U10kWdfNfkkUUVmlm3lmljUU3kfNfd11kU4_T_T_T4_WdWW4dff3NfUlUUVUUkUk3WUU3kVUklUf3Nff4dWWdW13_8kWWdWUqlUVVddfWUU3WUW3dW3UlqUWdWW8k13_l6mq4mqjjVUfdWdNWVVjVUWfdWdNVUqjq4mq6ml13_m7q6jVVWfW%WffVgNWVddW%WNWU7j7qm13_l6qm4qjjVUWd3WddVgfWUdgWWkfdUVj5qm6ql13_l8m3lmjjVWVVkVVWVqhmVWVUkjjkVjjm3l8ml65_",
+}
+
+UITexturesData.Atlases.menu = {
+	Id = "menu",
+	Name = "UI Atlas: menu.png",
+	Category = "ui",
+	OriginalPath = "drparking4_texturas/assets/menu.png",
+	EnhancedPath = "textures_enhanced/assets/menu.png",
+	SourceSize = Vector2.new(1024, 1024),
+	HasAlpha = true,
+	AssetId = "",
+	Palette = { Primary = Color3.fromRGB(225, 195, 151), Secondary = Color3.fromRGB(254, 254, 254) },
+	PixelData = "64,64,D6D2D2,EBA844,ECB758,EAC886,D1AC78,9F7B54,9F9284,B9935E,724622,76401E,E6D8CA,D28E2C,BA3525,AD7C41,CB5838,AD6F2E,C17D26,986E47,9E6F2E,B87B35,81816E,BB7927,FDFDFD,814C26,C4C1B6,CFC9C7,915929,7A2810,815F3F,C4802B,793F0F,B6874E,C39557,F3060C,808203,D3A55A,C48B43,DFC394,E1C396,592C18,C0803D,D88233,A1A49E,C1AA92,D39354,E2BE98,160101,A0B7A1,2E68DA,D5BD9D,C2732F,FBFA71,E1C296,548787,655D39|11_AA__B_CB_DE9FG_DH9F_HE18_IJ__JI_AK_AA_LB_MMNOO8PQRBBLS7PTUVBR__J3_J3_WW_WW__II__XX_YY_YZ__L_a__bc10RVd10R_ea__ee3_ee5_WW17_fgH45_10hHFiQM_NgN45_3hM6h7_R40_WW44_NjEjEf_kjggjN5_WW6_IIX4_II4_IJJ4_II5_II4_IXI__fDllmgng3jCN4_c__X5_XaX3_4X3_3X4_3X4_XX4_XaX__fDllmgng4jN__IjCS3I4_3a4_aa5_cc4_XX11_3a__fD3mgngCjjCN3_LBaIXI42_fmllmg_g4jN3_ne__In38_A3_oLdQ4dLd_P3d3oddpT4_AA5_WA17_FFGG__KYqZ__d8Ld_d9LV4_qrr3_WWA6_ii5_ii__Ni_G__rAWrY_V9dXQ9dV4_K5_AWK6_ii5_ii_ZKWWZ_iiYZrY_10da10dV3_KK6_rY13_i__YAAZY_iiYYr__10da10dV38_G3_10dX10dV42_V9dX11d17_p8_Os7_sOs4_V9dX9VQV5_tpCs6_sOss5_tOsps5_5O3_9dQa10gk5_OMOOM4_s4Os4_OOsMpO3_OpMOOpO__Vd6VdVR11j5_uubu5_M4bO4_bMOMbu3_nbOOMbb__gj6gjgajE7jEj16_nc7_bMb7_bMb4_gD6EDg_N9gN42_Rg6fgN16_Y15vY__AKv12wBT5SPP5SPk__l_l_3koo__qUa13RaUq_KKA12wVPkdLkkdT5kTS_rH_HxP4V__UPV13QVPU_AAv12wVPLkLokVPkkLkLPSBr3_r5V__R17QR_Po8TVTdP_oP13ST_Hr_E_5V__R17VR_VL10dLV19_F_F_5V__UU8cU6cUU_V12LV23_y4V22_PV4PaPPaPaVe23_T4V__A4YAZZqYKqYYq_q7_ZAWAZWZAA3ZYZYZYAZA4_G3_AKYZ_VT3V__AGGYAZZYYZWGqZZqYqY_GG_Aq3AYKqWZKYZAAY3AZK4qGqUqYKYZv5V__G3_GUGUqUq__qq4_qG_qq_Y3qYGY_qGqGqqUqGGqGGq5_YqUU_o5T_Y_Y_Z3YqZ_Y_ZqqYY_GqYqU_q_qq_A_Z_ZY_Y_YGY7q3YqqZZ__4I_WWAWZKqAAKZAZYAqWAAYAAKZAKWAKW3AKAAKAWZAqAZKYWZKWqWYKAYK7_ZZYZqZvZYZYYq_AYZYZqYYZYZYZYYZqAYZGZAYAGZqZqAGAqAAGAqZYZA48_DF3_FrEHrHrEErr5x26_z9_Cz4_4l_xmll13ml13_CCBBz5_CBLBB5_CBLLB__3EDE_llHHl12ml4_4B5_L5B3_BB3LBB3_L3BLBB__FEHH_l!EHlm!m8!ml4_QQVQ5_aLLPLL4_QaLLQL3_VQLVLQQ7_tlFHlm!m!!mm4!ml46_llFHlm!10ml46_l!HHlm!mm!m3!m!ml__gj11kgg__gg11kgg_kokfo6_llHHlm10!ml_PFHjCjCjC4jCgHNSHHC4jCC3jCHHN_fkko6_lmllm!!mm!mm!!m!ml_afHEFHREFEFHFHEgNakH5EHHEEHEHkN_koff6_x5m!m6!m!ml_ckEEXHaHeFaaRfDBNcsjaX3aFRXaRaEsS_sko7_lm!!5m!mm!!3ml_akEESEfHNNRHHEDBNaBEEj4HE4HEBS_gff7_El!!3l!8lml_akjEElEElEll3EsSXsEl10mEsN_fg_g8_6Et7_x__RFFNNR4N_gE3jEjEEHVN6ST5_o3k14_T5NoNk12_S8EDjPokkTokokT11_PypRUNfUF_BSkBsskkST12_agE6jEgPP6SPo3_s4k__3OaFHFU@@_sSST3PSST13_XR6cSX__7N5_ksk3_MOOXRkS@U@_PTPSS3PT45_MaM##a3c_7VQV3_Wvu49_V5QVQV4_OfNBBCjBB__3UgBCCjC__UU@HBjCsBj7_6JIJ4_7VQV3_POpMkssgss__FjHN5sH_@G@Fsgsgsk5_13J13_a3Mosgffg__#RcSgfgfgg_#U@csgfggk3_15J__HEEH__HjHH__3X3a__S__X##4a_S__X##a3SaS3_16J_H4ESfEElEN34_17J_HEFfEFflXNlF34_14JeJI_HlENHFflaNlf35_9J8_FEHEEXREEmER40_JJ11_cFRc__cRRc_",
+}
+
+UITexturesData.Atlases.world = {
+	Id = "world",
+	Name = "UI Atlas: world.png",
+	Category = "ui",
+	OriginalPath = "drparking4_texturas/assets/world.png",
+	EnhancedPath = "textures_enhanced/assets/world.png",
+	SourceSize = Vector2.new(1024, 1024),
+	HasAlpha = true,
+	AssetId = "",
+	Palette = { Primary = Color3.fromRGB(254, 254, 254), Secondary = Color3.fromRGB(0, 0, 1) },
+	PixelData = "64,64,BCB3BE,BDC0C4,8ACEA0,BCEBB2,F57F75,BB6F53,B95853,906D7A,6FB292,F0ECEB,817EA8,C38896,82A39B,F3D963,EF6E73,7F90B9,835669,828658,B6D2BF,4F87AB,4C577F,F3A4A9,516C7D,EBE1DE,F1B6B6,BD353A,C80612,4D8950,1A8A66,C7C0A6,F29018,000000,7D1E32,100A32,2D365D,47A37C,7D3C58,F59188,000C26,61CA84,F70405,E93232,206266,EB5746,F1C4B6,706B7C,BBA85D,EAA46D,F1C333,C88726,EFA413,FEFD0A,FBF89E,EBB42E,ED6B26,F97F02,FCFEFD|ABBCDCEFGHIJAKALMNOOEOLAKPJBQ3RIICSSAHLLABPKLTLKU3VHKKWICXYOO_PBP3CZaabcJPUdKUeafghiiUTJBaHZijbjSSMkkQMMTiG3ih3lkQkmbnDlop_TMIqIjHrrkjsLUtKINutQkRRHHLLHveW3jITMNwNXXBQHQKQHQkkjInRSPKKkk_brbiuULrrgxykPMqbeeGOOz!4@UtwWTTjRRbuvdIMMRFRIJIGAGcFw#lEktKU_cqcixitRbmRegUtUbo3aZye$3ciiRq5cRyxkgZg3cHrHiUicG@#YlgUki_TNILLtPAATu@QPJsrOGPBP3NUKUI!!InwLS3LTKVLLv%I3VOAP%J%PBJVVlE_ixihhUbxxqR$5aoaTPq3ghihcikbyoZRTThiiHHGeJcTWTZKTJJ%UgoaOpp_BPPjMRTAEFFrv3NEll3PsVsTIIHHjjKWInnIUWKABBlA3PBUBOMCC3OlVVY_XCbbGbHVPiZoZ3RLLMPPAYlYUVVprQWtt3xRiiULVA4TPAi%rRuuWTWLElV_4bFQGlTtGGZZpZhiiTPTssSG##FPTBSSH5kHOVA3TddskLpiqqbRRMBss_3Z@@eJLVJSSMuuQ3UXJBpzjZuuG@CUQkPSSLOErYY3LK3s3l3X3YbCs#_3ybccZaaHTTtxxghiiCSPawcaqckRcZoakTTkopZ3cUUi3jJ%%Orrk3iCv#_ISISXJIDVGRRdsV%ssXGHMTCTQFGOEOQCSLrOGKLHOELsdssJPKVVZGZtKUMNCu_cMcSBXcSOgbbMsl%3YgIIcjc3gQKKhrOpoogkQkZZGVLYBTcLEE3qgaagkkg_3FMCIRvEsdGFHLtMBOHRRIdHSdGPPKMRRQ3GLlGKLHQvr3GOAOFuuLOtGrOr_BXBRDnx##sSRkZZkHOOkjkjzp%soKMLjnjbRRbnlZPPTq@pYsY#PZo#pkUUk3p_3TbIRxGZVI4cW3O3rbyaXVZUUiq3bjjcTLkPPKTwOJJXrPGpFOUiik3Z_FRbKHptKLWTTU3tL__PKP3YHtUBSB3sISSblOOsXXVlVHHGJXJOlVPSCSMbb_#xx3aZQcq4ihiGg_PHBUTU3h3T3jcCCiHkQlYYVOVZGZJXJpgbcTTSbqm_IDIGHHXJrGGEEllOLsOBKK3JILrHLlXVZYYsBINLJXSPPCTPTTKrJX%Luu3Rb_cucZRCTTsQfgGPPHrVpVaa3pcxoiLOJOaYllPbya3knnRqRqgaoPIPZxxbqqm_PTPjnRkQVtRkkbbQrErYVVLVVTtGHLLCMRMdlLdNOppr3RjIWG@FtLHt3j3W_PJPcN#QLtUvldDXSVVLH3KPKUjjTBPAdBRbkMsA!@wwxexbRZUNncdYOEOGHVG_PTPcxoLYXFZbq3TXXYaZaaoabbcTPTGppgqiKBBVpp#x#xiZaUwbqmhbjbtUWi_uuMrVOEVVssYAKrO3YnRt3PRrprvudVrrHOrOErEOGtjjLLRLPTFuFMTTHdDS_bRWarpkWiLOEraoZDDCmiiHHQgooxRbZoaoagappapoaiqqhiiqccgxxyzz#kQQ_KLKPAAUULvsA3PKFrrwXX3NrOOLMTdssXlXAkQH3EjIIduRWLI11_GOGPBPtHlLSPPDDM3bz!JkQkp#pkUWB!XVEOpFSCLAMcbZ!xZhOb11_tkt3TGrrHPAR3bqccy!Xao4a3hAJJrpoaccm3fchgIbbfaq539_d63_19dB43_XJ18XJX3_N!N5_yN!N5_v!!@@v16_X20JX__yNNw$4_yNNwy3_e@NN@N@17_dB17dBd__eyzyev__$$3y$3_$3yxy$40_xuNu@@3_5x3_#$3y$41_4xN@3_@xZ@@4_$xx$46_e$6_x7_y110_vx62_x@4_M54_@N!NvN__Bd!!N5_v!!@42_ywN@vN__uxwN@x3_yywwy$41_$3y@v__$x3ye3_$yxxy$41_$3y$4_@@xw@3_#$yyw@42_xx$5_@eey@4_$yy@x234_bRKP5_vs7_vd43_eudPT4_w!!vr4_w!!w42_yywxxG3_y@zy#3_$E@@r#41_#uNNxr3_$yxy$3_$$xxe$41_#3ex4_$yey$4_$3y#42_3$6_$y$6_$y#131_",
+}
+
+UITexturesData.Atlases.logo = {
+	Id = "logo",
+	Name = "UI Atlas: logo.png",
+	Category = "ui",
+	OriginalPath = "drparking4_texturas/assets/logo.png",
+	EnhancedPath = "textures_enhanced/assets/logo.png",
+	SourceSize = Vector2.new(1024, 1024),
+	HasAlpha = true,
+	AssetId = "",
+	Palette = { Primary = Color3.fromRGB(254, 254, 253), Secondary = Color3.fromRGB(48, 163, 230) },
+	PixelData = "64,64,198CEA,25626E,A58B47,808586,DADCE0,50753C,555A30,B9A773,BE8F52,C07F34,A1753A,726243,A3907F,737677,508A78,92622D,AB7E4B,AA684F,828743,B0F1DF,D8925E,AB331C,6A3E1D,4BA3BA,1C8379,41352B,11121E,B1AFAE,E7E0DE,BDBFB4,544028,9CC1A8,E8D3BE,EAB1A0,243436,B1D3C3,877556,26A1E9,27ACE2,F4F9EE,1C520C,3D483F,98AA95,EADD61,276317,F07E58,4ABCD7,F4F96F,59AEAF,000000,FDB800,570010,F5AB00,30A5E8,F1AE08,FFFFFF|ABCDA6_E3_FFGFFHHIJKLLMNNBOOBPIQ3PQRQR_SFP_5TJIQIULVWG_AAXOY__ZaaEbEc_FFZSGMdbJPMHeeDBfDBCghHQP3QRSBiZWTgcTjJ4IWWRkNlmOXXRJVVWnEhUEopqqCZNgJK4kOBDOBKHIQKKI3QFpZiGgrgqqIJVJKDDbqNAOOXADMkk__EgdfDdfpSepLeMeegHGCkCkPHIpLQUIMQPJZiFjgcdqQJJIKDqNpisF3A__B4_Ej_DqDoFWeeZMkkLLKtUUtJQKLPPK3P_JGF_TufTfJIQIIZ3pZDqbdM3gnnPI3K3MhbngvgfoFFssGPJ4sFsjjffwapDpiappix10_MggcbgvvccPJQIKhgghbhJyrqqgcqoFMFesGeWofEdjqiDdNiippZZ10_qcqdMEThhgWVVKPdvrhbMJCuqMVhDoNbDosWVVofjfjwiNbNaHrIJP10_qcdcbTThhgPJJIPfTgEfhDmuqFhgFo3WeoGWWoqTjgwiDcNakCJPZ10_DbqbDnngccPCKKP4fqdbfjbsO3sWzeW4so3wqwapNpaN4p2509_yy!C@l__@@l@@50_!yI#yIl_3@l3@48_!y!OXCMX_8@48_!yy#CXA_4@_3@49_3!y#M__3@_3@47_!y!__#yC_3@l_3@48_!y!!y#4@ll4@48_4!JOl@@AA4@60_Z5_x63_b45_n13$3n$46_18$b45_14$4nb45_14$4rd45_c13E4d45_",
+}
+
+UITexturesData.Atlases.background = {
+	Id = "background",
+	Name = "UI Atlas: background.png",
+	Category = "ui",
+	OriginalPath = "drparking4_texturas/assets/background.png",
+	EnhancedPath = "textures_enhanced/assets/background.png",
+	SourceSize = Vector2.new(1024, 1024),
+	HasAlpha = true,
+	AssetId = "",
+	Palette = { Primary = Color3.fromRGB(216, 163, 70), Secondary = Color3.fromRGB(232, 212, 186) },
+	PixelData = "64,64,E7C3A6,ECDABF,E6D1B7,E9D5BB,EBD8BD,EEDCC1,F0DDC3,F3E0C6,FAEEDC,E8D5BC,EBDCC6,A57544,AF804D,9C612C,AF783C,BA7F38,D7AF8A,C49252,BE8639,CA933F,C58E3B,D19940,D69F41,D49D41,D0993F,D19A43,D9A242,D8A143,D8A244,D7A144,D8A243,D8A245,D59E43,D7A244,D7A245,BBB181,8B5022,814923,82603F,6B3014,823316,2D4E8E,6C777C,5B574F,214287,325DA6,3D353B,4A4138,A75610,554C3A,260E11,6B5C37,DAAD62|ABCDDCC4DEEDEB10FGHGGFF5EBFGHH7GHA13_AHG30H3GFBF3HI6HIA13_ABDDEFGGFFBEDD6CJDD3EDJEBBE4CEB3DEBFGFBDBHA13_AF3CDDEB5EDCD3EBB3F3G7FBF3GFBE4BEDHA13_AFCC3DE6FBDCDF21GFE6DCGA13_AGCEBBE4BFGGBBEDDEBF6GF3EBB3FBEEDJDJDD3CGA13_AHDDFGGFBE3DBE6CJEB3FE7CDEEDEBF3GFEDDGA13_CHD4EDDEEC6A5CDJD10C3GHF3DE3FBHA13_AGDD6CDGB6CA15CEFGGB6CDEDHA13_CI3HKKBJCJKHKBKBJ5C7JEJ3C6JEJ4BJFHA13_KAL15ML30MGC13_JMNO42POONQH13_CRPS3T3U6TUU9TUU12T6UPPQK13_CRSTVWWXYVXWXVY5VYYVVYVXZZVZZ6X3WXX3YTSPQK13_CRSTWaaWWa5Wb3WbWWc3dcc3a8e6aWYTPQK13_CRSTW5abW4bWWbcfcWdc4b3c8e6aXTPQK13_CRSTW4aeeaabbWdb6W8bceea5e5aXTPQK13_CRSTW3aeeaaebbcbb3gdbbdd8bWbe4be4aVTPQK13_CRSTWaaebXWb10chdgXXVXcd5b6e4aYUPQK13_CRSTX3aeebccb3c3h3chcdggdcchdbcbcc4e4aVTPQK13_CRSTXa3e3c9hifii3fc3hdd3cbc3eb3WYUPQK13_ARSTW3e3chi5fifi3fif5i3fch4ceWX3WYUPQJ13_ARSTXbeecch3iff3i3fif3iffifgXZgfh3cgVXeeaXTPQC13_ARSTXea3c11iff7ifXVVdfihcdXXbbeeVUPQC13_ARSTXeecbdfd3ididfiddf3dfiiddfdgdgdifgXbc3WTUPQC13_QRSTXeecchffiiffiff3iffiiffiif3d3fddXZgbeWVTTPjA13_QRSTXacchif3iffiff3if4if3igifiidgdgVXccWXZTPjA13_QRSTXebb22dgddiddgifgVZcXXeYUPjQ13_jRSTXbbW22dg4dgXgdXYXcgXVTUPjQ13_jRSTVW27gZ3YXWXVWddgZTUPRj13_jRSUYW23g3ZgVYXVYWVV4gXTUPRj13_jMSUY4X12gX4gYTTVZYZZ3XVTTV4XVTUPRj13_jMPUTY8VZ3VZ3VZ8VTTYZVVYTTVYTYVYTSPRj13_MMPSU37TU3TUSPMj13_MOPPSUUSUUSUSS3US28USPOMM13_MLNOO5POPOO7PO25PONMM13_MNk21NO24NLM13_MN4k23Nk16N3kLM13_LN4l42klLM13_LN47lLL13_ml46nom104_pqrr43_4r11_smM3tppr39_rqjqqr9_urUaLtppssp37_rmQAAQQr8_rpaaMtpp3sp35_vvrQRLRMm8_qpmwrpp4sr36_xrLlmQLM9_rurqrrvyur37_mmR3QAQ8_rrxrruvzyyv37_mmMA!RAj9_vvyvyymnvm38_LRQQmQj10_rmRmLRnlm37_mRML3jM10_mmzzLRnmv36_rjRLM3QM10_xzNLzMlxu36_jKCRmLMLx10_rzlRRmnmtu34_xzKIIAmqjq10_x4vnmqtq32_xzmzmIIjzjqmz9_vuuvnq4tpu29_v5zmKrvMxzmz8_psszxs6tpr27_xzxxzm7zmz6_uppsukrss7tp26_vzxvzz3mzmmzmxv4_r3tpqqstp8tv25_vxxv4zm4zmzx3_v5tjps7tpttr24_v3xvv10zx3_rt5ps5t3pspps24_v3xvv4x6zxu__pptp3spttpp5spssv23_vvx3v5x5zxv_vpptp3s3p7s3pu23_4vuvv5x3z3x_r3p15spps22_",
+}
+
+UITexturesData.Atlases.icon = {
+	Id = "icon",
+	Name = "UI Atlas: icon.png",
+	Category = "ui",
+	OriginalPath = "drparking4_extracted/icon.png",
+	EnhancedPath = "textures_enhanced/assets/icon.png",
+	SourceSize = Vector2.new(84, 84),
+	HasAlpha = true,
+	AssetId = "",
+	Palette = { Primary = Color3.fromRGB(75, 72, 67), Secondary = Color3.fromRGB(252, 252, 252) },
+	PixelData = "32,32,4B4741,585652,67614C,937754,5F542C,343C3E,9A5A1D,212828,181E22,090E12,574734,6C6B59,797168,252324,303131,484540,454340,3B3B41,653127,323536,423F3E,151212,3D332E,292927,241E1B,82837C,524F49,CB2005,A60802,4C4D4C,EDE575,E30900,8F2C1B,5E120F,8F8D8C,302E2C,504D47,4D4C3C,53514D,403C38,4F4C46,4F4B46,A4987F,302B28,CDCCCD,F7F7F7,FFFFFF,FBFFFF,AAA998,FDFCFC,C0BEBE,C4C4C6,ECECEC,DFDEDF,514E48,010104|4_ABCDEFGEHIJGKAKJGDLLMMCC6_NOPQDERIEEIEEGSTUPEGVWDMMCLC3_JIXHWEIIYE5GLZaWTQRWGEULMMC__EYJJDEKGGb4cbSdZZLPWQAWJEGCM_3eDeGbb9fghhLiZQjQklGYYG5ehc7fbbSFS3cDZZmnnQAjE4eGHFSbfbggSFgTOHYcbccGZZLQWodGDeEYIWFFggFSFOgYJVhcbbchTpZiMQWSGGHgYIjOSgThIJhSLqqDhhWQBUNnMiMjWrVcbgrIgSIhQistuuvvsMOBwswAYUiUOXNhcbb3gSMt3u4xuuyTJTz!iwZUBMLJrccfbGdTdw4utt@s@sZBXyumrwiMnYYZhqpHndQXB!x@zZLdUNUtt@sUoannPQYVFdHTTRQBTOzidNONIQst!@@ZnA#kPWawM$4TUTUiLTOJjLyt@z3@i3nUPwtu@FJXTROnwdINmw@x@sz@zwsZnwMP@uuxutMIVVNwdNLzt!@zzysiV$LBRmi@uxuuxuu@iLzwisu!zyzssyyXOXNOFUmyxuxuuxx4ut@szy3z3sZJjXHOTPLwMt5u!txt@zyz5swZTJIIVITpnMiBw!tt!uts@zys@@syZBONXO3TIVpUYB3y@@tsj$Zss@yiBjNNX6RQOpPnNOZ!@t@NJJVyiLnNNjOWIH6RdooQnXZzitZJNNQjYXjnWrBCSHH6RpAAQWjdZyU$JVLZprnPMwyTSSIHO4R4ApPWrrXVVrrBwwZwwMUYJrWjIIHRTpapAop#ap3ApaPnL@wXjaQYInWWKjIIoao#poAoak4opmUWiyZnWUrBRrgGCK_kakka#kk#k#kp##amnmwyLrOOXVInS__kaa3o3ko#a3#kamAWBywQNWjYVH3_ammakaa##aam#aa3kmPnZyiUnnY6_aa#k3am3a#3akkmmnPwyn4_",
+}
+
+UITexturesData.Sprites.GearShifterSlot = {
+	Id = "GearShifterSlot",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(6, 60),
+	RectSize = Vector2.new(68, 174),
+	PixelData = "16,36,969696,4B4B4D,303132,343538,3A3A3B,434345,565758,4C4D4F,464749,0A0B0B,0C0F11,141416,171718,2A2C2F,505153,49494B,0F1113,1B1C1F,212326,1D1F22,262628,1A1A1C,121212,1C1F22,191819,26292C,3D3D3D,080707,0C0C0C,0D1012,242527,242424,181819,2F2F2F,2C2E33,141616,242428,404141,161616,252525,191919,161615,19191A,373839,1A1919,1E2023,17181A,242525|_7ABCDEFGAAGAGGHFIGJK3LMNGBOF3PBFQRR3STIIOUVMWEIQXNYWZUHHabcQbUPdUNbKeNOOaWffghPdZiJjkNOOlmnfohIdNCJLeiOOlmnfohIKNCcpeiGOlmnnohPKiDcMUiGOlmnnohBKiDcoZiGOlmnnqhPKiDcqNiGOlmnnqhPKircsNiGOlmnnqhBKircqZNOHlmnnqhBKiDcsZNOHlmnnohBKiDcqZZHBamnfohBdNCcVUkHPamnfohBdZiJoeSPPamnfohBdZNJgftIIamnnohPdkZJstRFFamnnohIKkUJstRlIapfnohIKSkJstRlFEpffghIdSkJYTVaFEmffghIdSSJsRqEFrmffghIdtSJgRqEFrmffghPdtSJgRuEFrLffYhPdttbYRurFrWffohPdttbMVurFrWffohPdTTbgVurFEWffohPdXTbmVurlEWffohPdTXbLqqrlEWfvMhIdTTbpVqrlabpMbCPQXtbcMuDaOhnUUBlKRtWcVurD5GOBMQuquQeaRD5alDTXRVeEE_QLMMuRTUCDDrEr_",
+}
+
+UITexturesData.Sprites.SteeringWheel = {
+	Id = "SteeringWheel",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(84, 62),
+	RectSize = Vector2.new(214, 202),
+	PixelData = "36,36,3D3832,514C49,5F5C5C,555657,3D3B3B,33302D,1F1C1A,222021,7C7C7B,535255,232322,13100F,130605,686669,8F8D95,070605,000000,010101,0D0C0A,2C2926,404446,020202,A4A4B2,030303,0D0908,6D6C74,040304,181718,1A1B1B,000401,2E2E30,131414,060605,0A0A0A,262626,0C0B0A,48484B,161516,0E0D0D,0F0F0F,343434,1F1F20,BABAC4,73747D,0D0B09,3C3D46,000006|13_AB3CDBEFG23_HC3ICJ3BJDBEKL18_MNOIBGP5QRSTUBAG16_EOOA4QR3VRR3QLEBKM13_CWNQQRXX8_XVQQGBTY11_ZWEQRX13_QXQYBFM9_BOFQaQ16_XQPEbV7_DNcQV19_dRaefQ5_ENEQa22_XHeg5_JJgQg22_ghifQ3_EJiQh23_KjfHgQ__kkhXf10_bLLb10_ljKmQ__keQan7_eoEBNNBEoo7_cmcbR_ekpRg7_ioBNOqqONBoi7_LGHaQoUfgc4_qrpFEUCNUECNkEFHZW4_bTiPQoEmmcfI3qEHTKoBpKTbEoKTKE3qZfEEKjQeojcekqqOOblLLTHTAATciLLlbOOWqBBopnQTojpKrWCDrcSjnbfFTTFllnsScZDCWriicnQKejccOIKTrpYSmLfGAATnLmSSpZeirObpcmQGemngZWNkOegmSmflGGflmSmPiIkNONhbGhQfeLVQHDrOWtQmsSSl3bmssnQtWOrJHVmpgQhibR3_uoZZah3sjnL3SsPgZZom3_pKVQQbHg5_cCoQjss5SsPVoJc4_KEcQQ_jimV5_tkpahYsmSsYPacte5_UEhQ__XcGg6_UkbPPgPYPPhctt6_keQQ__Qjina6_JJcLnjhnfpJJ6_BkmQQ3_VbKhQ5_JrNeHKHpeNrJ5_kDiQQ4_QhHph6_IWI4_rWr5_kDEXQ6_VmiKf5_rWWC__CWWr4_JCUhQQ7_XnTTpl3_rWWr__rWWr3_CCUmQQ9_aniFTiK_OWWDPPDWWr_JCCEhQQ11_XjpoEEekOWDEEDWONCCkKXQQ13_QgLiE9UkJkih3Q15_QRgncToEE3oeibg3Q19_QQVahj3nhgR4Q23_9QX13_",
+}
+
+UITexturesData.Sprites.GearMarksActive = {
+	Id = "GearMarksActive",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(66, 6),
+	RectSize = Vector2.new(100, 22),
+	PixelData = "28,8,FF881C,FF7500,FF1417,FF261D,FF0000,FFE900,FFEB07,0EFF0E,29FF27,00FF00,FFBE68,FDE6CA,FFDBBD,FDCABC,FFCDBB,FDB2B0,FFF48B,FFFBC7,FDF7A8,FFF04D,C4FEC3,AFFFAD,45FD46,FFC499,FE3D1F,FF7F9F,FFF26F,FFFFFF,FFF89F,C8FDC8,B7FEB5,76FF74,FFA75A,FFFFF0,FF6049,FF9474|_AB5_CDE5_F_G4_HIJ__KLMK4_NOPD3_QRGST3_UUVW_KXAL4_NYNZ3_abTcT3_dIeV_KMXM4_NNPY3_QRScT3_dWfU_KLXg4_PZPE3_cQRRG3_dHVe_XO6_NYNZ3_cQahF3_dVUW_gg6_iDij3_TTGT4_ffI30_",
+}
+
+UITexturesData.Sprites.GearMarksInactive = {
+	Id = "GearMarksInactive",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(68, 36),
+	RectSize = Vector2.new(94, 20),
+	PixelData = "28,8,D1D1D1,BEBEBE,D8D8D8,C1C1C1,D6D6D6,C7C7C7,CECECE,BDBDBD,DBDBDB,262626,888888,E1E1E1,BBBBBB,101010,A4A4A4,C0C0C0,CFCFCF,A1A1A1,B3B3B3,181818,C4C4C4,8F8F8F,9A9A9A,4E4E4E,AAAAAA,C9C9C9,676767,CCCCCC,BABABA,787878,A7A7A7,737373,BCBCBC,3A3A3A,000000,FFFFFF,303030,F2F2F2,7B7B7B,585858,7F7F7F|ABC5_ADE5_ECFG4_AHI_DJKL4_MNOL4_PQRS4_FTKLHSUV4_HCWX4_ROMY4_Z_abPcdN4_SVO5_efbe4_U_gMbhi5_ZJcj4_FkQU4_ClEfda6_mhnV4_m_ad4_oVXii7_i_ii4_i_ii4_ii30_",
+}
+
+UITexturesData.Sprites.CoinSmall = {
+	Id = "CoinSmall",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(230, 10),
+	RectSize = Vector2.new(30, 28),
+	PixelData = "16,16,F5BF3C,FCC740,FCC53C,FCBC2E,FCC037,F0BC39,E8AC25,E59E17,F5B21E,F8C33E,D6941E,F0B62E,F9B828,F9C43F,FEBD25,FFC231,FFC030,FCBE0F,E29504,F8BA27,EFA503,EEB12D,EBA81A,E39B0A,EC9D01,F1B00E,E39909,FAB100,EA9D00,E09303,EAA212,F3A700,D17F07,F3AB03,F5AC00,EEA000,DC8A00,E89A01,F0AB19,DF9006,FEB605,C66700|4_ABCDEAF8_BCG3HIEJH5_BDKGFJALGMCH3_NDKJBNJAACLDM__GOKJNBPDQELCMRS_TUVNNOWXHQVGBRY_ZaDAPGSbcdeMPRfgZShLPXfZLGLVhibdhSUIPXjWBQCWcibkiljePelckmPXchigffclMQWXWCMnjRl_kiccnTPCCQaSURk__lojlnHWendURY3_pjoUc3dlZRfg4_pcoohihRRYp7_klUhUYkp4_",
+}
+
+UITexturesData.Sprites.RubySmall = {
+	Id = "RubySmall",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(270, 10),
+	RectSize = Vector2.new(34, 28),
+	PixelData = "16,16,F37550,FA7549,F76C3E,FB794F,D25A36,FFDBCF,FFA088,F97043,EE6538,F0511E,F36C41,FEAB92,D84D1E,E6460E,FC9272,FFB7A2,E75B30,DA4418,FE9F86,BB250D,D13919,930505,A00E06,BB4332,BC392E,BE311D,930201,8D0A05,8E0403,8A0202,810000,7F0000,870000,960D08,92120A,930804,9D0A03,7C1719|3_ABB3CBBDA5_EBBDDFGHDDI4_EJKACLFFDKAIM3_MNKIOF3PCKQNE_MNRIKLPLLPOIQNM_RNNQOGSGSSLAMNNMTTUAGS5GSQUTT_VWX7YXZab3_cVdefeefgVah4_iji5djhb6_bkc4ghb8_bkddgahi9_hkcjWi10_lWkWi12_lWi14_ll7_",
+}
+
+UITexturesData.Sprites.StarFilled = {
+	Id = "StarFilled",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(890, 118),
+	RectSize = Vector2.new(50, 52),
+	PixelData = "20,20,5C1201,570900,4C0600,794D1F,9A7240,8C6232,602101,986D3E,692A03,976B29,FFF09C,C3D08D,946530,F8CD57,FFDC61,B9924A,79380D,723509,864F25,A3793A,FCCB44,FDD34E,865C2A,692403,FDD24B,9F7F31,F7B71D,FEC72C,FFBF20,CF951A,6C481B,6B2F04,FBB91F,FCB81E,FCBC23,FEBC20,67390E,5F2C02,5D1C01,E6AC27,5F3718,5F2600,702904|9_AB16_CDEFG15_D3EHA13_IEJKLMFC11_CFMNOKPHQ8_CRSHMTOUVOJEWSA4_X3HEHNOYUOPETHHSB_GHEPLKKOYVYVKKLLETSCRFZKOVYU4YUVOKNJFAGDJabUY5VYUbcdWeAGfeJghgi3biigjdDeG__GkeWag5hgcdeelI3_meWnc6gcZWlG4_BDJajggcjggcdFf5_CDJajjcdncgcdFR5_BeWncnZeDdacZWf5_GfWZZDeeoeWdJSm6_peeoolmplooDkG6_IplpGX_qX4pf8_qq6_qf5_",
+}
+
+UITexturesData.Sprites.StarEmpty = {
+	Id = "StarEmpty",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(944, 118),
+	RectSize = Vector2.new(52, 52),
+	PixelData = "20,20,530A00,793B10,AA834A,936B36,5F1901,6D300B,AC8951,7E5F2E,A27C46,97713D,8E6633,4C2607,4F3512,8E5331,4A0100,370000,7F4E21,49300F,5E4218,6C4B1E,622300,705426,604317,5F4216,9A7A41,5D4016,5E4116,543814,593D15,5F4116,5A4019,561500,543810,6C2A01,743005,571D00,663F14,581A00,622C02,674519,573A11|9_AA16_ABCDE15_FGHIJA13_EIKLMGNO11_PQIRSRTGU9_EQNGVMWXRYCNFO4_ENGGIKMZaWbSYGGIBE_ANGVMRRcdaadMRReJCF_fKHLcZWX4aWWeMRCQAEBIcZX8aWgVIUhijKYgZX6aWgTGkl__hjDYcZX4aXcTGQl4_UmCcZaadaaWMHJAB5_FYbZaWZaXWgVDf6_FYbXXgncoWbVJf6_mYegoHGIToRHKf6_jDHVCITHCYTIQf6_UkJKTjljmQDKmm6_hUjjlh_iU3jU9_ii6_ii5_",
+}
+
+UITexturesData.Sprites.GasPedal = {
+	Id = "GasPedal",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(872, 180),
+	RectSize = Vector2.new(60, 116),
+	PixelData = "18,32,ADACAC,C9C9C9,C5C5C5,929292,8E8E8E,9C9C9C,888787,858585,828282,5F5F5F,8A8A8A,979797,797879,595959,666666,6D6D6D,636362,7D7D7D,4F4F4F,303030,363636,262626,484848,2D2D2D,434343,6A6A6A,727272,A2A2A2,B1B1B1,A6A6A6,A8A8A8,ABABAA,555555,BCBCBC,222222,343433,1A1A1A,2A2A2A,1D1D1E,202020,D6D6D6,D1D1D1,DCDCDC,3E3E3E,151515,060605,3A3B3B,393939|_ABB10CBCD__EFGG6HIHHGFI_JIKGEFDGHHKLLKIKM_JHEINONPKKQ3JHKRSQEEKTUVQDEWXTYEEKNZLDLMWJ3DHSSHDDENabFF3b3F3b3FLOMcdAd3eA3edfefdPEAgOSDcNQgGhNJgRhMLcijkEClTmRBTXnZBRDoESMBpLSPCpbSQhBRFo3qpp3qppoqqppIbqppopooppopopBpoRFEQOIqBPPJbqcQPOhRLrknjocsXsZqRtTsFRKDllKCCZiueCcWiNcPahAfhcchdccAccbhbQObfAedbecfbbdefdEgNEMKMKLMGRGLRGRGIWganUmQKiUngEVTiSMrYajmVPIuniZHYmnOZvrZaJZPPaJZaPaJOMNjUJZPaMOOZQQPMZQOSlTSQWSgYJNJSWNYgJYllWNXkkigSgvsmkWguVVrSYinvSWWYVnTWWUmmU5W4YW4YX_kTYrrjv3rujv3uV_sVuUkssluUksslvUm__nuumssXvUmssXuTk__kluvXjvUvUXTvUis__kkn5inniinks__",
+}
+
+UITexturesData.Sprites.BrakePedal = {
+	Id = "BrakePedal",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(944, 180),
+	RectSize = Vector2.new(58, 80),
+	PixelData = "18,24,D6D6D6,C8C8C8,ADADAD,B3B3B3,A6A6A6,A0A0A0,A1A1A2,9F9F9F,959595,A8A8A8,A4A4A4,A7A7A7,ABABAB,848484,777777,747473,6F7070,7B7B7B,9A9A9A,AFAFAF,2D2D2D,2A2A2A,2F2F2F,3E3E3E,232323,5D5D5D,161616,171717,626263,515251,8B8B8B,949494,929292,666666,363636,414141,131313,202020,1D1D1D,4C4C4C,3B3B3B,565656,323232,474646,191919,1B1B1B,181818|_15AB_CDE4F3G3HFGDDIHEFJCCJKGGLMCJGFKNIMMOPQRMKMRQPQJEGQSTMUVVWCKDXYWYGJKQSCTZabcDKDQbbdTLLQICECNNTLLETeNM3LQeTMMDTEMCCJCDCMCEQeGISfLJgHfFLHfHIKhediXiEfWjWZDZWjWehNdklUGgmYkcDckYmeZPInjNIIOopfgfpoOedhegIeNegfgeNNggeRnZRRPNNP3RORePPRQjdPQ3oXPQPpiXqZPcojhhVmmUcchrbYsdhdWqpZnVUn4piYoppoYVrdn3d4nd4nWmli11rjjXY_tVjoVauWXilkliXit__looskklXWkakUoVa__miXqtmqoiYsYiilb__slW4q6WYb4_abssbb4sbua3_",
+}
+
+UITexturesData.Sprites.Banner_YOU_WON = {
+	Id = "Banner_YOU_WON",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(304, 154),
+	RectSize = Vector2.new(414, 80),
+	PixelData = "48,12,FFFFFF,FBFDFD,FBF3EF,FBE4D7,FFF4EC,DFF3F7,FBCEB1,F79863,F9BF9F,F88C4E,F8A77A,F7B793,FC7D2C,F57021,F68543,F8DBCD,FBA06D,F8AD81,C0CFD7,EE4C02,F85D02,F8690F,F86405,F35405,EF4700,E5D0C6,D9BBAD,F0671C,F17C3B,E3DEDC,C4B7B2,E74801,E4540C,E13E01,3B525E,E78960,E6A184,B5B8B9,F25C0C,E3682F,E24B07,EB3D00,ACA5A4,0E1416,000000,00090D|_AABC3A_ACDAB_AAB3A__3A__BAA__AEDA_B5ABEDCFGHICJKCCLMNOPBLKEIHPF_DIGB_DGGBDQNNHCDQLCRIENNPSKTJPUVCHUVWUMDVXPKYLF_ZWVDDGUVDMUWWUHDUUGVWPVMP_aVMRUHPUVbcVULOUPRXIF_dMNOVQWOKUVNcVVINWQMNPVMd_ZMVMUIIUVaSHUQOUPRXIF_dOVNVMWJHUMeSOWKNVMNVPNMd_SHfgfPRhOSiIhjchGkhIF_dJf3gfjjhQllQhj5gGfmd_SkhhgdkhgPAjhjchIkhIF_FJ5hjjhnACnhjhgohhGkkS__aXpJSaXfbcfpLjpbbpL__FHpgnTpRIpfcbfgHpcnYfPKRF__ZmpQSlJpTYYfdkpTYXZ__FKpnkYYkdgYYTpnLpjjpTLYXd__ZNhQFiZcofnGqlQooLl__FRhjDgfLqanffndIhjPhoIgHS__l3eq_ileelq_iqeeq3_qaael3e_qleeli6eleli3_3r4_iis4_rr5_3i_rir__sii__tirsirsrs_",
+}
+
+UITexturesData.Sprites.Banner_YOU_LOST = {
+	Id = "Banner_YOU_LOST",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(304, 244),
+	RectSize = Vector2.new(418, 80),
+	PixelData = "48,12,FFFFFF,FBFFFF,FCF7F5,F9E7DB,FAC2A2,FCB387,FBD8C2,FBAB7A,FB8037,FE8A42,F7CCB4,F99C66,FA9353,E6E2E1,BECBD0,F04C00,F04600,F96C13,F85E02,FA660A,F86204,F75702,E8D8D2,F97832,E46428,E4ECEF,E54F0B,E5A589,E6BAA4,98D3DC,CDAFA3,E6CEC1,96A3AA,CFDBDD,E7C4B6,EE7638,EE5C12,4C636C,E84500,E84201,E33901,9A7A6E,E63E00,CBBEB9,141C1F|AA3BAA_AACAA_3ABAA__B3A3_ABCA3_6ABCBBCCDEFDGHGBDHIJKBGEGCHKC_DHLD__BEJIHC_BGEGDLMJJDIJNOIPKFQLDRSTUSDFQMDVIN_WXSK_BHVTTVLBFUVMGPUUTKSINOHVHMVKMSRYRSMEVMDUJN_NJTKZKSRRYRTGRTaMCbXTcWUJNdcUIXRGXUJOeTIFSMDUJN_NJUEZHSReOIUHRRfWghJTffTJN_iRaajDkPclfRYFPjDPJZ_NIPcZLmMOgFnbYPLCgWIVifPXN_hjooMZaobAKoYcoYDojZ_NjocBLoYCAjoceoojCWkoifpbh_OLombOjoaLkojfqajoJZ_NXojEbqmJJmqcCMnQiWkPcZFKZ_hFQVEdbqPnPqLZaQPqLh_NI3QfkQmQQaikkPVrfkPffQRZ_ZFomK_rLqmnMrgcaqYrl_ZIqanGfamnkiGonqHOiPnifqLO__rrer_sg3eOl_grerp__gr3ergreerggebeg_reergerl__3ls3_3l4_sls4_5s_slls__3l__slls_ls_",
+}
+
+UITexturesData.Sprites.Countdown_1 = {
+	Id = "Countdown_1",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(36, 346),
+	RectSize = Vector2.new(40, 92),
+	PixelData = "14,28,FFFFFF,FAFBF8,FAECE1,F6DCCF,EBCBB9,E3AD96,F1F3F3,E9E8E8,E6946A,ED5200,EB4700,DD814D,DBD6D1,EF5F03,EF5F02,EE5F0A,F15500,D4CFCB,EF6F2A,ED5700,EF5D00,EE5F03,EF5E02,FFFFFC,F9FFFF,EF5D01,C7C0BE,AFA5A3,BBB6B4,E34500,E35101,E34702,DC3400,DF4501,E13800,D96B3F,E34905,E34703,E43C00,D3DBDF,CCC8C6,E74D0C,E34602,E44808,3D3131,000000|__11A__BABCCDDEEFEAG_HAI6JKLAM_MALJNOONPQLAR_HASTN3UVQLAR_HASTW3UVQLAR_HASTW3UVQLAR_GXPUW3UVQLAM_GBPUW3UVQLAM_YCTZ4UVQLAM_YDJO4UVQLAR_YDJO4UVQLAabYEJN4UVQLAacYFd6efLAaaAIg6hijAaRAIik4dlmjAaRAIik4dlmjAaMALil4dlmjAcnAjil4dlmjAoHASmf4dlmjAoGApmq4dlmjAoGApdq4dlmjAoGBpdq4dlmjARBCrl5krmjARYD9gjXRGX9FEAbsc9nRbt_12t_",
+}
+
+UITexturesData.Sprites.Countdown_2 = {
+	Id = "Countdown_2",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(128, 346),
+	RectSize = Vector2.new(68, 92),
+	PixelData = "20,28,FFFBF9,FFFFFF,FEF2EB,FAE1D4,EFB99E,EF966A,EFC5B1,E36A2F,EF6005,EE5100,F06A1C,F4FBFE,EB5802,EF5D00,EF5E02,EF5F04,ECF2F5,EF5D01,F15900,DBE1E4,FDFFFF,EE5E04,FFFFFE,CAD1D4,E45107,C0C6C9,9C8A81,A67054,000000,1F1B1A,E94D02,D0B5A7,F15E00,DB3600,DE4401,E03900,E34500,E34602,E44804,E34804,E34501,E54500,E73A01,DD3200,E54703,E1D7D1,000101|4_A9B7_4BCDEEFFEGBBA4_BBDFHI7JKDBA3_LDJJMNOP4IPMMDB3_QDMIPR7NISKAB__TCRNR9NIJEU__TCVNR9NOSHUT_TAIRPPO7NOSKWQ_XWKSSJS7NOSKAT_TUYYHFHS6NOSKUZ_aBDQLQLFJP4NPSFQb_caZaddLEJI4NPeET3_3c_fUFJP4NgYDZ7_BC7YeHLa7_BFh6ijFQd6_UWYkl4kmhGT7_BGjn4kopiDXAB4_ABHjl4klqHL4B3_BDjl5klkHFFHGU__CBFjn8kjjrGQ__BCnoo7klnmiDT__BFjn9kopiCX_UBYkl9klpYAZ_BGjm5s6mpHLaBUHr12hrHLaXB6G8EftQ_ua6Z6X3TXa__18c_",
+}
+
+UITexturesData.Sprites.Countdown_3 = {
+	Id = "Countdown_3",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(236, 344),
+	RectSize = Vector2.new(66, 94),
+	PixelData = "20,28,FFFFFF,FDF8F4,F3E0D5,FBC8B2,ECB08D,F09A6B,F7EBE3,EF7430,EF6004,EE5100,EE5601,E4EAEE,EF5D00,EF5F03,F05E01,FFFCFA,BEB3AE,F05A02,EF5D01,7E7974,F9FFFF,ECF5F9,EA5104,E95801,F05E00,D6CBC6,D47548,B89B8D,D4DEE1,DE4B05,EA5901,242117,E04702,DB5E2A,FFFFF5,E34602,E44804,E14501,E34500,E13E00,E84C06,E54500,DF3500,E43F01,E34501,000000,CD3E07,010101|4_10AB6_4ABCDEFFEDGAA4_AADFHI7JKFAA3_LBKJKMN6IOJFAP__QAHRIS7MSIJDA__TUFJI9MNKHAB__VDWIONN7MOXGU__LCJKWJKY6MIJDU__ZAabEEHRN5MNJEU__TcU3AFKN5MNJEV3_QACDHKO6MIWDL3_VBIJKO6YNRdPQ3_LPW8eXKdZLf3_VP9gdghGLQ3_Lidjkg5lmgnoBA3_Lipqnrp6mkqFAG__QPFaFams5mjrdPU__L4AUank5msnCU_BAEDBPPanj5mjnCV_LAoqoHhnj5mjpgGZ_LAolmnn7mjrhUb_VPkm3j7mkqELf_VGnms6mljkqaAT__UCn8kprqaAQt__UD9quaEUQv3_LAD7ECGVcTt4_fTQZ5cZQTft7_11t7_",
+}
+
+UITexturesData.Sprites.VS_Badge = {
+	Id = "VS_Badge",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(342, 344),
+	RectSize = Vector2.new(136, 94),
+	PixelData = "28,20,FFFFFF,FFFFFC,FCFBFB,FC9D67,F88B4B,F6792F,F06412,FDB994,F6FFFF,FBA87C,FBF3F0,F4D3C4,F5CAB0,E6F4FA,E94D04,EE5500,ED5101,D6E7EF,EBE8E7,E54300,EF6004,EF5B00,F6DFD3,EF5E02,E54702,F05E01,CFD8DB,ED5B04,D6B6A5,A1AEB3,CDCBCA,A77058,E14401,E35103,E34601,E86D32,E75405,E13A00,E34804,E14A07,DE3F05,E34500,E34501,E43D00,161A18,8B4932,000000|4ABCBAACC5A4_7A_CDEEFGHICDFFEEJK__AKLHJDEMI_NFOPPQENKGQPPOFRSAHG3QPTEN_NJQUUVFIWUXXUQDRIJYVX3UQJN_RMQUXVGILPXZUQJNLQUXZXZUQJN_aLPXXVbKMQUZXPcIDQUZZPbbTJN_dWGVXZPWHQUZZbLIEPXXPEeMJMN__SFPXXQMDQUXVGeRDQUXQHNddSd__NDQUUQHEPXZPEaaMOUZZbDWaf3_RHghhiDjihhgDNfKki3hghJAA__RMlmgljnggmlJN_dWolggmgljCA_dWTpqpnmTpYlMR__dLjripqnlJA__SGgi5pilLeBAeRAjlmpirjC__NElm4piTnW_A3HEnqipiljS__NJlm4pirjS_Cj3lgippmlJR__RMlmp3qmlER_KjmnmiimmrnWd__aLrYp3TplJR_KnlrrTrlljWd3_dSnogg4nMR_eLDjGnjEcad5_aL8ef_sfd4edds6_s3t5su4_uussuu5_",
+}
+
+UITexturesData.Sprites.CameraRotateHint = {
+	Id = "CameraRotateHint",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(518, 338),
+	RectSize = Vector2.new(110, 130),
+	PixelData = "28,32,373333,17121C,443D33,605E5E,5F5C5C,494236,100202,747372,878686,D9DADB,FFFFFF,555453,000000,B4AA8F,FDFDFD,FBFBFB,807F7F,6B6864,FDFCFC,422F2C,675226,191D34,F8F8F8,9C6909,A96D01,2E2B31,B88B27,28252B,745F39,FFCA37,807B4F,FFC13C,E8B136,504A34,020101,FDFFFF,EFEFEF,F1D373,F0BF59|_AB3_BCD9EDFB7_GHIB__FJ11KJL7_MIKNAMHKO9KPKH7_MQKKJFRKS9KSKHTUCV3_MQKWKNEKO9KPKHXYXUZ__MQKWKNDKO9KPKHX3YU__MQKWKNDKO9KPKH3XYab_MQKWKNDKO9KSKHTCZcdU_MQKWKJDKO9KSKH__badaVMQ3KRDKO7KOPPKH_bedfghMQKJEUHKW6PWKKOKHBadffgFiIJCXYLj8KkHWkFadffdXV_FhXYYUD7INRcRLadffdaZ_AUYYXYUbMii5MclagdffdaA__CXYXYUZ4_ALA_Vad4fdaZ3_hYXYUZ4_bNKNbCg5fcb4_CXYUZ5_CJKkbc4dfhV6_UaUFAb3_CJKJZU3aggh7_Vadgmh3_CJKJA_VVbZCC8_ZaddmF__CJKJbB15_CagfaC_AJKkJIHRG13_VAhUTBAJ5KkIHZ14_ZNNFJKOSSP3KR14_RKKJkKO4KWKH14_CJ3KO5KSKH14_iHKW7KSKH15_ZJKO6KSKH15_GHKP6KSKR16_ZJKP4KOKkF16_GDKKOKKOKKIB17_BQP4KWIb19_bL4DLB9_",
+}
+
+UITexturesData.Sprites.LockIcon = {
+	Id = "LockIcon",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(856, 310),
+	RectSize = Vector2.new(84, 96),
+	PixelData = "22,24,B18F66,A67A47,A27642,A57946,A77C49,A1733B,B87F55,C9AA7D,D8BC8F,CDAF83,C19F72,E6CEA1,EAD2A3,E6CE9D,E4CA9C,9A7152,946B4C,E1C697,825932,9E6F36,DDC394,703C1D,895B2B,8F602D,936532,DEC496,794F26,E5CC9D,C2A675,DFC596,E3C89A,DEC494,DFC496,E1C597,E1C699,DFC595,DFC696,E2C69A,F0DBB2,311C15,130303,5B3114,5E3214,120003,000000|6_ABCDD3CE12_EFGH3IJKECE9_BDJLMMNNMMOKFP7_QCILRAQSSQHNLKFQ5_STKLUSVWXXWVANOGY5_YBZNQaECFFCFVKMHTa4_YAMJaCFFT3FYQNIFS4_YKMAXC7FXIbEW3_PXcMEX6TYTWHMEYP_QEAIbc10KIOHGC_XEMRdbLN4Lb3LefMJYVWEOURd3gZUUghiZRiOHXVWEbUhjdkdeMMlilRdgbHXVWEbffjffOIQPhhihdfbHXVWEbUfjjUMAaaHbdiifeHXVWEbfjddjeIFGihiligOHXVWELg4RjLTELZllidbHXVWENfhiidhOYEMgilijbHWVWEbgd3RgeHJed3ldbHXVWEO3UZZUUeRUUg3ZeHXVWE8MN7MmJXVVWQ16PSWnopqp3qpqpp9qn3_ror5orr5oros__",
+}
+
+UITexturesData.Sprites.Banner_LEVEL_UP = {
+	Id = "Banner_LEVEL_UP",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(808, 414),
+	RectSize = Vector2.new(208, 44),
+	PixelData = "44,12,FADCCD,F3B99E,FEFFFE,FCF6F5,FBEDE7,FAE4D9,F9CAAF,F3AD8F,ED4600,FA782A,EDEAE6,ECCCBC,F3621C,F49B6F,EE4C00,EE6725,F05B0A,EF5303,DBF1F5,F38448,F58A51,F15B00,DFCEC5,E48F66,92DBEA,EDC1A8,ED6F35,D1B4A9,E14402,E64D07,E12D00,E44803,E7540F,E63A01,E13902,F47C4A,E13D00,E75A2C,E86126,979999,BAB3B1,A9ACAE,000609,000000,6E2511,000004|ABAC_D3EFDEAACAA6EDGGE4_DFADAADGGADC_HIJK_L4MNHOPEQRHNQ3MFJIHS3_BQQETIBUIVJACBRJW_GVVRIXGOPGVOBTRVOOFTONY3_BVVFTIBURVIJDBOJW_ZVVXNZARQHVRLTOaHNETONS3_ZVVFTIZUOXTVLBRJW_BVVUHWbMVXVVFTRJNLWTINS3_LVRAUOZUIBBRbBcMW_HIdeMWWJfafgEaffhXSTiNS3_LQcAjiZjkUadbBkdACBifaNDKjigklDlkljLCjeUCC__LgiHaeZakcemWZkfmNBifmlUSUifhaKmkgmlFjigPB__WMcffkZmkclbnBikecNickemSNhfhXKgkkieLjekeXS_oHekimEgiXon_L3ajNdmmlNSHhdhXKMgmmlFNlalHS__oHajbWPiHn__n4p4oppno3bon4o7pn__qnppnn3o8_rq3r__qsqqt_q3r16_qqr3_",
+}
+
+UITexturesData.Sprites.Banner_QUEST_COMPLETED = {
+	Id = "Banner_QUEST_COMPLETED",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(168, 698),
+	RectSize = Vector2.new(318, 62),
+	PixelData = "48,12,F9D051,F8B84A,CF9235,C18A32,C88B34,CA8C35,ECA43D,786D18,586210,5A6811,5B6A11,606C12,636E12,FBB346,9C8025,59740F,608012,5F7E12,688310,628213,6D8612,798C16,5E7C12,E19C39,7A7E19,9B9328,DBB347,B7A139,C9AC42,D5AA45,CCA43E,D7AB45,D59B36,687A13,F3AC3E,BA9431,DB9735,D18D33,B8822E,D5A944,E4A43B,DAA537,5E6311,5C5A12,855021,885320,291708,875021|_ABCD12E15F11EDCBA__GHI3J4K5L16M6L4KJJIHG_NOPQQRSQSTTQ3S3UVVUUVUVVUVUV5US5QWRWRPONXYWZabYbZbbcZZcbdbUVcaZcBZbVbZcbbZVd3ceecbfbWYXghUiEieXjkGCOBlHimScNmnNlBBcBgiXNjVNDOiDNmXmGYhkgRYoIgkgjgogMXjhoZSojIojLNNBBgoeNjYNmKoOiOjHCOhgghhiaNjoBCiFVOBZiZQjBcgBaBNoNpNCDabNmZijimoaiYhgkYPOXkDOlHComXFHgOUHlkHFoOCHmECqOoXkXOCOkXllmPYklZPKrrqKIMIrJrIhIhUSIIhqrMqhLIIUM4ILIJrrIIJPZlsoZWR3WQWRQRQQWTRWR7TR3TWR4QWRWRRQRWZos_tXf9n5dffddf4df3dfdnd9nfXt3_u8svvt19v3tv8su__",
+}
+
+UITexturesData.Sprites.Banner_GOOD = {
+	Id = "Banner_GOOD",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(6, 772),
+	RectSize = Vector2.new(178, 50),
+	PixelData = "36,12,7E1D00,933712,B2786A,B27C74,B37C75,B57E76,862802,B87E70,9E5843,8B3F1F,883C18,82320F,A7624B,8A2C00,862300,944425,B98276,B1705A,A5583E,8A340C,A25D4A,8C3103,892F03,EDEEF0,FFFFFF,C3BDBD,FAF9F9,7D2504,8C3001,BDA8A4,87726D,DBE1E4,968681,AD958F,7A5A4D,692409,734434,E3E8EA,430600,D2D3D4,600F00,AE796F,7B2D0E,973C18,2F0400,410600|ABCD4E3FED3FEE3FE4FDFF3EDCBAGHI5JKLLKJKLLJJKLLJKLLKJLL4JIHGIMA4NOPQRBOPRSOOBRROBMPTAMQ4NAMIUSGVWVGPXYYMC3YQSXYYZMYYXPZabcWVGSUUSGVcVAdYdeJaaeZafYghYdXiXddXbccVGSUUSOVcVAdfjkUlhmillnojfZnoddhZbccVOSUUSOVcVAgnpngZZIdZdnUQngZUZgkiGccVOSUUSGVcVGknffeelflgiffldelflihZbccVGSUIMANNGNAkeijjigijjkeejkggejiiO3NAMIqHS5rTjqrrqjqrrLjjBTjjqrLL4rSHqmLC5pDHDppEHDppDHHpD3HpDD4pCLm_smt3m5tm9tm6t3mtms_",
+}
+
+UITexturesData.Sprites.Banner_GREAT = {
+	Id = "Banner_GREAT",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(194, 772),
+	RectSize = Vector2.new(178, 50),
+	PixelData = "36,12,094974,155E8C,6E96B5,7691B1,7792B4,7994B5,0D5282,3976A0,206290,155584,0C4D7D,4581A7,00487E,00588C,004D82,5989AC,C9CFD5,B4C0CA,3E78A3,186597,83A6BD,4B79A0,015387,03598C,FFFFFF,7291AE,6F8AAF,A8B1BA,FFFFFC,8797A2,1E4B6C,74818F,586C7B,D8D6D6,E5E1DF,001E42,04375F,758DAB,545E6C,24587F,105786,7290B6,718FB5,001123,001C41,001C3F|ABC3DEF4EFFEE3FDEFFD3F3E3DCBAGCHBIBIG4JGKJJ3GBJGGBGKK3JBIBHCGHLM3NOPQRSTCCBT3PNTPLNCUUPRUONNMLHVSWXXOL3YZaYYQbYYcMUYYIQYcdcRMXXWSVVSWXXMRYdeAFcfcQYdgMhicPjiQkYbMXXWSVVSWXXObiAVVCibQbiiVWidhUMQRGhDOXXWSVVSWXXOlhZhUPhhdfhmeHQQhUMRbMmeNNXWSVVSWXXWnQiiddiQRbihQUimbQJhRGiDOXXWSVSLMNWNMegmkgf3m3fmgkngJfgMgeWWNMLSKCH4TBAATGAoGK3AGAToABAATAB3THCKjJP5apqaqp3qpp3qaqqapqaq4aPJj_r5jstsjssjss3tjtsjsjs3ts4jr_",
+}
+
+UITexturesData.Sprites.Banner_PERFECT = {
+	Id = "Banner_PERFECT",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(382, 772),
+	RectSize = Vector2.new(178, 50),
+	PixelData = "36,12,077128,14943E,70B27D,73B37D,74B57E,78B57F,74B47E,7AB782,0A8231,6FBB81,339151,198A42,0E8537,13883C,3EA15B,45A963,008023,038931,1B9243,56AE6F,32A156,02852C,0A8D36,3EA65C,4CA060,FFFFFF,E6E0E4,7FAD8B,EDEEF0,CCD4CE,FEFFFD,ABC2B0,A2B3A6,C8C5C7,98A59B,E5D9E1,637B68,405D4B,287240,5F906C,70AD7D,004A0F,048730,4D6856,175A30,003309,00430A,00430C|ABCDEFFG3FGFFGG7FG5FHHFDCBAIJKLLMNLMMNLNM4LNNMNLLNMN4MNLKJIOPQRSTUVPPUWUXRVBWBUPOBVUXSXPTJTVQPOYXRVTZZHaZZbcZdOceZaZZfgZZhaZaZhQRXYYXRVCeiaajkKeicbZglfZbkZdkmmZnjfQRXYYXRVoaihhagLafdoafmbchncnpQKcYgbVqXYYXqVnddkfgkYhjinjkAbhkrhfbXSjKrrRVXYYXRVbjlAdjaidhfbhKQgjagkjjiKanhbVqXYOPQRmrVR3lmrsmssARmllmAllAIrmmARQPOIJUSNIBB3IWIBW3BSWIIWSWMBBIBWBSUJIpMCoCECoDEECD6CDEGECCDCCG3CoCMp_tuvu3vuu17vuuvvuvut_",
+}
+
+UITexturesData.Sprites.Badge_C = {
+	Id = "Badge_C",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(666, 826),
+	RectSize = Vector2.new(48, 48),
+	PixelData = "18,18,C27942,F1B369,FBB75C,F7B356,EBA755,E09336,833311,832F12,FCB558,741810,7C000D,920616,8D0011,85000D,D18754,F0AC5D,820B10,9B0916,A3131C,990917,AB2C2C,FCBD62,F1B064,8D1918,F3AF57,861615,AF5F25,9C5A1D,7D401A,A04A20,54020B,E49C40,C0702D,C11221,D28427,A85520,C77A20,DA8D31,D9882F,D48D47,A60917,9F4E15,92201F,9A2321,D88E36|_ABC10DCBA__EFGHH7GHGFE_AIJKLLM6NMKJIAOPQRSRSA4OASRQPOOPQTRUBVVCCVWXTQPOOPQTSWCEYVCVAKRQPOOPZMaVEYYbcbdLRQPOOPZMAVYVceLKLSTQPOAfZNgIEEX4hSTZfAaiXNdfFfU4hSTZiajkXMHlmlnOOEUoTZkjpkZRKaFiiliinULXkppkZTLegFlm3ljMXkppkZTSQecbabceeTZkppiXNTTN5eKLNXkpHkA4qr3qrrqqAkG_piF10sFip3_H12pH__",
+}
+
+UITexturesData.Sprites.Badge_M = {
+	Id = "Badge_M",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(718, 826),
+	RectSize = Vector2.new(48, 48),
+	PixelData = "18,18,C27C37,EEB268,FFB761,FFAD53,ECA854,D68D39,584B1D,425326,007847,007E4A,018650,FDB25A,D28A40,F2AB5C,10693B,069456,388E59,7BB078,ECAD5B,167141,D99946,F8AC55,F6B15B,EAA350,0A7C4A,B48E46,1C7945,277E4B,F1A954,AE6520,D27B21,E39236,29723F,A45715,D5852C,E68B2D,C7731B,2F7847,A04F15,0B7043,0C331D,833217,25824F,944B19|_ABC10DCBA__EF12GFE_ADHI3J4K3JIHLAMNOPQRRQ3P3RPONMMNOJSCCSPPRCCEJONMMNTJULSCQPBVWXYONMMNTJULSLZQCSWEaONMMNTYE3WBB3WNbOWMAXTaXV8cbOXAdeTa10fgTedheTa3idiiAiijgTehhkTg3iGAjGiijlTkhhkTgjijHHGHjijlTkmhkTgkddlJIgddkHTkmhegn3oIPPI3oOgempeZb10qbZep_rif10Ffir3_p12mp__",
+}
+
+UITexturesData.Sprites.Badge_L = {
+	Id = "Badge_L",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(770, 826),
+	RectSize = Vector2.new(48, 48),
+	PixelData = "18,18,C47F3A,F5B262,FFB355,FFAE50,E8A657,E2963C,574A2A,D78D37,1E4346,097283,007E94,007B96,CD8B4B,F1AB5A,186369,01879B,048FA0,309693,AC9F6E,0497A7,0799A7,0092A6,0F8187,F9AC51,6F9B80,0099AD,F2AF5C,3F746C,049BAB,008C9F,019DAE,20696D,A85F1D,D38023,216F74,E08F30,A67A3F,C97517,06808E,DC8A2D,A45616,795F32,A04F16,0B6070,833218,267B83,944B19|_ABC10DCBA__EF12GHE_ACIJK4L3KLLJICAMNOPQR3SRTUQQPONMMNOPVWXCCYZUTQPONMMNOPTWEaCbZcTTdONMMNOdZWEaCYZecTdONMMaOdZWEaCYZecTdOaMAFfdeWEXDYceeUdfFAghideWHFjkZeeUdihgglidcmAnnMYYUTdfloolfPcmAnhnnjbVPfloolfPTmA3jHjpdPflqolfKQmp5gpPPflqohfLKKr5IrKLflqslk12tkls_uhF10Hjhu3_s12qs__",
+}
+
+UITexturesData.Sprites.FirstPersonDashboard = {
+	Id = "FirstPersonDashboard",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(200, 878),
+	RectSize = Vector2.new(800, 122),
+	PixelData = "64,14,101315,101415,111315,121618,171A1B,1C2022,202528,262A2E,283136,111516,151718,303538,191B1D,171C1F,232628,212122,0A0B0D,020202,040404,000000,010102,030305,0D0E0F,121416,3B403E,050606,080909,03070C,101112,18181A,020303,060708,000207,0E151C,081623,0A0E12,040505,11171D,101C28,050707,060808,040606,030506,1A2024,000E1B,050505,030303,040504|9_ABBCBAABCDEFGH17IHHGFEDJCBBABCAC9_6ABBAAB4JDKEFHLLHGFMN4MEE4MNNFOILLONEDD4J4B7AJJ3D3J4BJDDEFOLLPQRSR5T3U6TVSRWOLLGNEDXJ4B3J3DJJ7BJJDDKENFGIYOWRWPPMEQZaa4baaVWP3OcRcHYHGFMEKDDJJ7BJ5DKEENFPOHLYYdZeCPfUgaMCQh4ijQKPQgUQHcefFYYIHGFFMEEK5DXFP4GOHHILL3YLCkZaFTbilibdWh4mhcPbiGibRGankd4YLLIHHO4GPF6K3d3EMECopoVXabGOMLGjKj4iQMjmFPEmbWKeakaXMM3Edd7K3f8ofonnoofZcqlFOHOOiCc4WAXHLEOKLGVKSfoonfof3of4o3fSk5p8noffaWjHOGNOOLjcjjWjChIPGrFOIbXffoonnZ5n5pkSSkk4Sk8nfZQQmLFislOYl3WjWcmPFishFHhcQZf7nZk3S3kSk6pkSZnZZ3naZWWmHr3iFImQPYImWmOr3iELmcWZa3nZZnpS7p7kppqSnn3ZnafWWmGrismPrmjdYYmWmPNisidYmcWfa4ZnnSkpp4kpkS7kSStk3qpafWcmHcGGrKHhWQjQQclPdGGrcHiXQofp3qktS8kSeeueueeuuS5evftoQljtcXQehA4aoalXaWXWqjlWfZfS4e4uee4ue",
+}
+
+UITexturesData.Sprites.OrangeArrow = {
+	Id = "OrangeArrow",
+	AtlasId = "ui",
+	RectOffset = Vector2.new(738, 188),
+	RectSize = Vector2.new(80, 64),
+	PixelData = "24,20,F4F1F3,FFFFFF,D7E5EB,919DA2,FAECE1,FEB081,F8FCFC,F26100,F98644,FFF7EC,EBF3F9,E7E5E5,EEFCFE,7D7F80,F1630B,F15D00,F66E2B,FBE2D4,F0F5F9,F4CEB7,C3CED3,F36802,F36401,AFB5B6,F87A3A,EE5102,FD9559,F36A04,F36700,F15A04,F36701,EC4A00,EB4500,ED5003,ED4F00,ED4F01,E93D00,8C8E8D,ED4E00,ED4E01,EB4300,6A6C69,EE510A,242423,EF5409,000000|11_ABC20_DEFGC19_DEHIJK8_LGMMKC4_NEOPQRM7_SFFTREGGMMUEOVHWTGX5_SYZPHOIaTTEEOWbcPFGC4_SIWbVWPPdPVQbccVbdaGC3_SIPVceV3bcW5cbPYJK__SIPV6cVV6cbPQES_SYZ16PHPfECSYgh14iZjkFLlSYgh3mn4h5mhfoTLp_SYg3hjfgkkg4mhoqRCr__SYkgkkosYaFTqmnhkQJUt3_SYqIFTRELUUAqnhkaGD5_UJLLUXDpr_rEqfkFKl6_rNpt6_XEqoTCp17_DEqRCr18_pLJUt20_ND11_",
+}
+
+UITexturesData.Sprites.Tab_Home = {
+	Id = "Tab_Home",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(32, 116),
+	RectSize = Vector2.new(46, 36),
+	PixelData = "18,16,88623F,51290A,64472B,5A3313,693E1B,6F3A13,C6AE8F,6F4624,6A5947,753F17,A58362,8A5126,65330D,7A461F,854619,7D4E28,754E2C,AD8F70,733C12,884819,834B1F,B69777,663916,905E33,854516,AC9880,82481D,874A1D,84481D,976334,864A1D,77421A,F9F9E5,87491C,ECE0C6,804417,884B1E,834619,956E49,884A1B|7_ABC__DBE9_ABFDCGEFH8_IDJKLMHNOP7_QDNRARLSNOP6_CMNRQMERLTOP5_CMUVHFNJWRXYNZ3_CMUVHFabcJWKdSWZ_DMLVESabebcJWKdMDRHPVEJa5ecfWKXEZ_gAScbehTheehJHiG3_Ajkeh3LeeklP5_AjkbcKiGUhkOP5_Ajkbam_RNhkOP5_Ajkkam_RNhkOP5_AjnTjm_RfTnYP5_KXddXK__X3dm3_",
+}
+
+UITexturesData.Sprites.Tab_CarShop = {
+	Id = "Tab_CarShop",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(140, 116),
+	RectSize = Vector2.new(40, 36),
+	PixelData = "18,16,8A6B48,4C2209,481A04,A38568,5E3719,663611,936A46,946E48,92633A,5F3210,634429,855833,A58C6F,743E14,B2A275,9C7651,6F3910,7D5331,C5AB8A,754B28,663D1C,7C4F2A,5E4328,7C4C22,81461A,603311,84481D,86491B,874A1E,864A1D,925F38,7A481C,E1D5C4,77441A,D0BDA0,825230,8D5D33,7D4D22|3_AB8CBD6_EF6GHIJK5_AFH8_LFM4_KNO8_PQR3_SFL10_TU__MKQVK8WTXFTOKFYNF8ZFNYJKVNPIY8aYGINRVV__Lbc4dcbe__fVTUgMhac4dcYTiOUVVFEEN7baQEEFRGLjj9ekRjLHRNlX10fXlNL_PlVMi6SgPllD__LQQH8_LQQH__DkkM8_PkeS_",
+}
+
+UITexturesData.Sprites.Tab_Shop = {
+	Id = "Tab_Shop",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(240, 114),
+	RectSize = Vector2.new(50, 40),
+	PixelData = "18,16,89613F,5E371B,825732,6E5528,6A3812,CAB597,966238,6E3E18,906944,553319,553419,6E4421,BF8B72,744118,753E16,743E17,743E18,774721,784B25,8C5B33,89491A,884A1D,874A1D,7F471B,976A43,874A1E,864A1D,87491C,7F4C24,9F7D5C,88491A,81522B,764622,B9A590|ABBC14_DEEB15_FGHIJK8JKJL__MNAHO8PQPC3_RSTUV6WVVXM3_TNYXZ7abc4_dPIaV6aZeC5_NfTU7ZbI5_fNYeU6eXd5_dOdY7GY6_FREL5RgRHD6_ACf5cfCRA7_AA5_dCh7_AEEI4_BEL7_dXcM4_fXA8_MM6_M3_",
+}
+
+UITexturesData.Sprites.Tab_Options = {
+	Id = "Tab_Options",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(354, 114),
+	RectSize = Vector2.new(38, 40),
+	PixelData = "18,16,6A5330,5B3C22,A98F71,8A603B,583216,613311,5D300D,634124,5B3313,794016,894B1C,82461A,6C3812,59371A,CDB89D,875329,8A5830,82491D,713D15,967C60,7F4317,AA855E,8F633E,804519,744119,6E3B15,6B492B,864719,B59979,794924,916E4D,7A431A,894918,D5C8B0,854A1D,633716,A87F5B|7_ABBC13_DEFGH11_DBIJKLMNAO5_ANBIMLPQQRSFNBBO_TIMSUQVO__CWXYZGa_DSKbQ7_WbKUa__PbRc__AEBT__PbRC__dUP__eGZFH__DXfV__dUd__TfgLD__QUfC_OdXZT__VWW__hYXYe_DMiJjC6_HZiJH_CfgbZIA3TABjLKbD__kWWiJF3EFSiQWW6_cWRUffLQk11_ViKgW14_VkkO7_",
+}
+
+UITexturesData.Sprites.Icon_Music = {
+	Id = "Icon_Music",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(18, 192),
+	RectSize = Vector2.new(54, 68),
+	PixelData = "18,22,E1DBDC,F3F0F0,774A47,D0CECD,FFFFFF,D6CECD,573128,CCC4C2,E1D7D6,A5827F,EFECEB,BBACAA,D4D1D0,DED1D1,674746,E8E4E4,2E0000,460F09,9F8B8A,F8F8F8,E5DBDB,FFFEFD,350000,250000,360000,9F9696,570900,E6DBDB,C7BFBF,DAD6D5,380000,460000,FDFDFD,681C05|8_ABC15_DEFG14_HEEIJ13_DBBEKL12_MNOIEEH11_MPQRSTEL10_MUR_QOPVC9_MUW__XCES9_MUY3_QPJ9_MUY3_ZAG9_MUY3_FJW9_MUY3_Ga10_DbY12_FbcdUe10_PT4ENf8_ZB4EgEIf8_KEgVEEgEHQ7_LEgVVggEBOR7_J6EACf8_YJABKFSRf10_WRGGYWh28_",
+}
+
+UITexturesData.Sprites.Icon_Sound = {
+	Id = "Icon_Sound",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(126, 194),
+	RectSize = Vector2.new(44, 64),
+	PixelData = "18,22,A18F8F,F2F0EF,D2CECD,CFC1C0,F6F3F3,FFFFFF,000000,E5DEDD,CDCCCC,F4F0F0,FCFCFC,BEB0AF,F9F6F6,684B3D,EDE9E9,6C5453,FCFBFB,FDFDFD,FBF9F9,FFFDFD,FFFEFE,FEFEFE,63312E,460000,937A7A,FCF8F8,4D180D,6E3630,AD9B9B,FDFCFC,671700,4C0000,4B0500,370000,DBD7D8,3F0E07,FCFDFD,CDCCCB,230000|14_ABC14_DEFCG11_AH3FIG10_DJFFKFIG8_AH4FKFIG7_DB5FKFIG_LBMEMJ7FKFIGNO12FKFIGPQF4R7FKFIGPS12FKFIGPS12FKFIGPSTU3V7FKFIGWJ5FKV5FKFIGXYOZMMZFFR4FKFIG_Xa3bWcSFd3FKFIG__eXXfghPiFFRFKFIG8_XjckFQKFIG9_ehPiFKRlG11_XacVFCG12_ehPiLm14_Xjae18_",
+}
+
+UITexturesData.Sprites.Icon_DriverSide = {
+	Id = "Icon_DriverSide",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(444, 194),
+	RectSize = Vector2.new(66, 64),
+	PixelData = "22,22,DDD6D5,FBFAFA,DDD8D8,BDB0AE,DECFCF,876261,5F3C2B,693A32,D5C8C6,380E09,A3553E,C5B6B5,310000,6E4D28,D2BFBB,845E5B,BB9391,B7A19F,110001,ACE701,9CC110,9C7876,A28C8B,571006,3E0000,490000,652814,743B23,6F5A4D,92A73F,898846,E8E0DF,000000,FFFFFF,FEFEFC,FDFDFC,3A0000|3_ABCAA8CBD7_EFG9HGFIJ5_KLM_NN8_MOP5_QRS3TU8_LV5_LWJ3TUJ7_QR5_OFX3TUY7_VDS4_OHZNUUaZ7_bOX3_KLJ_3Ua8_ZOc3_QRSU4TN7_JOV3_DVS5TU8_QQ3_ORW5deRf4EAILLg_OB17hBW_IhLcCiBiijj3hjhAcLhDgIhHgVhj7hBhFgHhDgIhLWfhj7hjhEWEhDgI19hDgEhBhi11hjhBhDgRji15hBhVgYRiCc12PCiWM__VhEMY9kYSAhFM__bFHX11_acFa3_XMZ13_ZkX__",
+}
+
+UITexturesData.Sprites.Icon_WheelSide = {
+	Id = "Icon_WheelSide",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(530, 188),
+	RectSize = Vector2.new(86, 72),
+	PixelData = "24,20,EEE9E8,FCFCFB,FFFFFF,F7F3F5,D3C7C5,E8E4E4,FBF9F8,E4DDDD,CFC1C3,AD9C9B,643A2D,400A04,300001,7E5944,C4B6B4,BDAEAE,1F0000,977A5F,5C3D2C,F0ECEC,43130D,0C0000,E6CDC2,C9BDBC,3F0000,521303,A7DC00,A1CF00,839701,A09750,8FAC00,A9E900,000202,7A6C1E,150D09,010202,000000,701901,423930|11_ABCCDE16_DCCFEEFCGH12_IBCJKLMMLNOCFN9_PGAKQ6_MRGHS8_TTUQ8_VKBE7_OCBP10_WCCR6_FHJCDX__FE__ACCJTI5_NCJVNECFTCCFDCPSVETU4_RGN__YRD4CFNMZ_JCS_aabcdcc__VH4BOV3_JCNeacafcbe3_XCCBCJ4_OCSecgbaMheQ__KEBGPU4_HTLcabafbfeQ3_MAIQ5_GPVeaeafebeQ4_AXi4_WCK_ecjbfMhe5_AIj3_ICJQ_cbeafeacEX3_AIk__HCIU__lafaaffSICHEmAXmDGCOU3_Yc4feLZJACBCCBCFRY5_Z4hZ__MZRJOOJNLM7_4Y5_M4QM7_",
+}
+
+UITexturesData.Sprites.Banner_QUEST_TODAY = {
+	Id = "Banner_QUEST_TODAY",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(578, 388),
+	RectSize = Vector2.new(258, 62),
+	PixelData = "44,12,FFD17A,F0B44F,E5A750,E6A851,E6A852,FBBB51,BB8739,7E531A,7B5319,80541A,83551B,CB9542,C58B37,785019,8A601E,865E1C,835A19,885B1A,8E611D,8D5F1A,92631E,986924,DA9333,EBAA44,A1712A,D29C47,AC742B,976420,D19B46,B0792F,E0A94D,9F6A22,F8B54B,E6A440,EEAD47,DDA143,D79D44,E6AB4D,B37C2F,AE7933,815819,D49C46,7D5519,B07933,AF7933|__AB7C9D4E9D7CFA3_FGHI6HJJKKJ13KJKJJHJ3HIHKLF_FMNOPQQOORSRTRTU4TSVUTTUSTTURRTSQRPQPQPNWFXSOPYZLUaGaGGLGbGGLcMbaccdGeLYLZYULGYGVGSQfghPOO3ieMiMXXBMMFLGFMffegLFXFjiklaFgmgLXQPVhhOPfgJngMhmjhBVmBVUgafUMhkiNMFWRXLjXajFmoOVhhPPUgZBimFlhXZnbpFmFmffjXMFLBiieXkFFmMFVPPVhhOOomgXgYMiYhBeMBLYgafbLXTjFjdigdjdMMmgbPPVhhdIS3NKQNNQJIqRKJSqUVfPobHHIRHNJHqIJQNPSNMjaiVIoIqNq3Q3oQoR8QRoR4Q3o4qInXS_alZ3cZ4c9Zpp9ZcZ6cpeV3_Nanr8s17r7srsaN__",
+}
+
+UITexturesData.Sprites.WoodPlateBar = {
+	Id = "WoodPlateBar",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(16, 396),
+	RectSize = Vector2.new(306, 80),
+	PixelData = "44,14,9F9EA1,BABDC2,B2BBC4,B2BAC4,B1BAC3,B2BAC2,979190,ACB0B9,766B64,766960,918B8C,979090,946F4A,904500,984C01,9A5008,927D61,A55C14,B56E15,B77119,BC761B,BB7419,BA7217,8A6039,BF7B1D,C38020,C07C1E,C07B1B,C48222,C17E20,BE781A,B76F14,9F591B,C4801E,C37E1C,C47F1C,C58221,C58222,C68425,C4801D,C58121,C48120,9F5717,200E0A,4B3629,4B3B31,4B3A2F,4B3A30|_AB3C13DE4DE14DCFBG_ABHI15JI4JI11JI3JKBB_HLIM4N11OPOPOOP12O3NQI3AKAMR3STUUVV3WVUVWVUUVVUUV3WVVUUW3SRKALAAXMRSTVUYZabacdbbaabbdaabaabadcbadZbeVTfgMJHHgSWVebhijklmklknhjoipihhjhnlpmmlpjjZbeVWRMEAgVVedijjnllmjjonohijjpojoonojpmkkjjihdeUfMHKgeeZlookophlhjjploplpolpolhjjolhpolpoliefXKIgbachZcllhhlcphpZZpoljpcjpZhpmphhllchZZYWXKKgeUaYYeYdaa3YeaYYeed3YbaYe3YdadeeYYUWfMKKgSS8TSfSSf3TfTTf3TffSfS3TSSTTSSPMKILqq4gqggqgqqgq4gq5gqgqqgqgqq3gqqgGJrIALL3GL6G14L6GL3GLLAJ__rst6uvv28uts__",
+}
+
+UITexturesData.Sprites.Btn_START = {
+	Id = "Btn_START",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(8, 710),
+	RectSize = Vector2.new(262, 86),
+	PixelData = "48,18,B58E58,BB9660,BC965B,BE965B,D2A14D,D2A047,A7794A,C09247,AEA767,C69644,C69847,C69746,270B10,B2833F,C69747,91795F,855129,CA9A48,C79846,90653C,A78A66,52191C,6F3A13,C6994F,C69A51,D5B072,DABC89,DBBD89,DABB86,DCBE89,E1C38E,E0C28C,DBBC87,E4C791,DEBF8A,CD9E4B,DBBB86,D8B986,CCAC7C,DCBD87,D7B780,DABA85,5F2E17,7B451D,85491C,7C3F13,DBBC86|3_ABCC34DCCBA5_DEFF36EFFED3_GEHIAJK32LKJBIHEG_MNOPQPARL30JLSAPTUSNMVNAPWPUJX3YXXY5X3YXX3Y4XYY4XYXJUTWPHNVVNNPUPGZabcdefgfeehhdbdiidbbifficd3ifiaZGUUPJNVVNjGPTZekkelmmdmIBUUlnllmlnn3mleclo3mneDTPNFNVVNjRJKkgpfUWqreTqWWqmhTWWTfdQqWWUmqrrqThcoJJRjNVVNjOSXccfmWstQeGQssGll3sQldQsstrB4sAecoOKOjNVVNjOSXcphAtQmBlhmtsohmtQQrmfQtATtBeTtGhpdoOSOjNVVNjOSXccfBtrPidfBtsmhUWGTWBfQtUQtmhTtGepdoOSOjNVVNjOSXcgcfGsWrmhAtsmhTtTTtGissrtQodQtGhpdoOSOjNVVNjOSXcgnolTstUhAtsmbQsttsTl3stGhlQtGhpdoOSOjNVVNjOSXcphGqrstBhGtsomrsTTsQm4srmlQtGhpdoOSOjNVVNjOSXcpeAtssAieGttoAWQimttBQtGQTdmtWGhpdoOSOjNVVNjOSXcggdmmoekdmBBloBBdlBBmmBlmmeoAGBfcdoOSOjNVVNjOSXc3gifdcggieendefuneeiifgidcnehfcgdoOSOjNVVNjOSXc3gcck3gcppggppggpp3cgccggppcggdoOSOjNV",
+}
+
+UITexturesData.Sprites.Btn_PRACTICE = {
+	Id = "Btn_PRACTICE",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(278, 710),
+	RectSize = Vector2.new(262, 86),
+	PixelData = "48,18,AC8D63,BF9B61,BC965C,BE965B,D2A14D,D09C43,CE9E49,A87C4B,BA8E4C,ACAE6A,C49444,C69747,C69746,270B10,B28340,93795E,7E502D,C79848,C69644,C79745,52191C,653114,C69A50,C79A51,C69A51,6F3D17,D9B476,D9BB87,DABC89,DBBD89,DBBC88,DBBB87,CDA76C,956C43,E0C18B,DEC08A,DABB86,DDBD88,DBBC87,E3C58F,DCBC86,C8A878,D0B07D,D5B783,81461A,946136,8C562A,7D4015|3_ABCC34DCCBA5_DEFG36EFFED3_HEIJCKL32MLKCJIEH_NOLPQPIRM30SMTAPQATONUOIPVPAKWXW26YWYWKAQZPIOUUOOPAPHabcddeceddee3deceecfbeeddccdcffbghPAPKOUUOG3hgiijfkjilkmljlmklilliinllkfijo4inBhhOGOUUOGRKRfbppjjqprikrqronbprrppArrjjpqc4pdrKKRGOUUOGLMWlqZVQpZVZpqZVPnAZVZQVZZQQqQVVPQVVZdrLRLGOUUOGLTWjqststutshBvstcZvttpHvCtutZutBtsHCdrLRLGOUUOGLTWipZHHQshuhHshQpvtjinBZBtQusqnbusQBnrLRLGOUUOGLTWipsQZhusvCtsusAsubqnHZA3usqqbushpirLRLGOUUOGLTWipssHpssvHussvAtZQVpAZAuuHvQVPuvQQrkKRLGOUUOGLTWipZhnpvtutvHqvHpussAAZAuuqtssht3urrKRLGOUUOGLTWerpqlbp3rpqjpqirprnqpqppjepqnbb3drLRLGOUUOGLTWklijfli3lilfijklilkjiljjkmijkllmmdrLRLGOUUOGLTWkmkkmmkffmkfmkkmmkmmkkmkkmmkk5mdrLRLGOUUOGLTWk33mdrLRLGOU",
+}
+
+UITexturesData.Sprites.Btn_FREE_GOLD = {
+	Id = "Btn_FREE_GOLD",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(346, 806),
+	RectSize = Vector2.new(142, 46),
+	PixelData = "36,12,F9B65D,EEAD5E,FDC465,ECA249,805521,78511E,7A531E,79521D,B5853B,F3A84B,8A6524,816222,7D5E1F,785A1D,7D5D1E,7A5C1E,7E5F20,846322,846221,674B18,AF7830,F7B25A,CD9C52,DDA04E,C1883C,C69249,A37232,E3A758,E5AA59,73551C,DC9844,F2AD5B,C88E3E,E7A852,76591D,EDA74F,7A5A21,875D23,70501B,E7AA59,97682A,875525,866522,977328,E7AA58,895626,885525|A30BACB__DEF6GHGGHGGHF5HG3HGHFHGEIAB_JKLMNNOPPQPNMPNORLMLQSPQMLOQRLPNTUV_DKOIWXYWZaZWIZWIQRZAWLZBbKZaOWcZKdefDKPeDagDXgJXUJhUiUAUKIAUegegNDajUdgJDKOeXkUjeUJYlJWkNIJkIgDTYeeYdDdeImgJDKMJgTgVDYAbZVnZPKJCVoVAAaeAZJCVodgJDaPaoQKlEloaooaoSNEolmpalmoaooaKkPgJghNTdqNiONTTmTTmRqkTiKiTdqdTmmTdKNgJTecrRQLSLLqqRRqRQQLqSQSqRQRqRRqRLdgJ_TYssn27sbVe3_Ttpp25uptpF",
+}
+
+UITexturesData.Sprites.Btn_QUEST = {
+	Id = "Btn_QUEST",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(844, 806),
+	RectSize = Vector2.new(142, 46),
+	PixelData = "36,12,F1AF60,FDBC60,F0AE5F,EEAD5E,9E7432,7A5420,754F1B,6F4A18,9B6B2A,F4A749,EDA951,876123,71541B,836321,836122,806022,BF893E,CE9A50,7D5D1F,AB813C,896524,7C5E1F,856322,7B5D1F,AA7830,F9AF53,866323,FDB85A,FFB350,DD9A45,B88138,F9AB4E,CE9344,E7A047,875525,6E4E19,866423,75581E,E7AA58,F7B356,7F5421,7C5A21,E8AB59,EAAD59,160D04,885525|__ABCDDCCACDCAD3C3ADDCACCACC4DAC_BCEFFG3HGFGHGHHG3HGFGHG3HGFGFHIJAKLMNOPQRRESETUTTITTQIVETE3RTSWWXYJZQMUaSQbccBEQBIdKebfcETbbQgcfIPaWXYJJYSaOaJhHIcdecIddYcQiMdfLGHJgjkWWXYJJYXaOUJglQfdYcIgdeccdMIfmEUfdP3WXYJJYXWWShcRKcQIcRKdecTPIlTcKUfdS3WSYJJYXWkXIf3cnIdccIQcZBedBcYUcdSWWUlQhJYSaWUMHIoLIMjFGMp3FpFUojOFoOWWXUZIJYlPPSNXjMMjNPMlNl3MXljlNSMlPSOEbQ_hn5mq4rmmrrmq3rqqrrmqrq4mYs_oi6t4ittiit4it3ittiitiiH3_",
+}
+
+UITexturesData.Sprites.LeagueCard_C = {
+	Id = "LeagueCard_C",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(14, 896),
+	RectSize = Vector2.new(150, 58),
+	PixelData = "36,14,F2CB8F,ECBD81,DAAF74,E9B370,9E3D22,92632A,FAC373,C29A5D,F8E4AF,FBDD87,760910,900010,970D19,A2281F,C4883B,DCA457,D38E44,FEB552,E29B44,FDBD5E,E8A047,BD9051,FDC769,D69A4E,EEA851,B2894C,AD0C19,BE6D31,4B3425,F3AF58,794F31,957041,F3B563,7A2D0C,883810,C27D2F,6C4525,00000C,1D080E,8C0717,B26619,A9561A,A27C47,AA712E,050106,000000,010100|_10AB24_CD8EFGHGA__IIJ_IA__AJAAI_AAII_DEKLLMENMMKOPQR_STUOHTTVBWROXYQRURSZDEMaXB3GELbPOR_QRVcdSUXYQceSSOUSYf_DELQGggPDNLbPORCXRPHddTQUgBgSdPUUYH_DEMggDehiaLbPOTTPRRYRjQYFRTQFRTOURTQXNMQUb4aLbXc7klck_ckc_ckm4kjNnojbaNNaLpoCB6DGGBGGD3GDG3DHoNLEjj3ONLEofH3fqHqfqFZZHZFVZfqqHfoMMKp4jpnEpDgDDBPPCggAPfPOBDfggXgDonMMKhiihKLipXVYRTUYXYYRVeSOSHfddYTQpEnMMnKKnMnoifXrrFOje3rXZOrkXVqrVrfho9bph_sllsml_ltlsum__ssttst__K3i3hiihK24_",
+}
+
+UITexturesData.Sprites.LeagueCard_M = {
+	Id = "LeagueCard_M",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(192, 896),
+	RectSize = Vector2.new(150, 58),
+	PixelData = "36,14,E3B87A,F7C88B,DDAE6D,F3BD75,787438,60713B,FCE7B6,FBD97C,EFAA57,A5955B,067D4B,0C965A,F0B161,A66628,FEC768,D49246,FBB35A,FBAE4D,9F7338,E4A451,DF9B4A,ECA14D,FEC074,C2A163,6C905F,307C46,7C622E,C58234,D29A4D,AB7A31,432F26,66482B,F7B860,D6A361,D7812E,00000C,15050A,B07530,AD8144,9C510C,1C6C3D,BD9250,BE8A47,772507,7F350E,030000,000000|_A10B24_CDE8FCA_B__BGG_GG__BHBGB_GBGG_IJK7LKFMNOP_QRPSQOTAORPUVPQRRUSUJKCWXLYAWZZMaQb_RcadVPITRefUVbRVTS_UJKCMgLJggZZMaRCXRTXMQMVPQAgVIhRVIc_VJKMMgXCMWYZMaRgTRRQMUdQSVOVSRObRQQPiYK3UVUUVFZVe7fejfkefe_efe3feNEKi5biFZlmD5ADDWAWWADWDAW3ACnFKbbaiNliFonSppXSJpm3pmppamXmppmXJnFoiiFfFbiEonqTPqWMSVqVcqMm_WqaIIcTInFoaaZLKaaFonPVTCbchRSIqUMJlQJX3IQPnN4KL4KEnddqcapldqcqmcq_ShpSSqdSrnl8dNsjkkt_kj7k__ttj_ju__e9sr24_",
+}
+
+UITexturesData.Sprites.LeagueCard_L = {
+	Id = "LeagueCard_L",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(370, 896),
+	RectSize = Vector2.new(150, 58),
+	PixelData = "36,14,F8CC8C,F9C483,DDAE6C,EDBB78,6F724F,565D46,EBB268,FDDF9D,F0AA52,A88A54,056A86,007F99,1F959E,0B8194,4D7767,CD8D40,F9B458,E29E4D,FEBB5D,B29356,FEC566,D0974E,F7AF51,B88141,EBA14F,047792,B69F6C,069CA1,DBA354,3F251B,4A321C,AC7A38,DA9846,9A7A45,010100,0198A5,CF9F5B,8D6A3F,684927,5C442B,28181B,D28128,A35912,A66E2A,62250F,882F02|_AA7BAA24_CDEE3F4EGCDA__3H_HH__AHAHH_HAHH_IJKLMMN3LKOGPQ_RSRPTSUVDUQPVWPQRQRXYEZLaUa3bLOcPW_PQTdI3RIYeFPIfYgIhiYEZjaSk3bLOcPQaRWcaIQQggQDSPQkIRWk_IELjaSC3bLOYXSSYWQcIPPIlWSglIUXgQSRgELjJWg3bLOge5mnnoom_dnd_dmonmmnpELjhpp3bLOqJ4DC3DBDBBD3BDBDCDCqFLjEppTJMLOqmTJrkTlTkfkVrlTTlTJrkTlqFLjE4pOLOqlQIXIcBIXXWf_BGX_WIXYcGqFLLF4mKLOqVQIPWgRVhgIh_WXFQQIPIYrql3Z4KZZEqVfXPgXmIIXWcmrGCVfX3Plsq9fqtdooeoo_ddoee__eddoodoo__s9ts24_",
+}
+
+UITexturesData.Sprites.Btn_Return = {
+	Id = "Btn_Return",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(836, 938),
+	RectSize = Vector2.new(84, 84),
+	PixelData = "22,22,AB8A63,A9793E,C29B6D,D4B88A,D9BB8B,D7BA8A,A37744,E5CA97,DDC08E,DDBF8D,DCBE8B,E3C795,956737,9F713C,C8A97E,DABC89,DBBD8A,DDBF8B,DEC08D,DBBD8B,DBBE8B,DCBE8A,DCBF8C,A17441,865528,E1C492,623818,DDC190,E2C693,885A2B,DCBE8C,793A17,6A2100,6B2D0B,7A522C,8F4311,DBBC8C,DCBF8E,D9BE8F,DEC290,DDBE8B,9F7345,40200B,AA773F,DCBD8C,000000,050000,0A0000|3_A14BA5_BBCDE6FEFFDCBB3_GBFHIJ7IJKJLDBB_MNOLPQKERSTTUQUVQPLCNMMBEWWTPHDDSRRPPKQTKFXMYGJWQZHAaAbDDcHPQKVJGdYNSeZCfg5hiAcVQKbXYYNIeZCY6jggMLPIbNYYNbeUcHCjCcklCjgCLUbXdYNbKWUPLmFnJTHCgMHTnXdYNbeWWKkJJUeTSOhYLKnXdYNbKWWKJ4SoHAgMHTnXdYNbKWWKm5DAfgCLenXdYNbelPHpq4hggrLsInXdYNJVlkHAf4jMCcJIWbXdYNUWeWel4klZclIlJlNYiMOZPWlKVRRVRPQbJTZOMiqdpZnQTTPkPPkPTeeZcpdq_adpDnc6LccLLDpda__taYdpG6pXpGpdYat3_tq14aqt6_tu10vut4_",
+}
+
+UITexturesData.Sprites.Btn_Play = {
+	Id = "Btn_Play",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(934, 938),
+	RectSize = Vector2.new(84, 84),
+	PixelData = "22,22,C9A97B,AF844F,A7783D,BB9668,A28143,D8BA89,D0B388,E3C796,E3C693,DDC08E,DDBF8D,DCBE8C,DCBF8C,DCBE8A,DEC28F,E5CA99,A27342,E1C492,DABC89,DBBD8A,DBBD8B,DCBE8B,DBBE8C,DBBC89,DABB88,E3C896,996934,DCBF8D,DCBD8A,8A5C28,704E27,613717,DDBE8C,DBBD89,7A512A,945D34,7D3508,DEC391,963802,47220D,DFC492,DABD8A,874514,E2C793,E3C794,0A0000,000000|__AB13CBD4_DCEA11FGDCB3_CBHIJKL6JMNOPACB_QCFRSTUIVSLVWTWTXYZBa_aBRTbUJDWIFWVcVcTTOAaddBIUVSPefAPXSgVhWTJGaidBHUVXZjkfQHRFcVVhlGaedBHUUSPjmmneAPXUMToGaedBHpKXPjkmmkfBZIULoGaedBHpKXPjk4mkeARUoGaedBHTKXPjk5mkDRpoGaedBHpKXPjk4mQOIULoGaedBHpKXPj3mqAPVSbLoGaedBHTJXZjkmQbrXWVMLoGaedBIXbXPdqAPMSKTLJblGaedBRUMUoDGsYTVhTJJMoAaedaKKTKWIJSVNVNMJKSZDdffdBPMpUSSUUppSWLLZGad__idBFlHsHssHsIsZRAadn__tedj11Qadin4_un14ft7_u11tu5_",
+}
+
+UITexturesData.Sprites.SpeechBubble = {
+	Id = "SpeechBubble",
+	AtlasId = "menu",
+	RectOffset = Vector2.new(712, 602),
+	RectSize = Vector2.new(296, 186),
+	PixelData = "36,24,D6B48B,E0C298,E6C99C,E2C699,E3C69B,E3C69A,E1C498,CEAA82,E4C699,DDBE92,E1C396,E1C295,E1C296,E0C195,E2C396,E5C89A,CBA57E,D8B990,C09671,C8A27A,E3C698,E1C397,E2C598,DAB98F,B68C66,BD936F,C39B75,E0C295,DABA90,C59E79,B08060,E0C296,E0C194,E2C597,DABA8F,D8BA91,E1C195,E2C497,935844,DBBA8F,DABA92,E2C599,E3C598|3_AB3CDEFEEFFEFFEFF5EFFEF3EGH3_HCIJAAKKLK3LMLKMLLMKLKLLMMLMMNOPQ__RPASTTQULKMMKVMKMMKVMKKMMKVMK3MWX__RCTYZXaJOVMKKVM6KMVM3KMVMKbWc__RCQYdee3VKMK4VKM4VMM4VKMfDc__RPQdHaSOLMMLLKLLKMLKLLMMLMKLLMMghi__jWgZeeAPNMLkMV3MLLKKMMLLMK3MkNWi__RPHeZdaMMKKLMKMMK3MK3MLMKMKVMNlc__RCdmmYSgKVMMKVMVKMMVKKVMMKVKVKMfWc__RCTmYdSgK4MV4MLKMMKMMKKL3MbWi__jInZYYHUMVKMKVKVVKKVKMVKMVKKVVMfWc__jPXZeYHUMVKMKVKVKKM4VMMVVKVKMbWc__RPQ3ZSgOLMLLKLLMLLKMLMMLLKLLMMghi__RCTaeSSgOMLLMKMKMkMKKMMLLMK3MLNlc_dNPHaYSaKKVKMMKMKKMMKKMK3MKMKVMNhceAfOfHTTXDMVMMKVKVKMKVKKVMMKVMVMKfWc__jlKIIPD6MVL3MLVKMMLMMVLMLMbWi__jhKfbN3KV3KVKVVKKVKVVKKVKKVVKfWc__ohKMKLVKKV3MVKVKMLVKKVMMKVKKMMNWc__jlLMMkKKLMMkLVLLMLLKMLMMkLKLLMLNWi__oKKMLMMKMMLLMK3ML5MLLMK3MLblc__RUKMfN5fNbfbffbbffbffbb5fLpX__aPUlWhWWhWl3Wh3Wh4WlWqWhWWlUIT3_dXiXicc5iciiXiic3iXicciiXiRT_",
+}
+
+UITexturesData.Sprites.StudioLogo_SUD = {
+	Id = "StudioLogo_SUD",
+	AtlasId = "logo",
+	RectOffset = Vector2.new(26, 790),
+	RectSize = Vector2.new(258, 120),
+	PixelData = "40,20,FAAF00,F4AB00,F1AA01,F3AB00,EEA804,DCA815,C89D1E,6F9B85,2B9FE6,34B0F7,30A4E7,2FA3E6,30A5E8,30A4E6,309FDF,30A3E6,2FA4E7,30A6EA,31A8ED,FEB200,FDAF00,F1AB03,F9AC00,30A3E5,2FA2E6,31A6EA,2794DB,32ACF2,32A9EE,F5AA00,F2AA02,2FA3E7,2486CB,017FF8,1D70AC,4082AF,30A3E7,30A4E8,2FA3E5,34A8EB,F9C303,6CAAC2,F1AE07|4_ABBCDEFGHIIJK6_LMNKMOOKPQRSR6_CATUBVVBWUUGOJX6_YMNNZaaKKMSbcS4_dTWDCAUUWVeVUGLf6_YMNPZagfQKPLLJQ3_DADeAGHGFWCDEUHh6_YMNPZaaJJZPKKYJP_DTCDWFiggjFUWATGg6_YMNLbOgkLlcXKPSK_CTDDWFj3IHEF3Gg6_YMNQJM4_ZcfKmbYDTCBeWFHHOag3iaa6_YMNQJM4_YbNKkbQ_BWDBDWUUEGHjaInY6_YMNQJN5_mSPPSP_CoB3DVVdUUWGjJN6_YMNQJN5_MbkKMN__CATW4DeVDUEpI6_YMNQJN5_fbLKKN3_EWB3TBCBBVUFg6_YMNQJN5_fbLKlQ6_CCDBTDBBeTG6_YMNQJN5_QbkKRP3_CT4_EBTDBDTF5_OMKKQJI5_YSPPSNDDBCoq5_BWDCTG5_YJQKQJa4_mcNKKbkCAdDTq5_eADVUHh3_fZZPKQJg4_RcPKLbfCTCBDTqF_GVTCBeWjINNmSZPKPMOiOPQlcXKNSN_EdWDBCTBBVTDBETGgOZbcPPKKPSgg3bMNKPQJM__CTA4DWBeCdTGiaXfLLNPXKSgiaQQLNNLRJY4_EA3T3ATTqGiaMc4ScclgiaZ4ScbSQ7_DDCCdEGGjiigaOYLLOagiiaILLQKLRc5_",
+}
+
+UITexturesData.Sprites.BlueprintPanel = {
+	Id = "BlueprintPanel",
+	AtlasId = "background",
+	RectOffset = Vector2.new(6, 6),
+	RectSize = Vector2.new(800, 640),
+	PixelData = "48,38,E4CFB5,E7D3B9,E9D5BB,EAD7BC,EDDAC0,EBD8BE,EEDCC2,EFDDC2,F0E0C6,ECDAC1,CEA367,B2875C,D9BFA4,A06B35,AD722F,B77D35,B27B39,C18939,C38C3B,CC953E,CA933E,C5913E,B87F38,D0993E,D59E41,D39B41,D49D42,D09941,D49E43,D8A142,D9A242,D7A042,D7A143,D8A244,D9A342,D8A243,D8A144,D69F43,D7A244,D59F43,D8A245,D7A245,D7A145,D6A144,975D27,894F21,783F1A|ABCC3BCCDEFDFEEGG6HIIHGGEFFDDBBDG9IDACFEGG3EGHEFDCB3D3FEEJFDFEECAABCBBCFGHIIHHGIFA3BDEEGEFDCC3BCBB3F8EDCDCEHGE3FEGGECEAABAABBC6EFBBDG20HGEFDCDDBDAABB3DFE3GHHEFCBFG9HGE6GEED7BCABDBFHGGEFDDEHE4BABFGGHHGD3ABCCDFFCCDEGGEFBABADEDDEEF3DB9ABCDFDB4AB3AEGGHHEFFGHGEEAA3B5ABEC21ABGHHEB4ABDDFBD6IJCC5IHFCAABDF7JFBBJGGJFJGJGGHIGHAIK44LMJMNOO11PO24POP4ONMMQRSTTUUVUT4U3VUUVV3U4V5U5T5VRWWMMPVX3Y3ZYabXZbZZbXXbbX7Z3acc5YXXTVRWMMWVXdeffd5fd3fdfghdg3he3iji3j7iYXVWMMWVXd4e3djd3fdhhdYfkkdkk3hjiji3j5idXVRMMPVXdeieiieiddfdf3Ylff4kdkdkh7jeieidXVRMMPVXdeeijdejjdhkk3f3kllff4kdllj5d3efXSWMMWVXfeijYYdhk7hmhknZZbfhkkdkkh5j3edTRWMMWVXfejei3hkh7mhohkkmmhmm4khhjjieddfXVWMMWVXdijj3hmm12poo5m3hkhhijYYfYTSWMMWVXfie3hm6oppoopoqpopp3opkm4hgZZfjfXSWMMWVXYijhhm9p4oppoopocbbaopmhhYZliidXRQMKWVXdejhm3pq4popqppqq3pqoqlZqrqponZfhYjfTRWMKWVbgjjhk13po3poppoqnk4qYZfhgYZUVWMKWVbgihhm18opoqr4onrabakjYZbSWKKWVbfj3k20qn3qpnnonbZoYYgTSWKKWSXfj3gkk3rkrk3rk4rk3rnkrklankaXahZYZUSWKKWSTYfl21ncanabbXaYZbnggZbUSWKLWSTYlY19cnZZbcZTXZXYbbcYYnZUSWKLWRUZ19aZTbXZbbZZaaZXTb4aXURQLLQRVX24bTT5bTTbTTXbTVRQLLQWSUTUUT3U3TUV11T10UTUSTTUSWQLLOPRSSRRSRSRR3SRSS3R7SR10SRSSRRPOLLsNOO4POPQO6P3Q22POONLNt3s22Nss15N3sLN4t39s3tNN46tNN45utN",
+}
+
+UITexturesData.Sprites.Character_Mechanic = {
+	Id = "Character_Mechanic",
+	AtlasId = "background",
+	RectOffset = Vector2.new(10, 682),
+	RectSize = Vector2.new(296, 340),
+	PixelData = "32,36,201017,51442D,5F5539,786E5D,3A2A2A,483631,8B7B5E,E6A886,D4B8A7,BA9C8C,936654,F9BD98,DD9974,AE8975,423D34,726444,685B3B,8F5844,AB6B50,6C5930,5A4C30,66352C,6D5F3D,C07E5F,655532,F3E5D9,433826,4B4027,715E32,66572E,4E422A,6D5E2E,564927,7C6B29,5C5031,695A2C,75642E,866E46,60522F,5A4C28,5D4F28,665629,554A2E,483D28|16_ABBA27_C5DE23_FDDG5DB21_E3DHIJDKGCF19_CDDK4LHMLNC18_OCPQMHLLHLHMLGO17_FOCDNHLMRSMTSNO17_F3OUMSRVSLSRKO18_OKWQSVPKRLKKHK18_QSRSMXXHXLMMLG18_EKRRH3LMH3LG19_KSYXMHMMHLHHC19_FRKXHLHRRKHHF19_B3XHLLHKSHHB19_P3XRKJHJNKMO18_DSXSXXK4NHJA17_FINXXSXX3HMHJ18_DIIMXSKSXHHMHN18_IZIZIXRRKSKKQA17_aJ5ZJSRPDDNG15_BWWbJ5ZIKKGNINO12_FWPPcdeI4ZDQSGINDGE10_FP4cffgI3ZOOXNIaCGcC8_EQhdidjfkfbJZJEaCJPaBDklU7_icjmndff3kgGPgmbWWomdklQ6_Emjponofkk3hpfcfmllmckhhYE5_Fqppogedjkhkk3hkjkldcklpmB5_Fbopogbmdj3k4hfklfTklpmC5_Fbgpnernjjc3khhk3fdTchkgYF3_Eqebpogbgmj4f3kffTddfkkgYB3_Fqgboonbbgopdjd7jddfcnYi3_Fegennebabn4omm3p3jdjfnmCE__Fb4gbrabgnn4omp4jdjfoomF__rbbggbbaaegq5nooppjjddTiUYB_Frrbber3abe3gng3nmddjdmdmqiqEFaa3r4abbe3gnnqnnmmdd3mqUqF",
+}
+
+UITexturesData.Sprites.Character_Officer = {
+	Id = "Character_Officer",
+	AtlasId = "background",
+	RectOffset = Vector2.new(324, 670),
+	RectSize = Vector2.new(352, 352),
+	PixelData = "34,34,391408,3A4159,526E94,3D7DBA,45597E,4B4F5F,4B4342,422918,9F7E6C,386BB8,3B72BD,315EA2,33528E,5E5962,966E55,EBBA67,30589B,2B5198,254891,234587,2D4887,21417B,2558A9,1E3B74,1D3464,17356C,1F3E7E,59483C,254A95,264D97,794A33,8C5E44,28262F,3C3533,160D0E,4A372A,5B3723,3863AA,3261B2,29509C,2D58A8,76B885,21428C,234590,1F3F88|10_AA30_BCDCCEFGH23_AEIIJKDDJLMEFA19_HBNOPOCLQRSTTUEG18_BVO3POWQRSTXYVMG16_NEZO3PNWQRMTVXYZUG15_NCab3PCWRcdTVXYYUF16_eCBfeeGFCEB3YVMF18_bNghFNGGNFhggBFA17_hbGFNIINFNNhgiHj18_NN3GbhhgHeeHAHj18_GjGhiHAiAikekHeb20_NNgOfjHHOIkHff20_hIePPOfIPOkkfe21_IOOfeOIIOHffh21_NjHkkHbIfHfb22_bffIIOkOOeebh21_bOkfIPPIOkeNCA20_bbje3OejkfCKN20_bjj4HAkOCKKDb19_jbh4HkN3KDDlFH17_GBYYbkkCKmJJK3JMFH14_HMTYYeeGZL3JmJDKJlMEG11_AEXTXBeeFYYmJQl5KJJlN8_HFClYTVkefVZXVnL5KJJmmlj6_GCJJlLSEIIXXnodU3mJJ3mommF5_HCKL3lnCpCZToomm3o4m4oE5_FD4LQnIpVanom8ond3nMj4_ElQQRRcdCMacn7ondnSqSndSG3_HERQRRcrqQsSdn4oncTaqSssqccrF3_GMTLRddssqqcdnnS3TVXasaXsqcSqUj__FRTQRRSassrSccdd3cSqaXXZarcdrqB_HESSQRSq3s3rqrrssaaXXaXYarSdcrB_GMTRQRrrSaa3saarr3qXXaXYaqrccqVj",
+}
+
+return UITexturesData]=====])
+	upsert(ReplicatedStorage, "ModuleScript", "DrParkingTextureEngine", [=====[
+-- DrParkingTextureEngine.lua
+-- Motor de decodificacao, renderizacao (EditableImage + Greedy 2D Canvas + AssetId)
+-- e construcao 3D de carros, objetos e ambiente com as texturas convertidas para Luau.
+
+local AssetService = game:GetService("AssetService")
+
+local DrParkingTextureEngine = {}
+
+local _decodedCache: { [string]: any } = {}
+local _editableCache: { [string]: any } = {}
+local _editableSupported: boolean? = nil
+
+local SAFE_PALETTE_CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%^&*"
+
+local function hexToColor3(hexStr: string): Color3
+	local r = tonumber(string.sub(hexStr, 1, 2), 16) or 200
+	local g = tonumber(string.sub(hexStr, 3, 4), 16) or 200
+	local b = tonumber(string.sub(hexStr, 5, 6), 16) or 200
+	return Color3.fromRGB(r, g, b)
+end
+
+local function makePart(props: { [string]: any }): BasePart
+	local p: BasePart
+	if props.IsWedge then
+		p = Instance.new("WedgePart")
+	else
+		local part = Instance.new("Part")
+		part.Shape = props.Shape or Enum.PartType.Block
+		p = part
+	end
+	p.Name = props.Name or "Part"
+	p.Anchored = if props.Anchored ~= nil then props.Anchored else true
+	p.CanCollide = if props.CanCollide ~= nil then props.CanCollide else false
+	p.CanTouch = false
+	p.CanQuery = if props.CanQuery ~= nil then props.CanQuery else true
+	p.CastShadow = if props.CastShadow ~= nil then props.CastShadow else false
+	p.TopSurface = Enum.SurfaceType.Smooth
+	p.BottomSurface = Enum.SurfaceType.Smooth
+	p.Material = props.Material or Enum.Material.SmoothPlastic
+	p.Reflectance = props.Reflectance or 0
+	p.Color = props.Color or Color3.fromRGB(220, 220, 220)
+	p.Transparency = props.Transparency or 0
+	p.Size = props.Size or Vector3.new(1, 1, 1)
+	p.CFrame = props.CFrame or CFrame.new()
+	p.Parent = props.Parent
+	return p
+end
+
+local function relCF(origin: CFrame, x: number, y: number, z: number, rx: number?, ry: number?, rz: number?): CFrame
+	local cf = origin * CFrame.new(x, y, z)
+	if rx or ry or rz then
+		cf = cf * CFrame.Angles(math.rad(rx or 0), math.rad(ry or 0), math.rad(rz or 0))
+	end
+	return cf
+end
+
+function DrParkingTextureEngine.DecodePixelGrid(texEntry)
+	if not texEntry or not texEntry.PixelData then
+		return nil
+	end
+	local cacheKey = (texEntry.Id or "tex") .. "::" .. string.sub(texEntry.PixelData, 1, 24)
+	if _decodedCache[cacheKey] then
+		return _decodedCache[cacheKey]
+	end
+
+	local raw = texEntry.PixelData
+	local pipeIdx = string.find(raw, "|", 1, true)
+	if not pipeIdx then
+		return nil
+	end
+
+	local header = string.sub(raw, 1, pipeIdx - 1)
+	local body = string.sub(raw, pipeIdx + 1)
+
+	local headerParts = string.split(header, ",")
+	local width = tonumber(headerParts[1]) or 16
+	local height = tonumber(headerParts[2]) or 16
+
+	local paletteColors: { [number]: Color3 } = {}
+	local paletteHex: { [number]: { number } } = {}
+	local charToIdx: { [string]: number } = { ["_"] = 0 }
+
+	for i = 3, #headerParts do
+		local palIdx = i - 2
+		local hex = headerParts[i]
+		if hex and #hex >= 6 and palIdx <= #SAFE_PALETTE_CHARS then
+			local ch = string.sub(SAFE_PALETTE_CHARS, palIdx, palIdx)
+			charToIdx[ch] = palIdx
+			paletteColors[palIdx] = hexToColor3(hex)
+			paletteHex[palIdx] = {
+				tonumber(string.sub(hex, 1, 2), 16) or 200,
+				tonumber(string.sub(hex, 3, 4), 16) or 200,
+				tonumber(string.sub(hex, 5, 6), 16) or 200,
+			}
+		end
+	end
+
+	local total = width * height
+	local pixels = table.create(total, 0)
+	local pos = 1
+	local outIdx = 1
+	local bodyLen = #body
+
+	while pos <= bodyLen and outIdx <= total do
+		local countStart = pos
+		while pos <= bodyLen do
+			local b = string.byte(body, pos)
+			if b >= 48 and b <= 57 then
+				pos += 1
+			else
+				break
+			end
+		end
+		local runCount = 1
+		if pos > countStart then
+			runCount = tonumber(string.sub(body, countStart, pos - 1)) or 1
+		end
+		if pos <= bodyLen then
+			local ch = string.sub(body, pos, pos)
+			local val = charToIdx[ch] or 0
+			pos += 1
+			for _ = 1, runCount do
+				if outIdx <= total then
+					pixels[outIdx] = val
+					outIdx += 1
+				end
+			end
+		end
+	end
+
+	local decoded = {
+		Width = width,
+		Height = height,
+		Palette = paletteColors,
+		PaletteRGB = paletteHex,
+		Pixels = pixels,
+	}
+	_decodedCache[cacheKey] = decoded
+	return decoded
+end
+
+function DrParkingTextureEngine.TryCreateEditableContent(texEntry)
+	if not texEntry then
+		return nil
+	end
+	if texEntry.AssetId and texEntry.AssetId ~= "" then
+		return texEntry.AssetId
+	end
+	if _editableSupported == false then
+		return nil
+	end
+	local cacheKey = (texEntry.Id or "tex") .. "::editable"
+	if _editableCache[cacheKey] then
+		return _editableCache[cacheKey]
+	end
+
+	local grid = DrParkingTextureEngine.DecodePixelGrid(texEntry)
+	if not grid then
+		return nil
+	end
+
+	local ok, result = pcall(function()
+		local edImg = AssetService:CreateEditableImage({
+			Size = Vector2.new(grid.Width, grid.Height),
+		})
+		if not edImg then
+			return nil
+		end
+		local buf = buffer.create(grid.Width * grid.Height * 4)
+		local pixels = grid.Pixels
+		local palRGB = grid.PaletteRGB
+		for i = 1, #pixels do
+			local pid = pixels[i]
+			local offset = (i - 1) * 4
+			if pid == 0 or not palRGB[pid] then
+				buffer.writeu8(buf, offset, 0)
+				buffer.writeu8(buf, offset + 1, 0)
+				buffer.writeu8(buf, offset + 2, 0)
+				buffer.writeu8(buf, offset + 3, 0)
+			else
+				local rgb = palRGB[pid]
+				buffer.writeu8(buf, offset, rgb[1])
+				buffer.writeu8(buf, offset + 1, rgb[2])
+				buffer.writeu8(buf, offset + 2, rgb[3])
+				buffer.writeu8(buf, offset + 3, 255)
+			end
+		end
+		edImg:WritePixelsBuffer(Vector2.zero, Vector2.new(grid.Width, grid.Height), buf)
+		if Content and Content.fromObject then
+			return Content.fromObject(edImg)
+		end
+		return nil
+	end)
+
+	if ok and result then
+		_editableSupported = true
+		_editableCache[cacheKey] = result
+		return result
+	else
+		-- EditableImage unavailable in this context (e.g. Server or restricted place); fallback to GreedyCanvas
+		if _editableSupported == nil then
+			_editableSupported = false
+		end
+		return nil
+	end
+end
+
+-- Greedy 2D rectangle merging over decoded pixel grid:
+-- Reduces 2,304+ pixels into ~250-550 crisp Frames with zero gaps.
+function DrParkingTextureEngine.RenderGreedyCanvas(parentContainer: GuiObject, texEntry, zIndexBase: number?): Frame?
+	local grid = DrParkingTextureEngine.DecodePixelGrid(texEntry)
+	if not grid then
+		return nil
+	end
+
+	local old = parentContainer:FindFirstChild("LuaGreedyCanvas")
+	if old then
+		old:Destroy()
+	end
+
+	local holder = Instance.new("Frame")
+	holder.Name = "LuaGreedyCanvas"
+	holder.Size = UDim2.fromScale(1, 1)
+	holder.BackgroundTransparency = 1
+	holder.BorderSizePixel = 0
+	holder.ZIndex = zIndexBase or parentContainer.ZIndex
+	holder.Parent = parentContainer
+
+	local w = grid.Width
+	local h = grid.Height
+	local pixels = grid.Pixels
+	local palette = grid.Palette
+	local visited = table.create(w * h, false)
+	local baseZ = zIndexBase or parentContainer.ZIndex
+
+	for y = 0, h - 1 do
+		local x = 0
+		while x < w do
+			local idx = y * w + x + 1
+			local val = pixels[idx]
+			if val ~= 0 and not visited[idx] then
+				-- Expand horizontally
+				local rw = 1
+				while (x + rw) < w do
+					local nIdx = y * w + (x + rw) + 1
+					if not visited[nIdx] and pixels[nIdx] == val then
+						rw += 1
+					else
+						break
+					end
+				end
+
+				-- Expand vertically while full row matches
+				local rh = 1
+				while (y + rh) < h do
+					local rowOk = true
+					for dx = 0, rw - 1 do
+						local nIdx = (y + rh) * w + (x + dx) + 1
+						if visited[nIdx] or pixels[nIdx] ~= val then
+							rowOk = false
+							break
+						end
+					end
+					if rowOk then
+						rh += 1
+					else
+						break
+					end
+				end
+
+				-- Mark visited
+				for dy = 0, rh - 1 do
+					for dx = 0, rw - 1 do
+						visited[(y + dy) * w + (x + dx) + 1] = true
+					end
+				end
+
+				local rect = Instance.new("Frame")
+				rect.BorderSizePixel = 0
+				rect.BackgroundColor3 = palette[val] or Color3.new(1, 1, 1)
+				rect.BackgroundTransparency = 0
+				rect.ZIndex = baseZ
+				rect.Position = UDim2.fromScale(x / w, y / h)
+				rect.Size = UDim2.fromScale(rw / w + 0.001, rh / h + 0.001)
+				rect.Parent = holder
+
+				x += rw
+			else
+				x += 1
+			end
+		end
+	end
+
+	return holder
+end
+
+function DrParkingTextureEngine.ApplyTextureToGui(container: GuiObject, texEntry, preferEditable: boolean?)
+	for _, child in ipairs(container:GetChildren()) do
+		if child.Name == "LuaEditablePreview" or child.Name == "LuaGreedyCanvas" then
+			child:Destroy()
+		end
+	end
+
+	if texEntry.AssetId and texEntry.AssetId ~= "" then
+		local imgLabel = Instance.new("ImageLabel")
+		imgLabel.Name = "LuaEditablePreview"
+		imgLabel.Size = UDim2.fromScale(1, 1)
+		imgLabel.BackgroundTransparency = 1
+		imgLabel.Image = texEntry.AssetId
+		if texEntry.RectOffset and texEntry.RectSize then
+			imgLabel.ImageRectOffset = texEntry.RectOffset
+			imgLabel.ImageRectSize = texEntry.RectSize
+		end
+		imgLabel.ScaleType = Enum.ScaleType.Fit
+		imgLabel.ZIndex = container.ZIndex + 1
+		imgLabel.Parent = container
+		return imgLabel
+	end
+
+	if preferEditable ~= false then
+		local edContent = DrParkingTextureEngine.TryCreateEditableContent(texEntry)
+		if edContent then
+			local imgLabel = Instance.new("ImageLabel")
+			imgLabel.Name = "LuaEditablePreview"
+			imgLabel.Size = UDim2.fromScale(1, 1)
+			imgLabel.BackgroundTransparency = 1
+			imgLabel.ImageContent = edContent
+			imgLabel.ScaleType = Enum.ScaleType.Fit
+			imgLabel.ResampleMode = Enum.ResamplerMode.Pixelated
+			imgLabel.ZIndex = container.ZIndex + 1
+			imgLabel.Parent = container
+			return imgLabel
+		end
+	end
+
+	return DrParkingTextureEngine.RenderGreedyCanvas(container, texEntry, container.ZIndex + 1)
+end
+
+function DrParkingTextureEngine.CreateSurfaceTextureDisplay(part: BasePart, face: Enum.NormalId, texEntry, pixelsPerStud: number?)
+	if texEntry.AssetId and texEntry.AssetId ~= "" then
+		local decal = Instance.new("Decal")
+		decal.Face = face
+		decal.Texture = texEntry.AssetId
+		decal.Parent = part
+		return decal
+	end
+
+	local gui = Instance.new("SurfaceGui")
+	gui.Name = "LuaTextureSurface_" .. face.Name
+	gui.Face = face
+	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+	gui.PixelsPerStud = pixelsPerStud or 32
+	gui.LightInfluence = 0.25
+	gui.AlwaysOnTop = false
+	gui.Parent = part
+
+	local rootFrame = Instance.new("Frame")
+	rootFrame.Size = UDim2.fromScale(1, 1)
+	rootFrame.BackgroundTransparency = 1
+	rootFrame.BorderSizePixel = 0
+	rootFrame.Parent = gui
+
+	DrParkingTextureEngine.RenderGreedyCanvas(rootFrame, texEntry, 1)
+	return gui
+end
+
+function DrParkingTextureEngine.BuildTexturedCar(entry, originCF: CFrame, parent: Instance?, options: { [string]: any }?): Model
+	local opts = options or {}
+	local scale = opts.Scale or 2.4 -- Convert ~2m x 4.5m game meters into natural Roblox Studs
+	local pal = entry.Palette
+	local bbox = entry.BBoxSize or Vector3.new(2.0, 1.3, 4.4)
+	local w = bbox.X * scale
+	local h = bbox.Y * scale
+	local l = bbox.Z * scale
+
+	local model = Instance.new("Model")
+	model.Name = opts.Name or ("Car_" .. entry.Id)
+	model.Parent = parent
+
+	local bodyColor = pal.Body
+	local roofColor = pal.Roof
+	local glassColor = pal.Glass
+	local trimColor = pal.Trim
+	local mat = entry.Material or Enum.Material.SmoothPlastic
+	local refl = entry.Reflectance or 0.1
+
+	local wheelRadius = math.max(0.75, h * 0.28)
+	local wheelThick = math.max(0.42, w * 0.14)
+	local bodyY = wheelRadius + (h * 0.24)
+
+	-- Root / Hitbox
+	local root = makePart({
+		Name = "ChassisRoot",
+		Size = Vector3.new(w * 0.94, h * 0.42, l * 0.96),
+		CFrame = relCF(originCF, 0, bodyY, 0),
+		Color = bodyColor,
+		Material = mat,
+		Reflectance = refl,
+		CastShadow = true,
+		Parent = model,
+	})
+	model.PrimaryPart = root
+
+	-- Lower trim / bumper skirt
+	makePart({
+		Name = "LowerSkirt",
+		Size = Vector3.new(w * 0.96, h * 0.14, l * 0.99),
+		CFrame = relCF(originCF, 0, wheelRadius * 0.72, 0),
+		Color = trimColor,
+		Material = Enum.Material.SmoothPlastic,
+		Parent = model,
+	})
+
+	-- Front Hood slope (WedgePart)
+	makePart({
+		Name = "FrontHood",
+		IsWedge = true,
+		Size = Vector3.new(w * 0.90, h * 0.22, l * 0.28),
+		CFrame = relCF(originCF, 0, bodyY + h * 0.26, -l * 0.30, 0, 0, 0),
+		Color = bodyColor,
+		Material = mat,
+		Reflectance = refl,
+		Parent = model,
+	})
+
+	-- Cabin & Roof
+	local cabinH = h * 0.38
+	local cabinY = bodyY + h * 0.34
+	makePart({
+		Name = "CabinCore",
+		Size = Vector3.new(w * 0.80, cabinH, l * 0.46),
+		CFrame = relCF(originCF, 0, cabinY, l * 0.04),
+		Color = bodyColor,
+		Material = mat,
+		Reflectance = refl,
+		Parent = model,
+	})
+
+	-- Roof cap
+	makePart({
+		Name = "RoofCap",
+		Size = Vector3.new(w * 0.76, h * 0.06, l * 0.40),
+		CFrame = relCF(originCF, 0, cabinY + cabinH * 0.52, l * 0.04),
+		Color = roofColor,
+		Material = mat,
+		Reflectance = refl,
+		Parent = model,
+	})
+
+	-- Sunroof / Glass detail
+	makePart({
+		Name = "SunroofGlass",
+		Size = Vector3.new(w * 0.44, h * 0.07, l * 0.16),
+		CFrame = relCF(originCF, 0, cabinY + cabinH * 0.53, -l * 0.02),
+		Color = glassColor,
+		Material = Enum.Material.SmoothPlastic,
+		Reflectance = 0.25,
+		Parent = model,
+	})
+
+	-- Front Windshield (slanted WedgePart)
+	makePart({
+		Name = "Windshield",
+		IsWedge = true,
+		Size = Vector3.new(w * 0.78, cabinH * 0.92, l * 0.14),
+		CFrame = relCF(originCF, 0, cabinY - h * 0.02, -l * 0.24),
+		Color = glassColor,
+		Material = Enum.Material.SmoothPlastic,
+		Reflectance = 0.35,
+		Parent = model,
+	})
+
+	-- Rear Windshield
+	makePart({
+		Name = "RearWindow",
+		IsWedge = true,
+		Size = Vector3.new(w * 0.78, cabinH * 0.88, l * 0.15),
+		CFrame = relCF(originCF, 0, cabinY - h * 0.02, l * 0.33, 0, 180, 0),
+		Color = glassColor,
+		Material = Enum.Material.SmoothPlastic,
+		Reflectance = 0.35,
+		Parent = model,
+	})
+
+	-- Side Windows
+	makePart({
+		Name = "SideWindows",
+		Size = Vector3.new(w * 0.82, cabinH * 0.68, l * 0.41),
+		CFrame = relCF(originCF, 0, cabinY + h * 0.02, l * 0.04),
+		Color = glassColor,
+		Material = Enum.Material.SmoothPlastic,
+		Reflectance = 0.30,
+		Parent = model,
+	})
+
+	-- Front Grille
+	makePart({
+		Name = "FrontGrille",
+		Size = Vector3.new(w * 0.46, h * 0.14, 0.15),
+		CFrame = relCF(originCF, 0, bodyY - h * 0.03, -l * 0.49),
+		Color = Color3.fromRGB(22, 24, 28),
+		Material = Enum.Material.Metal,
+		Parent = model,
+	})
+
+	-- Headlights (Neon)
+	for _, side in ipairs({ -1, 1 }) do
+		makePart({
+			Name = side < 0 and "Headlight_L" or "Headlight_R",
+			Size = Vector3.new(w * 0.18, h * 0.11, 0.14),
+			CFrame = relCF(originCF, side * w * 0.34, bodyY + h * 0.04, -l * 0.49),
+			Color = pal.Headlight,
+			Material = Enum.Material.Neon,
+			Parent = model,
+		})
+
+		-- Taillights + Brake + Reverse lights
+		makePart({
+			Name = side < 0 and "Taillight_L" or "Taillight_R",
+			Size = Vector3.new(w * 0.20, h * 0.10, 0.14),
+			CFrame = relCF(originCF, side * w * 0.33, bodyY + h * 0.06, l * 0.49),
+			Color = pal.Taillight,
+			Material = Enum.Material.Neon,
+			Parent = model,
+		})
+
+		makePart({
+			Name = side < 0 and "ReverseLight_L" or "ReverseLight_R",
+			Size = Vector3.new(w * 0.09, h * 0.06, 0.15),
+			CFrame = relCF(originCF, side * w * 0.20, bodyY + h * 0.05, l * 0.495),
+			Color = Color3.fromRGB(245, 250, 255),
+			Material = Enum.Material.Neon,
+			Parent = model,
+		})
+
+		-- Side mirrors
+		makePart({
+			Name = side < 0 and "Mirror_L" or "Mirror_R",
+			Size = Vector3.new(w * 0.09, h * 0.08, 0.28),
+			CFrame = relCF(originCF, side * w * 0.48, cabinY - cabinH * 0.22, -l * 0.14),
+			Color = bodyColor,
+			Material = mat,
+			Parent = model,
+		})
+	end
+
+	-- 4 Wheels (Tire + Rim)
+	local wheelOffsets = {
+		{ "Wheel_FL", -w * 0.44, -l * 0.30 },
+		{ "Wheel_FR", w * 0.44, -l * 0.30 },
+		{ "Wheel_RL", -w * 0.44, l * 0.30 },
+		{ "Wheel_RR", w * 0.44, l * 0.30 },
+	}
+	for _, wo in ipairs(wheelOffsets) do
+		local wName, wx, wz = wo[1], wo[2], wo[3]
+		makePart({
+			Name = wName,
+			Shape = Enum.PartType.Cylinder,
+			Size = Vector3.new(wheelThick, wheelRadius * 2, wheelRadius * 2),
+			CFrame = relCF(originCF, wx, wheelRadius, wz),
+			Color = pal.Wheel,
+			Material = Enum.Material.Rubber,
+			Parent = model,
+		})
+		makePart({
+			Name = wName .. "_Rim",
+			Shape = Enum.PartType.Cylinder,
+			Size = Vector3.new(wheelThick + 0.05, wheelRadius * 1.15, wheelRadius * 1.15),
+			CFrame = relCF(originCF, wx, wheelRadius, wz),
+			Color = pal.Rim,
+			Material = Enum.Material.Metal,
+			Reflectance = 0.25,
+			Parent = model,
+		})
+	end
+
+	-- Ground shadow decal pad (represents shadow.png)
+	makePart({
+		Name = "ShadowBase",
+		Size = Vector3.new(w * 1.08, 0.04, l * 1.05),
+		CFrame = relCF(originCF, 0, 0.02, 0),
+		Color = Color3.fromRGB(14, 16, 20),
+		Transparency = 0.42,
+		Material = Enum.Material.SmoothPlastic,
+		Parent = model,
+	})
+
+	return model
+end
+
+function DrParkingTextureEngine.BuildTexturedObject(entry, originCF: CFrame, parent: Instance?, scaleOverride: number?): Model
+	local scale = scaleOverride or 2.4
+	local bbox = entry.BBoxSize or Vector3.new(2.0, 1.0, 0.5)
+	local sx = math.max(0.5, bbox.X * scale)
+	local sy = math.max(0.4, bbox.Y * scale)
+	local sz = math.max(0.5, bbox.Z * scale)
+	local oid = entry.Id
+
+	local model = Instance.new("Model")
+	model.Name = "Obj_" .. oid
+	model.Parent = parent
+
+	local mainPart: BasePart
+
+	if oid == "cone" then
+		mainPart = makePart({
+			Name = "ConeBase",
+			Size = Vector3.new(sx, sy * 0.16, sz),
+			CFrame = relCF(originCF, 0, sy * 0.08, 0),
+			Color = Color3.fromRGB(235, 92, 18),
+			Material = Enum.Material.Plastic,
+			Parent = model,
+		})
+		makePart({
+			Name = "ConeBodyLower",
+			Shape = Enum.PartType.Cylinder,
+			Size = Vector3.new(sy * 0.40, sx * 0.58, sx * 0.58),
+			CFrame = relCF(originCF, 0, sy * 0.36, 0, 0, 0, 90),
+			Color = Color3.fromRGB(245, 96, 18),
+			Material = Enum.Material.Plastic,
+			Parent = model,
+		})
+		makePart({
+			Name = "ConeStripe",
+			Shape = Enum.PartType.Cylinder,
+			Size = Vector3.new(sy * 0.22, sx * 0.44, sx * 0.44),
+			CFrame = relCF(originCF, 0, sy * 0.65, 0, 0, 0, 90),
+			Color = Color3.fromRGB(248, 250, 252),
+			Material = Enum.Material.Neon,
+			Parent = model,
+		})
+		makePart({
+			Name = "ConeTip",
+			Shape = Enum.PartType.Cylinder,
+			Size = Vector3.new(sy * 0.24, sx * 0.28, sx * 0.28),
+			CFrame = relCF(originCF, 0, sy * 0.86, 0, 0, 0, 90),
+			Color = Color3.fromRGB(245, 96, 18),
+			Material = Enum.Material.Plastic,
+			Parent = model,
+		})
+	elseif oid == "barrier" then
+		mainPart = makePart({
+			Name = "BarrierBody",
+			Size = Vector3.new(sx, sy, sz),
+			CFrame = relCF(originCF, 0, sy * 0.5, 0),
+			Color = entry.Palette.Primary,
+			Material = entry.Material,
+			Parent = model,
+		})
+		DrParkingTextureEngine.CreateSurfaceTextureDisplay(mainPart, Enum.NormalId.Front, entry, 28)
+		DrParkingTextureEngine.CreateSurfaceTextureDisplay(mainPart, Enum.NormalId.Back, entry, 28)
+	elseif oid == "box" then
+		mainPart = makePart({
+			Name = "BoxBody",
+			Size = Vector3.new(sx, sy, sz),
+			CFrame = relCF(originCF, 0, sy * 0.5, 0),
+			Color = Color3.fromRGB(95, 92, 90),
+			Material = entry.Material,
+			Parent = model,
+		})
+		DrParkingTextureEngine.CreateSurfaceTextureDisplay(mainPart, Enum.NormalId.Front, entry, 32)
+		DrParkingTextureEngine.CreateSurfaceTextureDisplay(mainPart, Enum.NormalId.Top, entry, 32)
+	elseif oid == "display" or oid == "display01" or oid == "display02" then
+		mainPart = makePart({
+			Name = "DisplayFrame",
+			Size = Vector3.new(sx, sy * 0.82, sz),
+			CFrame = relCF(originCF, 0, sy * 0.58, 0),
+			Color = Color3.fromRGB(36, 38, 44),
+			Material = Enum.Material.Metal,
+			Parent = model,
+		})
+		for _, lx in ipairs({ -sx * 0.36, sx * 0.36 }) do
+			makePart({
+				Name = "Leg",
+				Size = Vector3.new(0.45, sy * 0.35, 0.45),
+				CFrame = relCF(originCF, lx, sy * 0.175, 0),
+				Color = Color3.fromRGB(28, 30, 34),
+				Material = Enum.Material.Metal,
+				Parent = model,
+			})
+		end
+		DrParkingTextureEngine.CreateSurfaceTextureDisplay(mainPart, Enum.NormalId.Front, entry, 24)
+		DrParkingTextureEngine.CreateSurfaceTextureDisplay(mainPart, Enum.NormalId.Back, entry, 24)
+	elseif oid == "fence" then
+		mainPart = makePart({
+			Name = "FencePanel",
+			Size = Vector3.new(sx, sy, sz),
+			CFrame = relCF(originCF, 0, sy * 0.5, 0),
+			Color = entry.Palette.Primary,
+			Material = entry.Material,
+			Transparency = 0.2,
+			Parent = model,
+		})
+		DrParkingTextureEngine.CreateSurfaceTextureDisplay(mainPart, Enum.NormalId.Front, entry, 28)
+	elseif oid == "sign" then
+		mainPart = makePart({
+			Name = "SignPole",
+			Shape = Enum.PartType.Cylinder,
+			Size = Vector3.new(sy * 0.9, 0.25, 0.25),
+			CFrame = relCF(originCF, 0, sy * 0.45, 0, 0, 0, 90),
+			Color = Color3.fromRGB(165, 170, 178),
+			Material = Enum.Material.Metal,
+			Parent = model,
+		})
+		local board = makePart({
+			Name = "SignBoard",
+			Size = Vector3.new(sx, sy * 0.55, 0.22),
+			CFrame = relCF(originCF, 0, sy * 0.85, 0),
+			Color = entry.Palette.Primary,
+			Material = Enum.Material.SmoothPlastic,
+			Parent = model,
+		})
+		DrParkingTextureEngine.CreateSurfaceTextureDisplay(board, Enum.NormalId.Front, entry, 36)
+	elseif oid == "grasscircle" then
+		mainPart = makePart({
+			Name = "CurbCircle",
+			Shape = Enum.PartType.Cylinder,
+			Size = Vector3.new(sy, sx, sz),
+			CFrame = relCF(originCF, 0, sy * 0.5, 0, 0, 0, 90),
+			Color = Color3.fromRGB(168, 162, 148),
+			Material = Enum.Material.Concrete,
+			Parent = model,
+		})
+		local grassTop = makePart({
+			Name = "GrassPatch",
+			Shape = Enum.PartType.Cylinder,
+			Size = Vector3.new(sy + 0.08, sx * 0.86, sz * 0.86),
+			CFrame = relCF(originCF, 0, sy * 0.52, 0, 0, 0, 90),
+			Color = entry.Palette.Primary,
+			Material = Enum.Material.Grass,
+			Parent = model,
+		})
+		DrParkingTextureEngine.CreateSurfaceTextureDisplay(grassTop, Enum.NormalId.Right, entry, 24)
+	else
+		-- grass, grasssector, grasstriangle
+		mainPart = makePart({
+			Name = "CurbBox",
+			Size = Vector3.new(sx, sy, sz),
+			CFrame = relCF(originCF, 0, sy * 0.5, 0),
+			Color = Color3.fromRGB(165, 160, 146),
+			Material = Enum.Material.Concrete,
+			Parent = model,
+		})
+		local grassTop = makePart({
+			Name = "GrassCenter",
+			Size = Vector3.new(sx * 0.86, sy + 0.08, sz * 0.86),
+			CFrame = relCF(originCF, 0, sy * 0.52, 0),
+			Color = entry.Palette.Primary,
+			Material = Enum.Material.Grass,
+			Parent = model,
+		})
+		DrParkingTextureEngine.CreateSurfaceTextureDisplay(grassTop, Enum.NormalId.Top, entry, 24)
+	end
+
+	model.PrimaryPart = mainPart
+	makePart({
+		Name = "ObjectShadow",
+		Size = Vector3.new(sx * 1.12, 0.03, sz * 1.12),
+		CFrame = relCF(originCF, 0, 0.015, 0),
+		Color = Color3.fromRGB(12, 14, 18),
+		Transparency = 0.5,
+		Parent = model,
+	})
+	return model
+end
+
+return DrParkingTextureEngine
+]=====])
+	upsert(ReplicatedStorage, "ModuleScript", "DrParkingTextureRegistry", [=====[
+-- DrParkingTextureRegistry.lua
+-- Registro unificado das 69 texturas originais melhoradas do Dr. Parking 4 convertidas para Luau.
+-- Indexa todas as texturas por Id, Caminho Original e Categoria (cars, ecars, envi, objects, ui).
+
+local TexturesFolder = script.Parent:WaitForChild("Textures")
+
+local CarTexturesData = require(TexturesFolder:WaitForChild("CarTexturesData"))
+local EnvironmentTexturesData = require(TexturesFolder:WaitForChild("EnvironmentTexturesData"))
+local ObjectTexturesData = require(TexturesFolder:WaitForChild("ObjectTexturesData"))
+local UITexturesData = require(TexturesFolder:WaitForChild("UITexturesData"))
+local TextureEngine = require(script.Parent:WaitForChild("DrParkingTextureEngine"))
+
+local DrParkingTextureRegistry = {
+	ById = {} :: { [string]: any },
+	ByPath = {} :: { [string]: any },
+	OrderedAll = {} :: { any },
+	Categories = {
+		cars = {} :: { any },
+		ecars = {} :: { any },
+		envi = {} :: { any },
+		objects = {} :: { any },
+		ui = {} :: { any },
+	},
+	Sprites = UITexturesData.Sprites,
+	Engine = TextureEngine,
+}
+
+local function registerEntry(entry)
+	DrParkingTextureRegistry.ById[entry.Id] = entry
+	if entry.OriginalPath then
+		DrParkingTextureRegistry.ByPath[entry.OriginalPath] = entry
+	end
+	table.insert(DrParkingTextureRegistry.OrderedAll, entry)
+	local catList = DrParkingTextureRegistry.Categories[entry.Category]
+	if catList then
+		table.insert(catList, entry)
+	end
+end
+
+-- 1. Cars (30 textures: car000..car141)
+for i = 0, 14 do
+	for skin = 0, 1 do
+		local id = string.format("car%02d%d", i, skin)
+		if CarTexturesData[id] then
+			registerEntry(CarTexturesData[id])
+		end
+	end
+end
+
+-- 2. ECars (7 textures: ecar00..ecar06)
+for i = 0, 6 do
+	local id = string.format("ecar%02d", i)
+	if EnvironmentTexturesData.ECars[id] then
+		registerEntry(EnvironmentTexturesData.ECars[id])
+	end
+end
+
+-- 3. Environment (14 textures)
+local enviOrder = {
+	"arrow", "asphalt", "brakelight", "building", "coin", "ground",
+	"lot", "random", "reverselight", "shadow", "shadow_obj",
+	"tire00", "tire01", "wall",
+}
+for _, id in ipairs(enviOrder) do
+	if EnvironmentTexturesData.Envi[id] then
+		registerEntry(EnvironmentTexturesData.Envi[id])
+	end
+end
+
+-- 4. Objects (12 textures)
+local objOrder = {
+	"barrier", "box", "cone", "display", "display01", "display02",
+	"fence", "grass", "grasscircle", "grasssector", "grasstriangle", "sign",
+}
+for _, id in ipairs(objOrder) do
+	if ObjectTexturesData[id] then
+		registerEntry(ObjectTexturesData[id])
+	end
+end
+
+-- 5. UI & Atlases (6 textures)
+local uiOrder = { "ui", "menu", "world", "logo", "background", "icon" }
+for _, id in ipairs(uiOrder) do
+	if UITexturesData.Atlases[id] then
+		registerEntry(UITexturesData.Atlases[id])
+	end
+end
+
+DrParkingTextureRegistry.TotalCount = #DrParkingTextureRegistry.OrderedAll
+
+function DrParkingTextureRegistry.Get(idOrPath: string)
+	return DrParkingTextureRegistry.ById[idOrPath] or DrParkingTextureRegistry.ByPath[idOrPath]
+end
+
+function DrParkingTextureRegistry.GetCarSkin(carId: number, skinIndex: number?)
+	local id = string.format("car%02d%d", math.clamp(carId, 0, 14), skinIndex == 1 and 1 or 0)
+	return DrParkingTextureRegistry.ById[id]
+end
+
+function DrParkingTextureRegistry.GetSprite(spriteName: string)
+	return DrParkingTextureRegistry.Sprites[spriteName]
+end
+
+function DrParkingTextureRegistry.BuildParkingLot(variant: string, originCF: CFrame, parent: Instance?): Model
+	local lotEntry = DrParkingTextureRegistry.ById["lot"]
+	local color = Color3.fromRGB(238, 242, 246)
+	if variant == "green" or variant == "lotgreen" then
+		color = lotEntry.LotVariants.lotgreen
+	elseif variant == "yellow" or variant == "lotyellow" then
+		color = lotEntry.LotVariants.lotyellow
+	end
+
+	local model = Instance.new("Model")
+	model.Name = "ParkingLot_" .. variant
+	model.Parent = parent
+
+	-- Standard Dr. Parking 4 slot: 2.0 x 5.0 units -> ~4.8 x 12.0 studs
+	local w, l, thick = 5.4, 12.2, 0.08
+	local border = 0.35
+
+	local function stripe(name, size, cf)
+		local p = Instance.new("Part")
+		p.Name = name
+		p.Anchored = true
+		p.CanCollide = false
+		p.CanTouch = false
+		p.CastShadow = false
+		p.Material = variant == "green" and Enum.Material.Neon or Enum.Material.SmoothPlastic
+		p.Color = color
+		p.Size = size
+		p.CFrame = cf
+		p.Parent = model
+		return p
+	end
+
+	local left = stripe("Line_L", Vector3.new(border, thick, l), originCF * CFrame.new(-w / 2, thick / 2, 0))
+	stripe("Line_R", Vector3.new(border, thick, l), originCF * CFrame.new(w / 2, thick / 2, 0))
+	stripe("Line_Back", Vector3.new(w + border, thick, border), originCF * CFrame.new(0, thick / 2, l / 2))
+	stripe("Line_Front", Vector3.new(w + border, thick, border), originCF * CFrame.new(0, thick / 2, -l / 2))
+	model.PrimaryPart = left
+
+	return model
+end
+
+function DrParkingTextureRegistry.BuildEnvironmentPiece(id: string, originCF: CFrame, parent: Instance?): Model
+	local entry = DrParkingTextureRegistry.ById[id]
+	assert(entry, "Unknown environment texture id: " .. tostring(id))
+
+	local model = Instance.new("Model")
+	model.Name = "Env_" .. id
+	model.Parent = parent
+
+	local main = Instance.new("Part")
+	main.Name = "MeshBody"
+	main.Anchored = true
+	main.CanCollide = false
+	main.CanTouch = false
+	main.CastShadow = true
+	main.Material = entry.Material or Enum.Material.SmoothPlastic
+	main.Color = entry.Palette.Primary
+
+	if id == "coin" then
+		main.Shape = Enum.PartType.Cylinder
+		main.Size = Vector3.new(0.45, 2.6, 2.6)
+		main.CFrame = originCF * CFrame.new(0, 2.0, 0)
+		main.Color = Color3.fromRGB(255, 204, 38)
+		main.Reflectance = 0.25
+		TextureEngine.CreateSurfaceTextureDisplay(main, Enum.NormalId.Right, entry, 28)
+		TextureEngine.CreateSurfaceTextureDisplay(main, Enum.NormalId.Left, entry, 28)
+	elseif id == "tire00" or id == "tire01" then
+		main.Shape = Enum.PartType.Cylinder
+		main.Size = Vector3.new(1.4, 3.8, 3.8)
+		main.CFrame = originCF * CFrame.new(0, 1.9, 0)
+		main.Color = Color3.fromRGB(28, 30, 34)
+		TextureEngine.CreateSurfaceTextureDisplay(main, Enum.NormalId.Right, entry, 24)
+		TextureEngine.CreateSurfaceTextureDisplay(main, Enum.NormalId.Left, entry, 24)
+	elseif id == "arrow" then
+		main.Size = Vector3.new(2.2, 3.2, 0.5)
+		main.CFrame = originCF * CFrame.new(0, 3.6, 0)
+		main.Color = Color3.fromRGB(255, 212, 35)
+		TextureEngine.CreateSurfaceTextureDisplay(main, Enum.NormalId.Front, entry, 28)
+		TextureEngine.CreateSurfaceTextureDisplay(main, Enum.NormalId.Back, entry, 28)
+	elseif id == "random" then
+		main.Size = Vector3.new(3.2, 3.2, 3.2)
+		main.CFrame = originCF * CFrame.new(0, 1.8, 0)
+		main.Color = Color3.fromRGB(255, 130, 24)
+		TextureEngine.CreateSurfaceTextureDisplay(main, Enum.NormalId.Front, entry, 24)
+		TextureEngine.CreateSurfaceTextureDisplay(main, Enum.NormalId.Top, entry, 24)
+	elseif id == "wall" then
+		main.Size = Vector3.new(9.0, 4.2, 1.2)
+		main.CFrame = originCF * CFrame.new(0, 2.1, 0)
+		TextureEngine.CreateSurfaceTextureDisplay(main, Enum.NormalId.Front, entry, 24)
+		TextureEngine.CreateSurfaceTextureDisplay(main, Enum.NormalId.Back, entry, 24)
+	elseif id == "building" then
+		main.Size = Vector3.new(9.0, 9.0, 3.2)
+		main.CFrame = originCF * CFrame.new(0, 4.5, 0)
+		TextureEngine.CreateSurfaceTextureDisplay(main, Enum.NormalId.Front, entry, 18)
+	else
+		-- ground, asphalt, lot, shadow, shadow_obj, brakelight, reverselight
+		main.Size = Vector3.new(5.5, 0.25, 5.5)
+		main.CFrame = originCF * CFrame.new(0, 0.15, 0)
+		TextureEngine.CreateSurfaceTextureDisplay(main, Enum.NormalId.Top, entry, 22)
+	end
+
+	main.Parent = model
+	model.PrimaryPart = main
+	return model
+end
+
+return DrParkingTextureRegistry
+]=====])
+	upsert(ServerScriptService, "Script", "DrParkingTextureShowroom", [=====[
+-- DrParkingTextureShowroom.server.lua
+-- Constroi automaticamente no Workspace o Showroom 3D Completo com todas as 69 texturas
+-- do Dr. Parking 4 convertidas para Luau (Cars, ECars, Environment, Objects e UI/Sprites).
+
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+local Workspace = game:GetService("Workspace")
+
+local Registry = require(ReplicatedStorage:WaitForChild("DrParkingTextureRegistry"))
+local TextureEngine = Registry.Engine
+
+local SHOWROOM_NAME = "DrParkingTextureShowroom"
+
+local function createLabelBillboard(targetPart: BasePart, title: string, subtitle: string?, accentColor: Color3?)
+	local bb = Instance.new("BillboardGui")
+	bb.Name = "InfoBillboard"
+	bb.Size = UDim2.fromOffset(220, 58)
+	bb.StudsOffset = Vector3.new(0, 4.8, 0)
+	bb.AlwaysOnTop = false
+	bb.MaxDistance = 95
+	bb.Parent = targetPart
+
+	local bg = Instance.new("Frame")
+	bg.Size = UDim2.fromScale(1, 1)
+	bg.BackgroundColor3 = Color3.fromRGB(22, 24, 30)
+	bg.BackgroundTransparency = 0.16
+	bg.BorderSizePixel = 0
+	bg.Parent = bb
+
+	local corner = Instance.new("UICorner")
+	corner.CornerRadius = UDim.new(0, 8)
+	corner.Parent = bg
+
+	local stroke = Instance.new("UIStroke")
+	stroke.Thickness = 2
+	stroke.Color = accentColor or Color3.fromRGB(245, 195, 45)
+	stroke.Parent = bg
+
+	local t1 = Instance.new("TextLabel")
+	t1.Size = UDim2.new(1, -10, 0.56, 0)
+	t1.Position = UDim2.fromOffset(5, 3)
+	t1.BackgroundTransparency = 1
+	t1.Font = Enum.Font.GothamBold
+	t1.TextScaled = true
+	t1.TextColor3 = Color3.fromRGB(255, 255, 255)
+	t1.Text = title
+	t1.Parent = bg
+
+	if subtitle then
+		local t2 = Instance.new("TextLabel")
+		t2.Size = UDim2.new(1, -10, 0.36, 0)
+		t2.Position = UDim2.new(0, 5, 0.58, 0)
+		t2.BackgroundTransparency = 1
+		t2.Font = Enum.Font.GothamMedium
+		t2.TextScaled = true
+		t2.TextColor3 = Color3.fromRGB(205, 215, 230)
+		t2.Text = subtitle
+		t2.Parent = bg
+	end
+end
+
+local function createTextureStand(entry, standCF: CFrame, width: number, height: number, parent: Instance): Part
+	local stand = Instance.new("Part")
+	stand.Name = "TextureBoard_" .. entry.Id
+	stand.Anchored = true
+	stand.CanCollide = false
+	stand.CanTouch = false
+	stand.CastShadow = false
+	stand.Material = Enum.Material.SmoothPlastic
+	stand.Color = Color3.fromRGB(26, 28, 34)
+	stand.Size = Vector3.new(width, height, 0.35)
+	stand.CFrame = standCF
+	stand.Parent = parent
+
+	TextureEngine.CreateSurfaceTextureDisplay(stand, Enum.NormalId.Front, entry, 28)
+	return stand
+end
+
+local function createFloorPlatform(name: string, size: Vector3, cf: CFrame, color: Color3, material: Enum.Material, parent: Instance)
+	local p = Instance.new("Part")
+	p.Name = name
+	p.Anchored = true
+	p.CanCollide = true
+	p.CanTouch = false
+	p.CastShadow = false
+	p.TopSurface = Enum.SurfaceType.Smooth
+	p.BottomSurface = Enum.SurfaceType.Smooth
+	p.Size = size
+	p.CFrame = cf
+	p.Color = color
+	p.Material = material
+	p.Parent = parent
+	return p
+end
+
+local function buildShowroom()
+	local existing = Workspace:FindFirstChild(SHOWROOM_NAME)
+	if existing then
+		existing:Destroy()
+	end
+
+	-- Remove default Baseplate if desired or elevate our arena neatly on Y=0
+	local rootFolder = Instance.new("Folder")
+	rootFolder.Name = SHOWROOM_NAME
+	rootFolder.Parent = Workspace
+
+	local wingsFolder = Instance.new("Folder")
+	wingsFolder.Name = "ShowroomWings"
+	wingsFolder.Parent = rootFolder
+
+	-- Outer Terrain Ground (representing ground.jpg)
+	createFloorPlatform(
+		"OuterGround",
+		Vector3.new(300, 1, 220),
+		CFrame.new(0, -0.55, 0),
+		Color3.fromRGB(142, 134, 118),
+		Enum.Material.Ground,
+		rootFolder
+	)
+
+	-- Inner Asphalt Arena (representing asphalt.jpg)
+	createFloorPlatform(
+		"AsphaltArena",
+		Vector3.new(250, 0.5, 175),
+		CFrame.new(0, -0.25, 0),
+		Color3.fromRGB(58, 60, 64),
+		Enum.Material.Asphalt,
+		rootFolder
+	)
+
+	-- Perimeter Walls (representing wall.jpg)
+	local wallH, wallT = 6, 2
+	createFloorPlatform("Wall_North", Vector3.new(254, wallH, wallT), CFrame.new(0, wallH / 2, -88.5), Color3.fromRGB(165, 128, 96), Enum.Material.Brick, rootFolder)
+	createFloorPlatform("Wall_South", Vector3.new(254, wallH, wallT), CFrame.new(0, wallH / 2, 88.5), Color3.fromRGB(165, 128, 96), Enum.Material.Brick, rootFolder)
+	createFloorPlatform("Wall_West", Vector3.new(wallT, wallH, 179), CFrame.new(-126, wallH / 2, 0), Color3.fromRGB(165, 128, 96), Enum.Material.Brick, rootFolder)
+	createFloorPlatform("Wall_East", Vector3.new(wallT, wallH, 179), CFrame.new(126, wallH / 2, 0), Color3.fromRGB(165, 128, 96), Enum.Material.Brick, rootFolder)
+
+	-- Central SpawnLocation
+	local spawn = Instance.new("SpawnLocation")
+	spawn.Name = "ShowroomSpawn"
+	spawn.Anchored = true
+	spawn.Size = Vector3.new(10, 0.6, 10)
+	spawn.Position = Vector3.new(0, 0.3, 18)
+	spawn.Color = Color3.fromRGB(45, 135, 225)
+	spawn.Material = Enum.Material.SmoothPlastic
+	spawn.Duration = 0
+	spawn.Parent = rootFolder
+
+	local function registerWingAnchor(name: string, label: string, pos: Vector3)
+		local anchor = Instance.new("Part")
+		anchor.Name = name
+		anchor.Anchored = true
+		anchor.CanCollide = false
+		anchor.Transparency = 1
+		anchor.Size = Vector3.new(2, 2, 2)
+		anchor.Position = pos
+		anchor:SetAttribute("WingLabel", label)
+		anchor.Parent = wingsFolder
+	end
+
+	-- =======================================================================
+	-- ALA 1: 30 TEXTURAS DE CARROS JOGAVEIS (15 carros x 2 skins)
+	-- =======================================================================
+	local wingCars = Instance.new("Folder")
+	wingCars.Name = "Wing1_Cars_30"
+	wingCars.Parent = rootFolder
+	registerWingAnchor("Cars", "Ala 1: Carros (30 Texturas)", Vector3.new(0, 3, -6))
+
+	for i = 0, 14 do
+		local x = (i - 7) * 14.5
+		-- Skin 0 (Common) at Z = -20
+		local e0 = Registry.GetCarSkin(i, 0)
+		local lot0 = Registry.BuildParkingLot("white", CFrame.new(x, 0, -20), wingCars)
+		lot0.Name = "Lot_" .. e0.Id
+		local car0 = TextureEngine.BuildTexturedCar(e0, CFrame.new(x, 0, -20), wingCars, { Scale = 2.2 })
+		local board0 = createTextureStand(e0, CFrame.new(x, 2.3, -12.5) * CFrame.Angles(math.rad(-22), 0, 0), 5.2, 2.6, wingCars)
+		createLabelBillboard(board0, e0.Id .. " (" .. e0.CarClass .. ")", e0.SkinLabel .. " • " .. e0.OriginalPath, e0.Palette.Body)
+
+		-- Skin 1 (Special) at Z = -40
+		local e1 = Registry.GetCarSkin(i, 1)
+		local lot1 = Registry.BuildParkingLot("yellow", CFrame.new(x, 0, -40), wingCars)
+		lot1.Name = "Lot_" .. e1.Id
+		local car1 = TextureEngine.BuildTexturedCar(e1, CFrame.new(x, 0, -40), wingCars, { Scale = 2.2 })
+		local board1 = createTextureStand(e1, CFrame.new(x, 2.3, -32.5) * CFrame.Angles(math.rad(-22), 0, 0), 5.2, 2.6, wingCars)
+		createLabelBillboard(board1, e1.Id .. " (" .. e1.CarClass .. ")", e1.SkinLabel .. " • " .. e1.OriginalPath, e1.Palette.Body)
+	end
+
+	-- =======================================================================
+	-- ALA 2: 7 CARROS DE CENARIO (ECars)
+	-- =======================================================================
+	local wingECars = Instance.new("Folder")
+	wingECars.Name = "Wing2_ECars_7"
+	wingECars.Parent = rootFolder
+	registerWingAnchor("ECars", "Ala 2: Carros Cenario (7 Texturas)", Vector3.new(-55, 3, 28))
+
+	for i, entry in ipairs(Registry.Categories.ecars) do
+		local x = -92 + (i - 1) * 14
+		local z = 36
+		Registry.BuildParkingLot("white", CFrame.new(x, 0, z), wingECars)
+		TextureEngine.BuildTexturedCar(entry, CFrame.new(x, 0, z), wingECars, { Scale = 2.2 })
+		local board = createTextureStand(entry, CFrame.new(x, 2.3, z - 7.5) * CFrame.Angles(math.rad(-22), math.rad(180), 0), 5.0, 2.5, wingECars)
+		createLabelBillboard(board, entry.Id, entry.Name, entry.Palette.Body)
+	end
+
+	-- =======================================================================
+	-- ALA 3: 14 TEXTURAS DE AMBIENTE (Envi)
+	-- =======================================================================
+	local wingEnvi = Instance.new("Folder")
+	wingEnvi.Name = "Wing3_Environment_14"
+	wingEnvi.Parent = rootFolder
+	registerWingAnchor("Environment", "Ala 3: Ambiente (14 Texturas)", Vector3.new(55, 3, 28))
+
+	-- Interactive Lot showcase (White / Green / Yellow + Floating Arrow)
+	Registry.BuildParkingLot("white", CFrame.new(30, 0, 40), wingEnvi)
+	Registry.BuildParkingLot("green", CFrame.new(40, 0, 40), wingEnvi)
+	Registry.BuildParkingLot("yellow", CFrame.new(50, 0, 40), wingEnvi)
+
+	local animatedArrow: Model? = nil
+	local animatedCoin: Model? = nil
+
+	for i, entry in ipairs(Registry.Categories.envi) do
+		local col = (i - 1) % 7
+		local row = math.floor((i - 1) / 7)
+		local x = 28 + col * 13
+		local z = 56 + row * 16
+		local envModel = Registry.BuildEnvironmentPiece(entry.Id, CFrame.new(x, 0, z), wingEnvi)
+		if entry.Id == "arrow" then
+			animatedArrow = envModel
+		elseif entry.Id == "coin" then
+			animatedCoin = envModel
+		end
+		local board = createTextureStand(entry, CFrame.new(x, 3.0, z - 5.2) * CFrame.Angles(math.rad(-10), math.rad(180), 0), 4.2, 4.2, wingEnvi)
+		createLabelBillboard(board, entry.Id, entry.OriginalPath, entry.Palette.Primary)
+	end
+
+	-- =======================================================================
+	-- ALA 4: 12 OBJETOS E OBSTACULOS (Objects)
+	-- =======================================================================
+	local wingObjects = Instance.new("Folder")
+	wingObjects.Name = "Wing4_Objects_12"
+	wingObjects.Parent = rootFolder
+	registerWingAnchor("Objects", "Ala 4: Objetos (12 Texturas)", Vector3.new(-55, 3, -55))
+
+	for i, entry in ipairs(Registry.Categories.objects) do
+		local x = -96 + (i - 1) * 16.5
+		local z = -66
+		TextureEngine.BuildTexturedObject(entry, CFrame.new(x, 0, z), wingObjects, 2.2)
+		local board = createTextureStand(entry, CFrame.new(x, 2.6, z + 6.8) * CFrame.Angles(math.rad(-12), 0, 0), 4.4, 4.4, wingObjects)
+		createLabelBillboard(board, entry.Id, entry.ObjPath or "", entry.Palette.Primary)
+	end
+
+	-- =======================================================================
+	-- ALA 5: 6 ATLAS DE UI + SPRITES RECORTADOS (UI & Menu)
+	-- =======================================================================
+	local wingUI = Instance.new("Folder")
+	wingUI.Name = "Wing5_UI_6"
+	wingUI.Parent = rootFolder
+	registerWingAnchor("UI", "Ala 5: UI & Sprites (6 Atlas)", Vector3.new(0, 3, 56))
+
+	for i, entry in ipairs(Registry.Categories.ui) do
+		local x = -32 + (i - 1) * 13
+		local z = 74
+		local board = createTextureStand(entry, CFrame.new(x, 6.2, z) * CFrame.Angles(0, math.rad(180), 0), 10.5, 10.5, wingUI)
+		createLabelBillboard(board, entry.Id .. " (" .. entry.SourceSize.X .. "x" .. entry.SourceSize.Y .. ")", entry.OriginalPath, Color3.fromRGB(255, 175, 45))
+	end
+
+	-- Sub-sprites showcase row in front of the main UI atlases
+	local keySprites = {
+		"SteeringWheel", "GearShifterSlot", "GasPedal", "BrakePedal",
+		"Banner_GOOD", "Banner_GREAT", "Banner_PERFECT",
+		"Btn_START", "Btn_PRACTICE", "FirstPersonDashboard",
+	}
+	for i, spriteName in ipairs(keySprites) do
+		local sp = Registry.GetSprite(spriteName)
+		if sp then
+			local x = -36 + (i - 1) * 8
+			local z = 63
+			local spEntry = {
+				Id = "Sprite_" .. spriteName,
+				PixelData = sp.PixelData,
+				AssetId = "",
+			}
+			local ratio = sp.RectSize.X / math.max(1, sp.RectSize.Y)
+			local w = math.clamp(3.0 * ratio, 2.2, 6.8)
+			local h = math.clamp(w / math.max(0.25, ratio), 1.6, 4.2)
+			local board = createTextureStand(spEntry, CFrame.new(x, 2.6, z) * CFrame.Angles(0, math.rad(180), 0), w, h, wingUI)
+			createLabelBillboard(board, spriteName, "Atlas: " .. sp.AtlasId .. ".png", Color3.fromRGB(95, 205, 255))
+		end
+	end
+
+	-- Gentle animation for floating parking arrow and spinning coin
+	local elapsed = 0
+	RunService.Heartbeat:Connect(function(dt)
+		elapsed += dt
+		if animatedArrow and animatedArrow.PrimaryPart then
+			local p = animatedArrow.PrimaryPart
+			local basePos = Vector3.new(p.Position.X, 3.6 + math.sin(elapsed * 3.0) * 0.65, p.Position.Z)
+			p.CFrame = CFrame.new(basePos) * CFrame.Angles(0, elapsed * 1.4, 0)
+		end
+		if animatedCoin and animatedCoin.PrimaryPart then
+			local p = animatedCoin.PrimaryPart
+			p.CFrame = CFrame.new(p.Position) * CFrame.Angles(0, elapsed * 2.2, math.rad(90))
+		end
+	end)
+
+	print(string.format("[DrParkingTextureShowroom] Showroom 3D criado com sucesso! Total de texturas registradas: %d/69", Registry.TotalCount))
+end
+
+buildShowroom()
+]=====])
+	upsert(StarterPlayerScripts, "LocalScript", "DrParkingTextureInspector", [=====[
+-- DrParkingTextureInspector.client.lua
+-- HUD interativa no Roblox Studio para inspecionar todas as 69 texturas convertidas para Luau,
+-- visualizar os 52 sprites de UI recortados, testar o HUD in-game e teleportar pelas 5 alas do Showroom.
+
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Workspace = game:GetService("Workspace")
+
+local LocalPlayer = Players.LocalPlayer
+local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
+
+local Registry = require(ReplicatedStorage:WaitForChild("DrParkingTextureRegistry"))
+local TextureEngine = Registry.Engine
+
+local oldGui = PlayerGui:FindFirstChild("DrParkingTexturesHUD")
+if oldGui then
+	oldGui:Destroy()
+end
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "DrParkingTexturesHUD"
+screenGui.ResetOnSpawn = false
+screenGui.IgnoreGuiInset = false
+screenGui.Parent = PlayerGui
+
+local function addCorner(inst: Instance, r: number)
+	local c = Instance.new("UICorner")
+	c.CornerRadius = UDim.new(0, r)
+	c.Parent = inst
+	return c
+end
+
+local function addStroke(inst: Instance, color: Color3, thick: number?)
+	local s = Instance.new("UIStroke")
+	s.Color = color
+	s.Thickness = thick or 2
+	s.Parent = inst
+	return s
+end
+
+-- =========================================================================
+-- TOP BAR (Estilo madeira / placa metalica do Dr. Parking 4)
+-- =========================================================================
+local topBar = Instance.new("Frame")
+topBar.Name = "TopBar"
+topBar.Size = UDim2.new(0, 740, 0, 54)
+topBar.Position = UDim2.new(0.5, -370, 0, 10)
+topBar.BackgroundColor3 = Color3.fromRGB(162, 104, 46)
+topBar.BorderSizePixel = 0
+topBar.Parent = screenGui
+addCorner(topBar, 12)
+addStroke(topBar, Color3.fromRGB(78, 48, 22), 3)
+
+local titleLbl = Instance.new("TextLabel")
+titleLbl.Size = UDim2.new(0, 260, 1, -8)
+titleLbl.Position = UDim2.fromOffset(12, 4)
+titleLbl.BackgroundTransparency = 1
+titleLbl.Font = Enum.Font.FredokaOne
+titleLbl.TextSize = 20
+titleLbl.TextXAlignment = Enum.TextXAlignment.Left
+titleLbl.TextColor3 = Color3.fromRGB(255, 232, 175)
+titleLbl.Text = string.format("DR. PARKING LUA (%d/69)", Registry.TotalCount)
+titleLbl.Parent = topBar
+
+local function makeTopButton(text: string, xPos: number, w: number, bgCol: Color3): TextButton
+	local btn = Instance.new("TextButton")
+	btn.Size = UDim2.new(0, w, 0, 38)
+	btn.Position = UDim2.new(0, xPos, 0.5, -19)
+	btn.BackgroundColor3 = bgCol
+	btn.Font = Enum.Font.GothamBold
+	btn.TextSize = 14
+	btn.TextColor3 = Color3.new(1, 1, 1)
+	btn.Text = text
+	btn.AutoButtonColor = true
+	btn.Parent = topBar
+	addCorner(btn, 8)
+	addStroke(btn, Color3.fromRGB(45, 28, 12), 2)
+	return btn
+end
+
+local btnToggleInspector = makeTopButton("Inspetor (69)", 275, 130, Color3.fromRGB(214, 118, 28))
+local btnToggleGameHud = makeTopButton("Preview HUD", 413, 122, Color3.fromRGB(48, 148, 86))
+local btnNextWing = makeTopButton("Ala Showroom ->", 543, 185, Color3.fromRGB(62, 120, 198))
+
+-- Wing Quick Teleport Bar
+local wingIndex = 0
+local wingOrder = {
+	{ Key = "Cars", Label = "Ala 1: Carros (30)" },
+	{ Key = "ECars", Label = "Ala 2: ECars (7)" },
+	{ Key = "Environment", Label = "Ala 3: Ambiente (14)" },
+	{ Key = "Objects", Label = "Ala 4: Objetos (12)" },
+	{ Key = "UI", Label = "Ala 5: UI & Sprites (6)" },
+}
+
+local function teleportToWing(wingKey: string)
+	local showroom = Workspace:FindFirstChild("DrParkingTextureShowroom")
+	local wings = showroom and showroom:FindFirstChild("ShowroomWings")
+	local anchor = wings and wings:FindFirstChild(wingKey)
+	local char = LocalPlayer.Character
+	local hrp = char and char:FindFirstChild("HumanoidRootPart") :: BasePart?
+	if anchor and anchor:IsA("BasePart") and hrp then
+		hrp.CFrame = anchor.CFrame + Vector3.new(0, 4, 0)
+	end
+end
+
+btnNextWing.MouseButton1Click:Connect(function()
+	wingIndex = (wingIndex % #wingOrder) + 1
+	local info = wingOrder[wingIndex]
+	btnNextWing.Text = info.Label
+	teleportToWing(info.Key)
+end)
+
+-- =========================================================================
+-- MODAL DO INSPETOR DE TEXTURAS (69/69 + 52 Sprites)
+-- =========================================================================
+local modal = Instance.new("Frame")
+modal.Name = "InspectorModal"
+modal.Size = UDim2.new(0, 760, 0, 470)
+modal.Position = UDim2.new(0.5, -380, 0.5, -210)
+modal.BackgroundColor3 = Color3.fromRGB(218, 192, 146) -- Papel pardo Dr. Parking
+modal.Visible = true
+modal.Parent = screenGui
+addCorner(modal, 14)
+addStroke(modal, Color3.fromRGB(108, 68, 32), 4)
+
+-- Category Tabs
+local tabsRow = Instance.new("Frame")
+tabsRow.Size = UDim2.new(1, -24, 0, 36)
+tabsRow.Position = UDim2.fromOffset(12, 12)
+tabsRow.BackgroundTransparency = 1
+tabsRow.Parent = modal
+
+local tabLayout = Instance.new("UIListLayout")
+tabLayout.FillDirection = Enum.FillDirection.Horizontal
+tabLayout.Padding = UDim.new(0, 6)
+tabLayout.Parent = tabsRow
+
+local listScroll = Instance.new("ScrollingFrame")
+listScroll.Size = UDim2.new(0, 260, 1, -68)
+listScroll.Position = UDim2.fromOffset(12, 56)
+listScroll.BackgroundColor3 = Color3.fromRGB(186, 156, 110)
+listScroll.BorderSizePixel = 0
+listScroll.ScrollBarThickness = 6
+listScroll.AutomaticCanvasSize = Enum.AutomaticSize.Y
+listScroll.CanvasSize = UDim2.new(0, 0, 0, 0)
+listScroll.Parent = modal
+addCorner(listScroll, 10)
+addStroke(listScroll, Color3.fromRGB(115, 76, 38), 2)
+
+local listLayout = Instance.new("UIListLayout")
+listLayout.Padding = UDim.new(0, 4)
+listLayout.Parent = listScroll
+
+local listPad = Instance.new("UIPadding")
+listPad.PaddingTop = UDim.new(0, 6)
+listPad.PaddingBottom = UDim.new(0, 6)
+listPad.PaddingLeft = UDim.new(0, 6)
+listPad.PaddingRight = UDim.new(0, 6)
+listPad.Parent = listScroll
+
+-- Preview Panel
+local detailPanel = Instance.new("Frame")
+detailPanel.Size = UDim2.new(1, -296, 1, -68)
+detailPanel.Position = UDim2.fromOffset(284, 56)
+detailPanel.BackgroundColor3 = Color3.fromRGB(32, 36, 44)
+detailPanel.BorderSizePixel = 0
+detailPanel.Parent = modal
+addCorner(detailPanel, 10)
+addStroke(detailPanel, Color3.fromRGB(115, 76, 38), 2)
+
+local previewBox = Instance.new("Frame")
+previewBox.Name = "PreviewBox"
+previewBox.Size = UDim2.new(1, -24, 0, 230)
+previewBox.Position = UDim2.fromOffset(12, 12)
+previewBox.BackgroundColor3 = Color3.fromRGB(20, 22, 28)
+previewBox.BorderSizePixel = 0
+previewBox.Parent = detailPanel
+addCorner(previewBox, 8)
+addStroke(previewBox, Color3.fromRGB(70, 78, 92), 1)
+
+local previewCanvas = Instance.new("Frame")
+previewCanvas.Name = "CanvasContainer"
+previewCanvas.Size = UDim2.new(1, -16, 1, -16)
+previewCanvas.Position = UDim2.fromOffset(8, 8)
+previewCanvas.BackgroundTransparency = 1
+previewCanvas.ZIndex = 3
+previewCanvas.Parent = previewBox
+
+local aspectConstraint = Instance.new("UIAspectRatioConstraint")
+aspectConstraint.AspectRatio = 1
+aspectConstraint.Parent = previewCanvas
+
+local metaTitle = Instance.new("TextLabel")
+metaTitle.Size = UDim2.new(1, -24, 0, 28)
+metaTitle.Position = UDim2.fromOffset(12, 250)
+metaTitle.BackgroundTransparency = 1
+metaTitle.Font = Enum.Font.GothamBold
+metaTitle.TextSize = 18
+metaTitle.TextXAlignment = Enum.TextXAlignment.Left
+metaTitle.TextColor3 = Color3.fromRGB(255, 220, 120)
+metaTitle.Text = ""
+metaTitle.Parent = detailPanel
+
+local metaBody = Instance.new("TextLabel")
+metaBody.Size = UDim2.new(1, -24, 0, 96)
+metaBody.Position = UDim2.fromOffset(12, 280)
+metaBody.BackgroundTransparency = 1
+metaBody.Font = Enum.Font.Code
+metaBody.TextSize = 13
+metaBody.TextWrapped = true
+metaBody.TextXAlignment = Enum.TextXAlignment.Left
+metaBody.TextYAlignment = Enum.TextYAlignment.Top
+metaBody.TextColor3 = Color3.fromRGB(215, 222, 234)
+metaBody.Text = ""
+metaBody.Parent = detailPanel
+
+local swatchRow = Instance.new("Frame")
+swatchRow.Size = UDim2.new(1, -24, 0, 24)
+swatchRow.Position = UDim2.fromOffset(12, 372)
+swatchRow.BackgroundTransparency = 1
+swatchRow.Parent = detailPanel
+
+local swatchLayout = Instance.new("UIListLayout")
+swatchLayout.FillDirection = Enum.FillDirection.Horizontal
+swatchLayout.Padding = UDim.new(0, 6)
+swatchLayout.Parent = swatchRow
+
+local function selectTextureItem(item, isSprite: boolean?)
+	for _, ch in ipairs(swatchRow:GetChildren()) do
+		if ch:IsA("Frame") then
+			ch:Destroy()
+		end
+	end
+
+	local ratio = 1
+	if isSprite and item.RectSize then
+		ratio = math.clamp(item.RectSize.X / math.max(1, item.RectSize.Y), 0.3, 4.0)
+		metaTitle.Text = "Sprite: " .. item.Id
+		metaBody.Text = string.format(
+			"Atlas: %s.png\nRectOffset: (%d, %d)  |  RectSize: %dx%d\nRenderizador: Lua RLE PixelGrid -> EditableImage / GreedyCanvas",
+			item.AtlasId,
+			item.RectOffset.X,
+			item.RectOffset.Y,
+			item.RectSize.X,
+			item.RectSize.Y
+		)
+	else
+		if item.SourceSize then
+			ratio = math.clamp(item.SourceSize.X / math.max(1, item.SourceSize.Y), 0.4, 3.0)
+		end
+		metaTitle.Text = string.format("%s  [%s]", item.Name or item.Id, string.upper(item.Category or ""))
+		local pbrInfo = if item.PBR then "Sim (Albedo + Normal + Roughness 1024px)" else "Textura Direta / UV"
+		local sizeTxt = if item.SourceSize then string.format("%dx%d", item.SourceSize.X, item.SourceSize.Y) else "-"
+		metaBody.Text = string.format(
+			"Id: %s  |  Resolucao Original: %s\nOriginal: %s\nGIMP Enhanced: %s\nPBR: %s",
+			item.Id,
+			sizeTxt,
+			item.OriginalPath or "-",
+			item.EnhancedPath or "-",
+			pbrInfo
+		)
+
+		if item.Palette then
+			for key, col in pairs(item.Palette) do
+				local sw = Instance.new("Frame")
+				sw.Size = UDim2.fromOffset(56, 22)
+				sw.BackgroundColor3 = col
+				sw.Parent = swatchRow
+				addCorner(sw, 4)
+				addStroke(sw, Color3.new(1, 1, 1), 1)
+				local lbl = Instance.new("TextLabel")
+				lbl.Size = UDim2.fromScale(1, 1)
+				lbl.BackgroundTransparency = 1
+				lbl.Font = Enum.Font.GothamBold
+				lbl.TextScaled = true
+				lbl.TextColor3 = Color3.new(1, 1, 1)
+				lbl.TextStrokeTransparency = 0.2
+				lbl.Text = key
+				lbl.Parent = sw
+			end
+		end
+	end
+
+	aspectConstraint.AspectRatio = ratio
+	TextureEngine.ApplyTextureToGui(previewCanvas, item, true)
+end
+
+local currentCategory = "all"
+local categoryDefs = {
+	{ Id = "all", Label = "Todas (69)" },
+	{ Id = "cars", Label = "Carros (30)" },
+	{ Id = "ecars", Label = "ECars (7)" },
+	{ Id = "envi", Label = "Ambiente (14)" },
+	{ Id = "objects", Label = "Objetos (12)" },
+	{ Id = "ui", Label = "UI Atlas (6)" },
+	{ Id = "sprites", Label = "Sprites UI" },
+}
+
+local function populateList(catId: string)
+	currentCategory = catId
+	for _, ch in ipairs(listScroll:GetChildren()) do
+		if ch:IsA("TextButton") then
+			ch:Destroy()
+		end
+	end
+
+	local items = {}
+	local isSpriteMode = (catId == "sprites")
+	if isSpriteMode then
+		local keys = {}
+		for k, _ in pairs(Registry.Sprites) do
+			table.insert(keys, k)
+		end
+		table.sort(keys)
+		for _, k in ipairs(keys) do
+			table.insert(items, Registry.Sprites[k])
+		end
+	elseif catId == "all" then
+		items = Registry.OrderedAll
+	else
+		items = Registry.Categories[catId] or {}
+	end
+
+	for idx, entry in ipairs(items) do
+		local btn = Instance.new("TextButton")
+		btn.Size = UDim2.new(1, -6, 0, 32)
+		btn.BackgroundColor3 = idx % 2 == 0 and Color3.fromRGB(238, 221, 186) or Color3.fromRGB(246, 232, 204)
+		btn.Font = Enum.Font.GothamSemibold
+		btn.TextSize = 13
+		btn.TextXAlignment = Enum.TextXAlignment.Left
+		btn.TextColor3 = Color3.fromRGB(52, 34, 16)
+		btn.Text = string.format("  %02d. %s", idx, entry.Id)
+		btn.Parent = listScroll
+		addCorner(btn, 6)
+
+		btn.MouseButton1Click:Connect(function()
+			selectTextureItem(entry, isSpriteMode)
+		end)
+	end
+
+	if items[1] then
+		selectTextureItem(items[1], isSpriteMode)
+	end
+end
+
+for _, cdef in ipairs(categoryDefs) do
+	local tab = Instance.new("TextButton")
+	tab.Size = UDim2.new(0, 98, 1, 0)
+	tab.BackgroundColor3 = Color3.fromRGB(134, 84, 36)
+	tab.Font = Enum.Font.GothamBold
+	tab.TextSize = 12
+	tab.TextColor3 = Color3.fromRGB(255, 240, 205)
+	tab.Text = cdef.Label
+	tab.Parent = tabsRow
+	addCorner(tab, 8)
+	addStroke(tab, Color3.fromRGB(78, 48, 22), 2)
+
+	tab.MouseButton1Click:Connect(function()
+		populateList(cdef.Id)
+	end)
+end
+
+-- =========================================================================
+-- PREVIEW HUD IN-GAME (Volante, Pedais, Cambio P-R-N-D, Painel 1a Pessoa)
+-- =========================================================================
+local hudOverlay = Instance.new("Frame")
+hudOverlay.Name = "InGameHUDPreview"
+hudOverlay.Size = UDim2.fromScale(1, 1)
+hudOverlay.BackgroundTransparency = 1
+hudOverlay.Visible = false
+hudOverlay.Parent = screenGui
+
+local function mountSpriteOnHud(spriteName: string, pos: UDim2, size: UDim2)
+	local sp = Registry.GetSprite(spriteName)
+	if not sp then
+		return
+	end
+	local holder = Instance.new("Frame")
+	holder.Name = "HUD_" .. spriteName
+	holder.Position = pos
+	holder.Size = size
+	holder.BackgroundTransparency = 1
+	holder.Parent = hudOverlay
+	TextureEngine.ApplyTextureToGui(holder, sp, true)
+	return holder
+end
+
+mountSpriteOnHud("SteeringWheel", UDim2.new(0, 28, 1, -210), UDim2.fromOffset(180, 180))
+mountSpriteOnHud("BrakePedal", UDim2.new(1, -245, 1, -120), UDim2.fromOffset(72, 95))
+mountSpriteOnHud("GasPedal", UDim2.new(1, -162, 1, -152), UDim2.fromOffset(72, 130))
+mountSpriteOnHud("GearShifterSlot", UDim2.new(1, -78, 1, -205), UDim2.fromOffset(64, 175))
+mountSpriteOnHud("Banner_PERFECT", UDim2.new(0.5, -135, 0, 82), UDim2.fromOffset(270, 72))
+mountSpriteOnHud("FirstPersonDashboard", UDim2.new(0.5, -260, 1, -92), UDim2.fromOffset(520, 82))
+
+btnToggleInspector.MouseButton1Click:Connect(function()
+	modal.Visible = not modal.Visible
+end)
+
+btnToggleGameHud.MouseButton1Click:Connect(function()
+	hudOverlay.Visible = not hudOverlay.Visible
+	if hudOverlay.Visible then
+		modal.Visible = false
+	end
+end)
+
+populateList("all")
+]=====])
+
+	print("[DrParkingRoblox] Instalacao concluida! 8 scripts + 69 texturas carregados. Clique em Play (F5)!")
+end

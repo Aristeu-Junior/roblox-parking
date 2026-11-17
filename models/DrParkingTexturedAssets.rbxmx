@@ -1,0 +1,1709 @@
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+	<External>null</External>
+	<External>nil</External>
+	<Item class="Folder" referent="RBX_ASSETS_ROOT">
+		<Properties>
+			<string name="Name">DrParkingTexturedAssets</string>
+		</Properties>
+		<Item class="Folder" referent="RBX_FOLDER_CARS">
+			<Properties><string name="Name">Cars_30_Skins</string></Properties>
+			<Item class="Model" referent="MODEL_car000">
+				<Properties><string name="Name">car000</string></Properties>
+				<Item class="Part" referent="PART_1">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4293519849</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-98.0000</X><Y>1.0890</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4664</X><Y>1.4329</Y><Z>9.6507</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_2">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4294309365</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-98.0000</X><Y>2.2353</Y><Z>-19.5175</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.5732</X><Y>1.0317</Y><Z>4.6324</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car001">
+				<Properties><string name="Name">car001</string></Properties>
+				<Item class="Part" referent="PART_3">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4280697180</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-98.0000</X><Y>1.0890</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4664</X><Y>1.4329</Y><Z>9.6507</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_4">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4280697179</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-98.0000</X><Y>2.2353</Y><Z>-39.5175</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.5732</X><Y>1.0317</Y><Z>4.6324</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car010">
+				<Properties><string name="Name">car010</string></Properties>
+				<Item class="Part" referent="PART_5">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4290493371</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-84.0000</X><Y>1.0219</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4240</X><Y>1.3446</Y><Z>10.3851</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_6">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4290559164</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-84.0000</X><Y>2.0976</Y><Z>-19.4807</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.5392</X><Y>0.9681</Y><Z>4.9848</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car011">
+				<Properties><string name="Name">car011</string></Properties>
+				<Item class="Part" referent="PART_7">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4281496249</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-84.0000</X><Y>1.0219</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4240</X><Y>1.3446</Y><Z>10.3851</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_8">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4281496249</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-84.0000</X><Y>2.0976</Y><Z>-39.4807</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.5392</X><Y>0.9681</Y><Z>4.9848</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car020">
+				<Properties><string name="Name">car020</string></Properties>
+				<Item class="Part" referent="PART_9">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4290163893</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-70.0000</X><Y>1.0670</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5641</X><Y>1.4039</Y><Z>11.2803</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_10">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4292401368</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-70.0000</X><Y>2.1901</Y><Z>-19.4360</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6513</X><Y>1.0108</Y><Z>5.4145</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car021">
+				<Properties><string name="Name">car021</string></Properties>
+				<Item class="Part" referent="PART_11">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4279703319</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-70.0000</X><Y>1.0670</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5641</X><Y>1.4039</Y><Z>11.2803</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_12">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4279637526</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-70.0000</X><Y>2.1901</Y><Z>-39.4360</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6513</X><Y>1.0108</Y><Z>5.4145</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car030">
+				<Properties><string name="Name">car030</string></Properties>
+				<Item class="Part" referent="PART_13">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4292364800</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-56.0000</X><Y>1.1044</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5505</X><Y>1.4531</Y><Z>9.3425</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_14">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4294149889</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-56.0000</X><Y>2.2668</Y><Z>-19.5329</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6404</X><Y>1.0462</Y><Z>4.4844</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car031">
+				<Properties><string name="Name">car031</string></Properties>
+				<Item class="Part" referent="PART_15">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4282755994</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-56.0000</X><Y>1.1044</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5505</X><Y>1.4531</Y><Z>9.3425</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_16">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4282755994</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-56.0000</X><Y>2.2668</Y><Z>-39.5329</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6404</X><Y>1.0462</Y><Z>4.4844</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car040">
+				<Properties><string name="Name">car040</string></Properties>
+				<Item class="Part" referent="PART_17">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4282076246</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-42.0000</X><Y>1.0869</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5179</X><Y>1.4301</Y><Z>10.2432</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_18">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4283655276</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-42.0000</X><Y>2.2310</Y><Z>-19.4878</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6143</X><Y>1.0297</Y><Z>4.9167</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car041">
+				<Properties><string name="Name">car041</string></Properties>
+				<Item class="Part" referent="PART_19">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4292465351</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-42.0000</X><Y>1.0869</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5179</X><Y>1.4301</Y><Z>10.2432</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_20">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4293058261</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-42.0000</X><Y>2.2310</Y><Z>-39.4878</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6143</X><Y>1.0297</Y><Z>4.9167</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car050">
+				<Properties><string name="Name">car050</string></Properties>
+				<Item class="Part" referent="PART_21">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4279769112</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-28.0000</X><Y>1.0221</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4506</X><Y>1.3449</Y><Z>10.8451</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_22">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4278195002</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-28.0000</X><Y>2.0980</Y><Z>-19.4577</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.5605</X><Y>0.9683</Y><Z>5.2057</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car051">
+				<Properties><string name="Name">car051</string></Properties>
+				<Item class="Part" referent="PART_23">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4287240448</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-28.0000</X><Y>1.0221</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4506</X><Y>1.3449</Y><Z>10.8451</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_24">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4287964416</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-28.0000</X><Y>2.0980</Y><Z>-39.4577</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.5605</X><Y>0.9683</Y><Z>5.2057</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car060">
+				<Properties><string name="Name">car060</string></Properties>
+				<Item class="Part" referent="PART_25">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4291418624</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-14.0000</X><Y>1.2354</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.3358</X><Y>1.6256</Y><Z>8.9265</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_26">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4291418624</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-14.0000</X><Y>2.5359</Y><Z>-19.5537</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.4686</X><Y>1.1704</Y><Z>4.2847</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car061">
+				<Properties><string name="Name">car061</string></Properties>
+				<Item class="Part" referent="PART_27">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4289265686</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-14.0000</X><Y>1.2354</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.3358</X><Y>1.6256</Y><Z>8.9265</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_28">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4289265686</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-14.0000</X><Y>2.5359</Y><Z>-39.5537</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.4686</X><Y>1.1704</Y><Z>4.2847</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car070">
+				<Properties><string name="Name">car070</string></Properties>
+				<Item class="Part" referent="PART_29">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4278203771</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>0.0000</X><Y>1.0219</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4240</X><Y>1.3446</Y><Z>10.3851</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_30">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4278203771</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>0.0000</X><Y>2.0976</Y><Z>-19.4807</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.5392</X><Y>0.9681</Y><Z>4.9848</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car071">
+				<Properties><string name="Name">car071</string></Properties>
+				<Item class="Part" referent="PART_31">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4285098345</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>0.0000</X><Y>1.0219</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4240</X><Y>1.3446</Y><Z>10.3851</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_32">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4285295723</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>0.0000</X><Y>2.0976</Y><Z>-39.4807</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.5392</X><Y>0.9681</Y><Z>4.9848</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car080">
+				<Properties><string name="Name">car080</string></Properties>
+				<Item class="Part" referent="PART_33">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4285951308</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>14.0000</X><Y>1.0690</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4959</X><Y>1.4066</Y><Z>10.6960</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_34">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4289436788</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>14.0000</X><Y>2.1942</Y><Z>-19.4652</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.5967</X><Y>1.0127</Y><Z>5.1341</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car081">
+				<Properties><string name="Name">car081</string></Properties>
+				<Item class="Part" referent="PART_35">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4282777600</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>14.0000</X><Y>1.0690</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4959</X><Y>1.4066</Y><Z>10.6960</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_36">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4285202432</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>14.0000</X><Y>2.1942</Y><Z>-39.4652</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.5967</X><Y>1.0127</Y><Z>5.1341</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car090">
+				<Properties><string name="Name">car090</string></Properties>
+				<Item class="Part" referent="PART_37">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4278229963</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>28.0000</X><Y>1.4133</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5725</X><Y>1.8597</Y><Z>9.0827</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_38">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4278229449</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>28.0000</X><Y>2.9011</Y><Z>-19.5459</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6580</X><Y>1.3390</Y><Z>4.3597</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car091">
+				<Properties><string name="Name">car091</string></Properties>
+				<Item class="Part" referent="PART_39">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4280895488</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>28.0000</X><Y>1.4133</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5725</X><Y>1.8597</Y><Z>9.0827</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_40">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4280829185</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>28.0000</X><Y>2.9011</Y><Z>-39.5459</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6580</X><Y>1.3390</Y><Z>4.3597</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car100">
+				<Properties><string name="Name">car100</string></Properties>
+				<Item class="Part" referent="PART_41">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4288217088</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>42.0000</X><Y>1.1003</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5025</X><Y>1.4478</Y><Z>9.8245</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_42">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4288217088</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>42.0000</X><Y>2.2586</Y><Z>-19.5088</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6020</X><Y>1.0424</Y><Z>4.7158</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car101">
+				<Properties><string name="Name">car101</string></Properties>
+				<Item class="Part" referent="PART_43">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4278211993</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>42.0000</X><Y>1.1003</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5025</X><Y>1.4478</Y><Z>9.8245</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_44">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4278211737</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>42.0000</X><Y>2.2586</Y><Z>-39.5088</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6020</X><Y>1.0424</Y><Z>4.7158</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car110">
+				<Properties><string name="Name">car110</string></Properties>
+				<Item class="Part" referent="PART_45">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4292072131</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>56.0000</X><Y>0.9927</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.7670</X><Y>1.3061</Y><Z>10.6086</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_46">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4292137667</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>56.0000</X><Y>2.0376</Y><Z>-19.4696</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.8136</X><Y>0.9404</Y><Z>5.0921</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car111">
+				<Properties><string name="Name">car111</string></Properties>
+				<Item class="Part" referent="PART_47">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4280558628</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>56.0000</X><Y>0.9927</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.7670</X><Y>1.3061</Y><Z>10.6086</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_48">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4280558628</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>56.0000</X><Y>2.0376</Y><Z>-39.4696</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.8136</X><Y>0.9404</Y><Z>5.0921</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car120">
+				<Properties><string name="Name">car120</string></Properties>
+				<Item class="Part" referent="PART_49">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4294362113</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>70.0000</X><Y>1.0581</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.2464</X><Y>1.3923</Y><Z>8.9472</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_50">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4294362113</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>70.0000</X><Y>2.1719</Y><Z>-19.5526</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.3972</X><Y>1.0024</Y><Z>4.2946</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car121">
+				<Properties><string name="Name">car121</string></Properties>
+				<Item class="Part" referent="PART_51">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4289396736</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>70.0000</X><Y>1.0581</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.2464</X><Y>1.3923</Y><Z>8.9472</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_52">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4289396736</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>70.0000</X><Y>2.1719</Y><Z>-39.5526</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.3972</X><Y>1.0024</Y><Z>4.2946</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car130">
+				<Properties><string name="Name">car130</string></Properties>
+				<Item class="Part" referent="PART_53">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4283074233</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>84.0000</X><Y>1.0802</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5241</X><Y>1.4213</Y><Z>9.8186</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_54">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4283074489</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>84.0000</X><Y>2.2172</Y><Z>-19.5091</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6193</X><Y>1.0233</Y><Z>4.7129</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car131">
+				<Properties><string name="Name">car131</string></Properties>
+				<Item class="Part" referent="PART_55">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4288282625</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>84.0000</X><Y>1.0802</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5241</X><Y>1.4213</Y><Z>9.8186</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_56">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4288348161</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>84.0000</X><Y>2.2172</Y><Z>-39.5091</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6193</X><Y>1.0233</Y><Z>4.7129</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car140">
+				<Properties><string name="Name">car140</string></Properties>
+				<Item class="Part" referent="PART_57">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4284940288</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>98.0000</X><Y>1.0612</Y><Z>-20.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5342</X><Y>1.3963</Y><Z>10.5886</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_58">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4287823872</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>98.0000</X><Y>2.1783</Y><Z>-19.4706</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6274</X><Y>1.0054</Y><Z>5.0825</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_car141">
+				<Properties><string name="Name">car141</string></Properties>
+				<Item class="Part" referent="PART_59">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4279571733</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>98.0000</X><Y>1.0612</Y><Z>-40.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.5342</X><Y>1.3963</Y><Z>10.5886</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_60">
+					<Properties>
+						<string name="Name">Cabin</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4279571732</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>98.0000</X><Y>2.1783</Y><Z>-39.4706</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">1088</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.6274</X><Y>1.0054</Y><Z>5.0825</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+		</Item>
+		<Item class="Folder" referent="RBX_FOLDER_ECARS">
+			<Properties><string name="Name">ECars_7</string></Properties>
+			<Item class="Model" referent="MODEL_ecar00">
+				<Properties><string name="Name">ecar00</string></Properties>
+				<Item class="Part" referent="PART_61">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4294072721</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-42.0000</X><Y>1.6291</Y><Z>36.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.9552</X><Y>2.3532</Y><Z>7.5082</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_ecar01">
+				<Properties><string name="Name">ecar01</string></Properties>
+				<Item class="Part" referent="PART_62">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4294101248</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-28.0000</X><Y>1.4528</Y><Z>36.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4554</X><Y>2.0985</Y><Z>7.3951</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_ecar02">
+				<Properties><string name="Name">ecar02</string></Properties>
+				<Item class="Part" referent="PART_63">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4291363072</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-14.0000</X><Y>1.3609</Y><Z>36.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.0920</X><Y>1.9657</Y><Z>7.2653</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_ecar03">
+				<Properties><string name="Name">ecar03</string></Properties>
+				<Item class="Part" referent="PART_64">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4278197318</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>0.0000</X><Y>1.6681</Y><Z>36.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4396</X><Y>2.4094</Y><Z>8.9747</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_ecar04">
+				<Properties><string name="Name">ecar04</string></Properties>
+				<Item class="Part" referent="PART_65">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4281479741</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>14.0000</X><Y>1.2935</Y><Z>36.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.6200</X><Y>1.8684</Y><Z>10.1143</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_ecar05">
+				<Properties><string name="Name">ecar05</string></Properties>
+				<Item class="Part" referent="PART_66">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4292401624</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>28.0000</X><Y>1.8419</Y><Z>36.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>5.8366</X><Y>2.6605</Y><Z>10.3893</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+			<Item class="Model" referent="MODEL_ecar06">
+				<Properties><string name="Name">ecar06</string></Properties>
+				<Item class="Part" referent="PART_67">
+					<Properties>
+						<string name="Name">Chassis</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4291877593</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>42.0000</X><Y>1.4852</Y><Z>36.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.2570</X><Y>2.1453</Y><Z>11.0513</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+			</Item>
+		</Item>
+		<Item class="Folder" referent="RBX_FOLDER_OBJECTS">
+			<Properties><string name="Name">Objects_12</string></Properties>
+				<Item class="Part" referent="PART_68">
+					<Properties>
+						<string name="Name">Object_barrier</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4291303168</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-82.5000</X><Y>1.2636</Y><Z>-66.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4000</X><Y>2.5271</Y><Z>0.6600</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_69">
+					<Properties>
+						<string name="Name">Object_box</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4286280309</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-67.5000</X><Y>0.8800</Y><Z>-66.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4000</X><Y>1.7600</Y><Z>1.1000</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_70">
+					<Properties>
+						<string name="Name">Object_cone</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4292489984</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-52.5000</X><Y>1.1576</Y><Z>-66.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>1.3834</X><Y>2.3153</Y><Z>1.3834</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_71">
+					<Properties>
+						<string name="Name">Object_display</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4278255873</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-37.5000</X><Y>3.8606</Y><Z>-66.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>13.2000</X><Y>7.7211</Y><Z>0.6600</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_72">
+					<Properties>
+						<string name="Name">Object_display01</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4278255873</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-22.5000</X><Y>3.8606</Y><Z>-66.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>13.2000</X><Y>7.7211</Y><Z>0.6600</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_73">
+					<Properties>
+						<string name="Name">Object_display02</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4278255873</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>-7.5000</X><Y>3.8606</Y><Z>-66.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>13.2000</X><Y>7.7211</Y><Z>0.6600</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_74">
+					<Properties>
+						<string name="Name">Object_fence</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4278190080</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>7.5000</X><Y>1.1927</Y><Z>-66.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>4.4000</X><Y>2.3855</Y><Z>0.6000</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_75">
+					<Properties>
+						<string name="Name">Object_grass</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4278190080</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>22.5000</X><Y>0.4950</Y><Z>-66.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>3.5200</X><Y>0.9900</Y><Z>13.2000</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_76">
+					<Properties>
+						<string name="Name">Object_grasscircle</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4283983616</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>37.5000</X><Y>0.7150</Y><Z>-66.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>11.3102</X><Y>1.4300</Y><Z>11.3102</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_77">
+					<Properties>
+						<string name="Name">Object_grasssector</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4285293131</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>52.5000</X><Y>0.7150</Y><Z>-66.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>5.5000</X><Y>1.4300</Y><Z>5.5000</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_78">
+					<Properties>
+						<string name="Name">Object_grasstriangle</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4285293131</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>67.5000</X><Y>0.7150</Y><Z>-66.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>5.5000</X><Y>1.4300</Y><Z>5.5000</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+				<Item class="Part" referent="PART_79">
+					<Properties>
+						<string name="Name">Object_sign</string>
+						<bool name="Anchored">true</bool>
+						<bool name="CanCollide">false</bool>
+						<bool name="CastShadow">false</bool>
+						<Color3uint8 name="Color3uint8">4294095616</Color3uint8>
+						<CoordinateFrame name="CFrame">
+							<X>82.5000</X><Y>1.1332</Y><Z>-66.0000</Z>
+							<R00>1</R00><R01>0</R01><R02>0</R02>
+							<R10>0</R10><R11>1</R11><R12>0</R12>
+							<R20>0</R20><R21>0</R21><R22>1</R22>
+						</CoordinateFrame>
+						<token name="Material">272</token>
+						<token name="shape">1</token>
+						<Vector3 name="size"><X>1.8515</X><Y>2.2664</Y><Z>1.2571</Z></Vector3>
+						<token name="TopSurface">0</token>
+						<token name="BottomSurface">0</token>
+					</Properties>
+				</Item>
+		</Item>
+	</Item>
+</roblox>
